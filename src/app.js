@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Hello world.");
+  res.send("Hello wosrld.");
 });
 
 app.use(routes);

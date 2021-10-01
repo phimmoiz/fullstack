@@ -14,7 +14,7 @@ _dotenv["default"].config();
 
 var app = (0, _express["default"])();
 app.get("/", function (req, res) {
-  res.send("Hello worlds1.");
+  res.send("Hello worlds1ss.");
 });
 app.use(_routes["default"]);
 var server = app.listen(PORT, function () {

@@ -14,12 +14,6 @@ app.get("/", (req, res) => {
 
 app.use(routes);
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
-});
-
-// Graceful shutdown of server
-process.once("SIGUSR2", function () {
-  console.log("Shutting down");
-  process.kill(process.pid, "SIGUSR2");
 });

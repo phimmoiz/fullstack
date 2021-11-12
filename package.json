@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "cors": "^2.8.5",
     "daisyui": "^1.16.2",
     "dotenv": "^10.0.0",

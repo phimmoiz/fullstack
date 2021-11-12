@@ -1,0 +1,47 @@
+.khabanh::before {
+  content: "";
+  background: url(/images/khabanh.png) no-repeat center / cover;
+  width: 3rem;
+  height: 3rem;
+  top: -2.1rem;
+  left: 0;
+  position: absolute;
+  animation: moveSlowly 2s infinite;
+}
+
+.khabanh::after {
+  content: "";
+  background: url(/images/khabanh.png) no-repeat center / cover;
+  width: 3rem;
+  height: 3rem;
+  top: -2.1rem;
+  left: 3rem;
+  position: absolute;
+  transform: scaleX(-1);
+  animation: moveBackward 2s infinite;
+}
+
+@keyframes moveSlowly {
+  from {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveBackward {
+  from {
+    transform: translateX(0) scaleX(-1);
+  }
+  50% {
+    transform: translateX(-20px) scaleX(-1);
+  }
+  to {
+    transform: translateX(0) scaleX(-1);
+    opacity: 0.6;
+  }
+}

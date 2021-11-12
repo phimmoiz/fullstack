@@ -8,8 +8,13 @@
     <meta name="author" content="{{! Author: author }}">
     <link rel="icon" href="{{! Site: url }}/favicon.ico">
     <title>{{! Title: title }} - {{! Site: name }}</title>
+    <link rel="stylesheet" href="/styles/style.css">
   </head>
   <body>
+    {{> header }}
     {{{body}}}
+    {{> footer }}
+
+  <script src="/reload/reload.js"></script>
   </body>
 </html>

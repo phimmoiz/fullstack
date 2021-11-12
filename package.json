@@ -8,7 +8,8 @@
     "dev": "nodemon -e js,css,hbs --exec npx babel-node src/app.js",
     "tailwind:build": "postcss public/styles/tailwind.css -o public/styles/style.css",
     "tailwind:watch": "postcss public/styles/tailwind.css -o public/styles/style.css -w",
-    "serve": "npm run tailwind:build && babel-node ./src/app.js"
+    "serve": "npm run tailwind:build && babel-node ./src/app.js",
+    "start": "babel-node ./src/app.js"
   },
   "keywords": [],
   "author": "",

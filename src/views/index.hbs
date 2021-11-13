@@ -1,73 +1,92 @@
-<div class="card lg:card-side compact my-2 bg-base-200 shadow-lg bordered ">
-    <span id="prev" class="absolute left-0 important-block hover:bg-base-100 rounded-full transition duration-500 z-20 p-3 bg-opacity-60" style="top: 50%">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-    </span>
-    <span id="next" class="absolute right-0 important-block hover:bg-base-100 rounded-full transition duration-500 z-20 p-3 bg-opacity-60" style="top: 50%">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </span>
-  <div class="card-body relative">
-    <h2 class="card-title">Phim mới</h2>
-    <div class="my-2 my-slider">
-      {{>card}}
-      {{>card}}
-      {{>card}}
-      {{>card}}
-      {{>card}}
-      {{>card}}
-      {{>card}}
-      {{>card}}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+/>
+
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+<!-- Slider main container -->
+<div class="swiper h-48 w-full">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div class="swiper-slide">
+
       {{>card}}
     </div>
-    {{!-- 
-		<div class="card-actions">
-			<button class="btn btn-primary">Get Started</button>
-			<button class="btn btn-ghost">More info</button>
-		</div> --}}
-  </div>
-</div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css" />
-<!--[if (lt IE 9)]>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.helper.ie8.js"></script>
-	<![endif]-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js" type="text/javascript"></script>
-<script>
-  var slider = tns({
-    container: '.my-slider',
-    slideBy: 'page',
-    autoplay: true,
-    mouseDrag: true,
-    nextButton: document.querySelector('#next'),
-    prevButton: document.querySelector('#prev'),
-    autoplayButtonOutput: false,
-    autoWidth: true,
-    rewind: true,
-    loop: true,
-    
-    responsive: {
-      320: {
-        items: 1,
-        gutter: "0"
-      },
-      768: {
-        items: 4,
-        gutter: "5"
-      },
-      1024: {
-        items: 5,
-        gutter: "5"
-      }
-  }});
-</script>
+    <div class="swiper-slide">
 
-<style>
-  .important-block {
-    display: block!important;
-  }
-  [aria-label="Carousel Pagination"] {
-    display: none;
-  }
-</style>
+      {{>card}}
+    </div>
+    <div class="swiper-slide">
+
+      {{>card}}
+    </div>
+    <div class="swiper-slide">
+
+      {{>card}}
+    </div>
+    <div class="swiper-slide">Slide 2</div>
+    <div class="swiper-slide">Slide 3</div>
+    <div class="swiper-slide">
+
+      {{>card}}
+    </div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <div class="swiper-scrollbar"></div>
+</div>
+
+
+
+<script>
+  const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+
+  // Default parameters
+  slidesPerView: 3,
+  spaceBetween: 10,
+
+  // Responsive breakpoints
+  breakpoints: {
+    // when window width is >= 320px
+    320: {
+      slidesPerView: 1,
+    },
+    // when window width is >= 480px
+    480: {
+      slidesPerView: 2,
+    },
+    // when window width is >= 640px
+    640: {
+      slidesPerView: 4,
+    }
+  },
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});
+
+</script>

@@ -49,3 +49,54 @@ body {
     opacity: 0.6;
   }
 }
+
+.khabanh2::before {
+  content: "";
+  background: url(/assets/images/khabanh2.png) no-repeat center / cover;
+  background-position: 50%;
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  animation: vibrate 2s infinite;
+  z-index:-1;
+}
+
+/* animation vibrate image */
+@keyframes vibrate {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(5deg);
+  }
+  20% {
+    transform: rotate(-5deg);
+  }
+  30% {
+    transform: rotate(5deg);
+  }
+  40% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  70% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  90% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+  
+}

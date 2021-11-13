@@ -1,92 +1,19 @@
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
-/>
-
-<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-
-<!-- Slider main container -->
-<div class="swiper h-48 w-full">
-  <!-- Additional required wrapper -->
-  <div class="swiper-wrapper">
-    <!-- Slides -->
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-    <div class="swiper-slide">Slide 2</div>
-    <div class="swiper-slide">Slide 3</div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-  </div>
-  <!-- If we need pagination -->
-  <div class="swiper-pagination"></div>
-
-  <!-- If we need navigation buttons -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-
-  <!-- If we need scrollbar -->
-  <div class="swiper-scrollbar"></div>
+<div class="p-2 shadow-md rounded-md bg-base-200">
+  <h2 class="text-xl my-2">Phim mới</h2>
+  {{> carousel barId="phimMoi"}}
 </div>
 
+ <div class="p-2 shadow-md rounded-md bg-base-200">
+  <h2 class="text-xl my-2">Phim hành động</h2>
+  {{> carousel barId="phimHanhDong"}}
+</div> 
 
+<div class="p-2 shadow-md rounded-md bg-base-200">
+  <h2 class="text-xl my-2">Phim kinh dị</h2>
+  {{> carousel barId="phimKinhDi"}}
+</div>
 
-<script>
-  const swiper = new Swiper('.swiper', {
-  // Optional parameters
-  direction: 'horizontal',
-  loop: true,
-
-  // Default parameters
-  slidesPerView: 3,
-  spaceBetween: 10,
-
-  // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 320px
-    320: {
-      slidesPerView: 1,
-    },
-    // when window width is >= 480px
-    480: {
-      slidesPerView: 2,
-    },
-    // when window width is >= 640px
-    640: {
-      slidesPerView: 4,
-    }
-  },
-
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
-
-  // Navigation arrows
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-
-  // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
-  },
-});
-
-</script>
+<div class="p-2 shadow-md rounded-md bg-base-200">
+  <h2 class="text-xl my-2">Phim hoạt hình</h2>
+  {{> carousel barId="phimHoatHinh"}}
+</div>

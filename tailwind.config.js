@@ -9,7 +9,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      scale: ["group-hover"]
+      scale: ["group-hover"],
+      width: ["group-hover"],
+      height: ["group-hover"],
     },
   },
   plugins: [require("daisyui")],

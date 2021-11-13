@@ -11,13 +11,11 @@
 .card-badge {
   position: absolute;
   top: 0;
-  background: cadetblue;
   z-index: 1;
   padding: 0.5rem;
-  padding: 0.5rem 2rem;
   font-weight: bold;
-  @apply text-base-content;
-  @apply rounded-md;
+  @apply text-white text-sm;
+  @apply rounded-md bg-opacity-60 bg-red-500;
 }
 
 .hiddeni {

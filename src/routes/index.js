@@ -2,6 +2,7 @@ import express from "express";
 import userRoute from "./user.route";
 import signUpRoute from "./signup.route";
 import signInRoute from "./signin.route";
+import filmListRoute from "./filmList.route";
 
 const router = express.Router();
 
@@ -17,6 +18,10 @@ const defaultRoutes = [
   {
     path: "/signup",
     route: signUpRoute,
+  },
+  {
+    path: "/danh-sach",
+    route: filmListRoute,
   }
 ];
 

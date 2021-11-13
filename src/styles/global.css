@@ -15,7 +15,7 @@
   padding: 0.5rem;
   font-weight: bold;
   @apply text-white text-sm;
-  @apply rounded-md bg-opacity-60 bg-red-500;
+  @apply rounded-md bg-opacity-70 bg-red-500;
 }
 
 .hiddeni {

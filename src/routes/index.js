@@ -3,6 +3,7 @@ import userRoute from "./user.route";
 import signUpRoute from "./signup.route";
 import signInRoute from "./signin.route";
 import filmListRoute from "./filmList.route";
+import filmDetailRoute from "./filmDetail.route";
 
 const router = express.Router();
 
@@ -22,6 +23,10 @@ const defaultRoutes = [
   {
     path: "/danh-sach",
     route: filmListRoute,
+  },
+  {
+    path: "/phim/thong-tin",
+    route: filmDetailRoute,
   }
 ];
 

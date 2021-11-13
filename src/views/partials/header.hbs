@@ -80,6 +80,10 @@
   });
   if ($(window).width() < 768) {
     $("#nav").addClass("hiddeni");
+
+  }
+  else {
+    $("#navbarToggle").addClass("hiddeni");
   }
   $(window).resize(function() {
     if ($(window).width() <= 768) {
@@ -92,15 +96,23 @@
   });
 </script>
 <script>
+  const themeVal = localStorage.getItem("theme") || "dark";
+
+  if(themeVal) {
+    document.querySelector("html").setAttribute("data-theme", themeVal);
+  }
+
   $("#themeToggle").click(function() {
     const el = document.querySelector("html");
-    const themeVal = el.dataset.theme;
+    const themeVal = localStorage.getItem("theme") || "dark";
     if (themeVal === "dark") {
       el.dataset.theme = "light";
+      localStorage.setItem("theme", "light");
       //change svg path
       $("#themeToggle svg path").attr("d", "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z");
     } else {
       el.dataset.theme = "dark";
+      localStorage.setItem("theme", "dark");
       $("#themeToggle svg path").attr("d", "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z");
     }
   }); // change dataset html tag to dark
@@ -109,11 +121,6 @@
   $("#search-form").toggleClass("hiddeni");
 });*/
 </script>
-<style>
-  .hiddeni {
-    display: none !important;
-  }
-</style>
 <div class="max-w-6xl mx-auto">
   <div class="alert alert-info mx-2">
     <div class="flex-1">

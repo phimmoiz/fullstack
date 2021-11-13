@@ -17,4 +17,9 @@
   padding: 0.5rem 2rem;
   font-weight: bold;
   @apply text-base-content;
+  @apply rounded-md;
+}
+
+.hiddeni {
+  display: none !important;
 }

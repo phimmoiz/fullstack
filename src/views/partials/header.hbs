@@ -1,11 +1,26 @@
 <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content">
   <div class="flex-1 px-2 mx-2">
     <a href="/" class="navbar-brand">
-      <span class="text-lg font-bold relative khabanh">
-        <span class="absolute left-0 top-0"> PhimMoi.net </span>
+      <span class="text-lg font-bold relative">
+        <span class="khabanh z-10"></span>
+        <span class="absolute z-20">
+          PhimCatMoi.net
+        </span>
       </span>
     </a>
+
   </div>
+
+    <div class="form-control mr-12 ml-2 md:mx-2 text-base-content">
+      <div class="relative" x-data="{ open: false }">
+        <button type="submit" class="input w-32 md:w-auto" @click="open = true;  console.log($('#searchInput')[0].focus());">
+          Tìm kiếm
+        </button>
+        <span x-show="open">
+          {{> search}}
+        </span>
+      </div>
+    </div>     
   <div class="flex-none px-2 lg:flex [ fixed top-0 bottom-0 left-0 right-0 ] md:static bg-gray-700 md:bg-transparent z-50" id="nav">
     <div class="flex items-stretch flex-col md:flex-row w-full gap-2">
       <a class="btn btn-ghost btn-md md:btn-sm rounded-btn">
@@ -23,7 +38,7 @@
         <span> Shop Merch <span class="absolute transform -translate-y-3 text-xs -translate-x-2 bg-red-500 rounded p-0.5 bg-opacity-60">new</span>
         </span>
       </a>
-      <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/login">
+      <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/signin">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
         </svg> Đăng nhập </a>
@@ -82,10 +97,17 @@
     const themeVal = el.dataset.theme;
     if (themeVal === "dark") {
       el.dataset.theme = "light";
+      //change svg path
+      $("#themeToggle svg path").attr("d", "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z");
     } else {
       el.dataset.theme = "dark";
+      $("#themeToggle svg path").attr("d", "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z");
     }
   }); // change dataset html tag to dark
+
+/*$("#search").click(function() {
+  $("#search-form").toggleClass("hiddeni");
+});*/
 </script>
 <style>
   .hiddeni {

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card.image-full>figure img {
+  @apply h-48;
+  -o-object-fit: cover;
+  object-fit: cover;
+}

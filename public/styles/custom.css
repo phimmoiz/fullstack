@@ -4,7 +4,7 @@ body {
 
 .khabanh::before {
   content: "";
-  background: url(/images/khabanh.png) no-repeat center / cover;
+  background: url(/assets/images/khabanh.png) no-repeat center / cover;
   width: 3rem;
   height: 3rem;
   top: -2.1rem;
@@ -15,7 +15,7 @@ body {
 
 .khabanh::after {
   content: "";
-  background: url(/images/khabanh.png) no-repeat center / cover;
+  background: url(/assets/images/khabanh.png) no-repeat center / cover;
   width: 3rem;
   height: 3rem;
   top: -2.1rem;

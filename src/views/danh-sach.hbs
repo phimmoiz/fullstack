@@ -1,6 +1,11 @@
-{{> filter}}
 
-<div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+
+
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2 ">
+  <h2 class="text-xl mb-2">Lọc phim</h2>
+  {{> filter}}
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+
   {{> card}}
   {{> card}}
   {{> card}}
@@ -14,4 +19,5 @@
   {{> card}}
   {{> card}}
   {{> card}}
+  </div>
 </div>

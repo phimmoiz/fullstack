@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   purge: {
     enabled: true,
@@ -5,6 +7,12 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    colors: {
+      ...colors,
+      facebook: "#3b5998",
+      google: "#EA4335",
+    },
+
     extend: {},
   },
   variants: {
@@ -12,6 +20,7 @@ module.exports = {
       scale: ["group-hover"],
       width: ["group-hover"],
       height: ["group-hover"],
+      mixBlendMode: ["hover"],
     },
   },
   plugins: [require("daisyui")],

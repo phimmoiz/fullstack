@@ -1,148 +1,219 @@
-<div class="bg-grey-lighter" style="margin:25px;padding:30px;min-height:85vh">
-  <div x-data="{
-               tags: [],
-               newTag: '',
-               inputName: 'foo',
-               show: false,
-               services: ['Acer','Cisco','Zigby','IBM', 'Microsoft', 'Azure Cloud','Azure Cloud', 'Dependency Injection']}"
-       style="position:relative;"
-       id="wrapper"
-       >
-
-      <template x-for="tag in tags">
-          <input type="hidden" x-bind:name="inputName + '[]'" x-bind:value="tag">
-      </template>
-
-      <div class="max-w-sm w-full mx-auto">
-          <div class="tags-input" >
-              <div style="display:flex;flex-wrap:wrap;padding:0.25em;">
-                  <template x-for="tag in tags" :key="tag">
-                    <span class="tags-input-tag">
-                      <span x-text="tag"></span>
-                      <button type="button" class="tags-input-remove"
-                              @click="tags = tags.filter(i => i !== tag);show=false;addService(`${tag}`, services)">
-                        &times;
-                      </button>
-                    </span>
-                  </template>
-
-                  <input class="tags-input-text" placeholder="Select Services..." x-model="newTag"
-                         x-on:focus="show=true;positionCloud()"
-                          x-on:keydown.escape="show=false;"
-                          >
-              </div>
-              <span id="tag-cloud" class="list-group" x-show="show">
-                  <template
-                      x-for="service in services.filter((service) =>   service.toLowerCase().startsWith(newTag.toLowerCase()))"
-                      :key="service">
-                    <span class="tags-input-tag"
-                           x-on:click="services = services.filter(i => i !== service);addTag(`${service}`, tags);newTag='';show=false;">
-                      <div :x-ref="service"
-                           
-                            class="w-full hover:bg-gray-300" x-text="service"></div>
-                    </span>
-                  </template>
-              </span>
-          </div>
-
-      </div>
-  </div>
-</div>
-
 <style>
-  .tags-input {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        background-color: #fff;
-        border-width: 1px;
-        /*padding-left: .5rem;*/
-        /*padding-right: 1rem;*/
-        /*padding-top: .5rem;*/
-        /*padding-bottom: .25rem;*/
-    }
-
-    .tags-input-tag {
-        display: inline-flex;
-        line-height: 1;
-        align-items: center;
-        font-size: .875rem;
-        background-color: #bcdefa;
-        color: #1c3d5a;
-        user-select: none;
-        padding: .5rem;
-        margin-right: .5rem;
-        margin-bottom: .25rem;
-        cursor: pointer;
-    }
-
-    .list-group{
-        list-style-type: none; /* Remove bullets */
-        /* Remove padding */
-        margin: 0; /* Remove margins */
-        padding: 1.5rem 1.5rem 1.5rem 1.5rem;
-        display: flex;
-        top: 50px;
-        box-shadow: 3px 4px 4px #ccc;
-        border: 1px solid #eee;
-        width: 600px;
-        flex-wrap: wrap;
-        background-color: #fff;
-        z-index: 99;
-        position:absolute;
-    }
-
-    .tags-input-tag:last-of-type {
-        margin-right: 0;
-    }
-
-    .tags-input-remove {
-        color: #2779bd;
-        font-size: 1.125rem;
-        line-height: 1;
-    }
-
-    .tags-input-remove:first-child {
-        margin-right: .25rem;
-    }
-
-    .tags-input-remove:last-child {
-        margin-left: .25rem;
-    }
-
-    .tags-input-remove:focus {
-        outline: 0;
-    }
-
-    .tags-input-text {
-        flex: 1;
-        outline: 0;
-        /*border: 1px solid #ddd;*/
-        padding: 10px;
-        margin-left: .5rem;
-        /*margin-bottom: .25rem;*/
-        background-color: #fff;
-        min-width: 10rem;
-    }
-
+  .top-100 {top: 100%} .bottom-100 {bottom: 100%} .max-h-select { max-height:
+  300px; }
 </style>
 
-<script>
-  function addTag(service, tags) {
-        if (!tags.includes(service)) {
-            tags.push(service);
-        }
-    }
-
-function positionCloud(){
-  tagCloud = document.querySelector("#tag-cloud");
-  wrapper = document.querySelector("#wrapper");
-  var newHeight = wrapper.offsetHeight + 2;
-  tagCloud.style.top = newHeight.toString() + "px";
-  console.log(wrapper.offsetHeight);
-}
-
-function addService(service, services) {
-  services.push(service);
-}
-</script>
+<div class="w-full md:w-1/2 flex flex-col items-center h-64 mx-auto">
+  <div class="w-full px-4">
+    <div class="flex flex-col items-center relative">
+      <div class="w-full svelte-1l8159u">
+        <div
+          class="my-2 p-1 flex border border-gray-200 bg-white rounded svelte-1l8159u"
+        >
+          <div class="flex flex-auto flex-wrap">
+            <div
+              class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300"
+            >
+              <div
+                class="text-xs font-normal leading-none max-w-full flex-initial"
+              >HTML</div>
+              <div class="flex flex-auto flex-row-reverse">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300"
+            >
+              <div
+                class="text-xs font-normal leading-none max-w-full flex-initial"
+              >Ruby</div>
+              <div class="flex flex-auto flex-row-reverse">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300"
+            >
+              <div
+                class="text-xs font-normal leading-none max-w-full flex-initial"
+              >Javascript</div>
+              <div class="flex flex-auto flex-row-reverse">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1">
+              <input
+                placeholder=""
+                class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
+              />
+            </div>
+          </div>
+          <div
+            class="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200 svelte-1l8159u"
+          >
+            <button
+              class="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-up w-4 h-4"
+              >
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="absolute shadow top-100 bg-base-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto"
+      >
+        <div class="flex flex-col w-full">
+          <div
+            class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-base-200"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">Python </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative border-teal-600"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">Javascript </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative border-teal-600"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">Ruby </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">JAVA </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">ASP.Net </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">C++ </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">SQL </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cursor-pointer w-full border-gray-100 rounded-b hover:bg-teal-100"
+          >
+            <div
+              class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative border-teal-600"
+            >
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6">HTML </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

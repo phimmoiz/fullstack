@@ -2,7 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-.card.image-full>figure img {
+html[data-theme="light"] body {
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-attachment: fixed;
+}
+
+#navbar {
+  top: 0;
+  transition: top 0.3s;
+}
+
+.card.image-full > figure img {
   @apply h-48;
   -o-object-fit: cover;
   object-fit: cover;

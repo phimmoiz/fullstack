@@ -1,4 +1,4 @@
-<div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content">
+<div id="navbar" class="navbar fixed mb-2 shadow-lg bg-neutral text-neutral-content left-0 right-0 z-50">
   <div class="flex-1 px-2 mx-2">
     <a href="/" class="navbar-brand">
       <span class="text-lg font-bold relative">
@@ -122,7 +122,7 @@
 });*/
 </script>
 <div class="max-w-6xl mx-auto">
-  <div class="alert alert-info mx-2">
+  <div class="alert mx-2 text-base-content">
     <div class="flex-1">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -131,3 +131,18 @@
     </div>
   </div>
 </div>
+
+<script>
+  var prevScrollpos = window.pageYOffset;
+
+  window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-50px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+
+</script>

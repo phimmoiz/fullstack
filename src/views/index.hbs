@@ -1,19 +1,57 @@
-<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl my-2">Phim mới</h2>
-  {{> carousel barId="phimMoi"}}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+  <div class="col-span-2">
+
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2 col-span-2">
+  <h2 class="text-xl">Phim mới</h2>
+  {{> carousel barId="phimMoi" slidesPerView=3}} 
+  
+</div>
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2 col-span-2">
+  <h2 class="text-xl">Phim hành động</h2>
+  {{> carousel barId="phimHanhDong" slidesPerView=3}}
+</div>
+  </div>
+
+ <div class="p-2 shadow-md rounded-md bg-base-200 my-2 md:row-span-2 order-first md:order-last w-full">
+  <h2 class="text-xl mb-2">
+   Top phim tuần:
+  </h2>
+  <div class="flex flex-col gap-1 text-base-content">
+    <div class="flex gap-2 bg-fuchsia-700 overflow-hidden">
+      <img src="https://via.placeholder.com/150" class="rounded transition transform hover:scale-105" alt="">
+      <div>
+        Thanh gươm diệt quỷ
+      </div>
+    </div>
+    <div class="flex gap-2 bg-fuchsia-700 overflow-hidden">
+      <img src="https://via.placeholder.com/150" class="rounded transition transform hover:scale-105" alt="">
+      <div>
+        Thanh gươm diệt quỷ
+      </div>
+    </div>
+    <div class="flex gap-2 bg-fuchsia-700 overflow-hidden">
+      <img src="https://via.placeholder.com/150" class="rounded transition transform hover:scale-105" alt="">
+      <div>
+        Thanh gươm diệt quỷ
+      </div>
+    </div>
+    <div class="flex gap-2 bg-fuchsia-700 overflow-hidden">
+      <img src="https://via.placeholder.com/150" class="rounded transition transform hover:scale-105" alt="">
+      <div>
+        Thanh gươm diệt quỷ
+      </div>
+    </div>
+  </div>
+  </div>
+
 </div>
 
- <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl my-2">Phim hành động</h2>
-  {{> carousel barId="phimHanhDong"}}
-</div> 
-
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl my-2">Phim kinh dị</h2>
-  {{> carousel barId="phimKinhDi"}}
+  <h2 class="text-xl">Phim kinh dị</h2>
+  {{> carousel barId="phimKinhDi" slidesPerView=4}}
 </div>
 
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl my-2">Phim hoạt hình</h2>
-  {{> carousel barId="phimHoatHinh"}}
+  <h2 class="text-xl">Phim hoạt hình</h2>
+  {{> carousel barId="phimHoatHinh" slidesPerView=4}}
 </div>

@@ -3,7 +3,10 @@
   300px; }
 </style>
 
-<div class="w-full md:w-1/2 flex flex-col items-center h-64 mx-auto">
+<div
+  class="w-full md:w-1/2 flex flex-col items-center mx-auto"
+  x-data="{open: false}"
+>
   <div class="w-full px-4">
     <div class="flex flex-col items-center relative">
       <div class="w-full svelte-1l8159u">
@@ -101,6 +104,7 @@
           >
             <button
               class="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none"
+              @click="open = !open"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -122,6 +126,7 @@
       </div>
       <div
         class="absolute shadow top-100 bg-base-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto"
+        x-show="open"
       >
         <div class="flex flex-col w-full">
           <div

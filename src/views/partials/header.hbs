@@ -1,4 +1,4 @@
-<div id="navbar" class="navbar fixed mb-2 shadow-lg bg-neutral text-neutral-content left-0 right-0 z-50">
+<div id="navbar" class="navbar fixed mb-2 shadow left-0 right-0 z-50 bg-neutral text-neutral-content">
   <div class="flex-1 px-2 mx-2">
     <a href="/" class="navbar-brand">
       <span class="text-lg font-bold relative">
@@ -52,26 +52,10 @@
     </button>
   </div>
 </div>
-<a id="themeToggle" class="fixed bottom-5 right-5 rounded-full cursor-pointer hover:bg-gray-300 hover:text-black p-5 transition">
+<a id="themeToggle" class="fixed z-50 bottom-5 right-5 rounded-full cursor-pointer hover:bg-gray-300 hover:text-black p-5 transition">
   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
   </svg>
-  {{! 
-	
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-    class="h-6 w-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-		<path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-    ></path>
-	</svg> }}
 </a>
 <script>
   $("#navbarToggle").click(function() {
@@ -121,7 +105,7 @@
   $("#search-form").toggleClass("hiddeni");
 });*/
 </script>
-<div class="max-w-6xl mx-auto">
+<div class="max-w-6xl mx-auto mt-20">
   <div class="alert mx-2 text-base-content">
     <div class="flex-1">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">

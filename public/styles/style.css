@@ -2693,6 +2693,10 @@ html[data-theme="dark"] .card-badge {
   transition-duration: 300ms;
 }
 
+[x-cloak] {
+  display: none !important;
+}
+
 @media (min-width: 640px) {
 }
 

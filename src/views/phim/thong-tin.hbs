@@ -70,8 +70,15 @@
             anh ấy thực chất là người chơi nền trong trò chơi điện tử thế giới
             mở. Guy quyết định trở thành người anh hùng và viết lại câu chuyện
             của chính mình. Giờ đây, trong […]</span>
-          <span class="score" itemprop="ratingValue">4.35</span><i>/</i>
+          <span class="score" itemprop="ratingValue">
+            <i class="fas fa-star">
+            </i>
+            
+            4.35</span><i>/</i>
           <span class="max-ratings" itemprop="bestRating">5</span>
+            <br>
+          <i class="fas fa-comment">
+          </i>
           <span class="total_votes" itemprop="ratingCount">108</span><span
             class="vote-txt"
           > đánh giá</span>
@@ -122,8 +129,49 @@
     perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
     tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
   </p>
-
 </div>
+
+
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+  <div class="tabs">
+  <a class="tab tab-lifted">Phần 1</a> 
+  <a class="tab tab-lifted tab-active">Phần 2</a> 
+  <a class="tab tab-lifted">Phần 3</a>
+  <a class="tab tab-lifted">Phần 4</a>
+  <a class="tab tab-lifted">Phần 5</a>
+  <a class="tab tab-lifted">Phần 6</a>
+  </div>
+
+  <div class="p-2 grid gap-2">
+    {{> topweek_card}}
+    {{> topweek_card}}
+    {{> topweek_card}}
+    {{> topweek_card}}
+    {{> topweek_card}}
+    {{> topweek_card}}
+    {{> topweek_card}}
+    {{> topweek_card}}
+  </div>
+
+  
+  {{!-- <div class="plyr__video-embed" id="player">
+  <iframe
+    src="https://www.youtube.com/embed/bTqVqk7FSmY?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+    allowfullscreen
+    allowtransparency
+    allow="autoplay"
+  ></iframe>
+  
+  </div> --}}
+</div>
+
+<script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.9/plyr.css" />
+
+<script>
+  const player = new Plyr('#player');
+</script>
+
 
 <script>
   const desc = document.querySelector("#description"); const fullText =

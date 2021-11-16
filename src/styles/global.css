@@ -30,9 +30,17 @@ html[data-theme="light"] .bg-neutral {
   padding: 0.5rem;
   font-weight: bold;
   @apply text-white text-sm;
-  @apply rounded-md bg-opacity-70 bg-red-500;
+  @apply rounded-md bg-rose-600;
+}
+
+html[data-theme="dark"] .card-badge {
+  @apply bg-purple-600;
 }
 
 .hiddeni {
   display: none !important;
+}
+
+.btn-purple {
+  @apply mb-2 bg-purple-500 hover:bg-purple-600 p-2 rounded text-white transition duration-300;
 }

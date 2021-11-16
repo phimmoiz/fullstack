@@ -4,6 +4,7 @@ import signUpRoute from "./signup.route";
 import signInRoute from "./signin.route";
 import filmListRoute from "./filmList.route";
 import filmDetailRoute from "./filmDetail.route";
+import topViewRoute from "./topView.route";
 
 const router = express.Router();
 
@@ -27,7 +28,11 @@ const defaultRoutes = [
   {
     path: "/phim/thong-tin",
     route: filmDetailRoute,
-  }
+  },
+  {
+    path: "/top-luot-xem",
+    route: topViewRoute,
+  },
 ];
 
 // set router for defaultRoutes

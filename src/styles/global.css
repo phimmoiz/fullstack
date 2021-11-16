@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-html[data-theme="light"] body {
-  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+html[data-theme="light"] {
   background-attachment: fixed;
+
+  background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+}
+
+html[data-theme="light"] .bg-neutral {
+  background: transparent;
 }
 
 #navbar {

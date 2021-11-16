@@ -9,9 +9,9 @@
       />
     </div>
     <div class="col-span-4 p-2 flex flex-col">
-      <div class="flex flex-col gap-2 divide-y divide-base-300">
-        <p class="text-sm">Free Guy</p>
-        <p class="text-base-content">Mới cập nhật:
+      <div class="flex flex-col divide-y divide-base-300">
+        <p class="p-2 text-sm">Free Guy</p>
+        <p class="p-2 text-base-content">Mới cập nhật:
           <a
             class="halim-episode"
             href="https://phimgii.net/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"
@@ -19,13 +19,13 @@
               class="bg-accent p-2 shadow-sm text-white font-bold rounded hover:bg-success transition duration-300"
             >HD</span></a>
         </p>
-        <p class="text-base-content">
+        <p class="p-2 text-base-content">
           Tình trạng:
           <span class="font-bold">
             Phụ Đề Full
           </span>
         </p>
-        <p class="text-base-content">
+        <p class="p-2 text-base-content">
           <span class="title-year">Năm:
             <a
               href="https://phimgii.net/release/2021/"
@@ -33,24 +33,24 @@
               class="font-bold"
             >2021</a></span>
         </p>
-        <p class="text-base-content">Thể loại:
+        <p class="p-2 text-base-content">Thể loại:
           <a
             href="https://phimgii.net/phim-hai-huoc/"
             rel="category tag"
-            class="p-1 bg-primary-focus rounded hover:bg-success transition duration-300 font-bold"
+            class="p-1 bg-primary-focus text-white rounded hover:bg-success transition duration-300 font-bold"
           >Phim Hài Hước</a>,
           <a
             href="https://phimgii.net/phim-hai-huoc/"
             rel="category tag"
-            class="p-1 bg-primary-focus rounded hover:bg-success transition duration-300 font-bold"
+            class="p-1 bg-primary-focus text-white rounded hover:bg-success transition duration-300 font-bold"
           >Phim Hài Hước</a>,
           <a
             href="https://phimgii.net/phim-hai-huoc/"
             rel="category tag"
-            class="p-1 bg-primary-focus rounded hover:bg-success transition duration-300 font-bold"
+            class="p-1 bg-primary-focus text-white rounded hover:bg-success transition duration-300 font-bold"
           >Phim Hài Hước</a>,
         </p>
-        <p class="">Quốc gia:<a
+        <p class="p-2 ">Quốc gia: <a
             href="https://phimgii.net/country/my"
             title="Mỹ"
             class="font-bold"
@@ -136,9 +136,9 @@
 
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
   <h2 class="text-xl">Phim lẻ mới</h2>
-  {{> carousel barId="phimMoi"}}
+  {{> carousel barId="phimMoi" slidesPerView="4"}}
 </div>
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
   <h2 class="text-xl">Phim bộ random</h2>
-  {{> carousel barId="phimBoRandom"}}
+  {{> carousel barId="phimBoRandom" slidesPerView=4}}
 </div>

@@ -44,3 +44,7 @@ html[data-theme="dark"] .card-badge {
 .btn-purple {
   @apply mb-2 bg-purple-500 hover:bg-purple-600 p-2 rounded text-white transition duration-300;
 }
+
+[x-cloak] {
+  display: none !important;
+}

@@ -3,7 +3,7 @@ import userRoute from "./user.route";
 import signUpRoute from "./signup.route";
 import signInRoute from "./signin.route";
 import filmListRoute from "./filmList.route";
-import filmDetailRoute from "./filmDetail.route";
+import filmRoute from "./film.route";
 import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
 
@@ -27,8 +27,8 @@ const defaultRoutes = [
     route: filmListRoute,
   },
   {
-    path: "/phim/thong-tin",
-    route: filmDetailRoute,
+    path: "/phim",
+    route: filmRoute,
   },
   {
     path: "/top-luot-xem",

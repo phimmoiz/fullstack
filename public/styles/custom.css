@@ -2,27 +2,19 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.khabanh {
+  position: relative;
+}
 .khabanh::before {
   content: "";
-  background: url(/assets/images/khabanh.png) no-repeat center / cover;
+  background: url(https://blog.trungtin.codes/images/ColouredCloud1.svg)
+    no-repeat center / contain;
   width: 3rem;
   height: 3rem;
   top: -2.1rem;
   left: 0;
   position: absolute;
-  animation: moveSlowly 2s infinite;
-}
-
-.khabanh::after {
-  content: "";
-  background: url(/assets/images/khabanh.png) no-repeat center / cover;
-  width: 3rem;
-  height: 3rem;
-  top: -2.1rem;
-  left: 3rem;
-  position: absolute;
-  transform: scaleX(-1);
-  animation: moveBackward 2s infinite;
+  animation: moveSlowly 30s linear infinite;
 }
 
 @keyframes moveSlowly {
@@ -30,7 +22,7 @@ body {
     transform: translateX(0);
   }
   50% {
-    transform: translateX(20px);
+    transform: translateX(5rem);
   }
   to {
     transform: translateX(0);
@@ -55,12 +47,12 @@ body {
   background: url(/assets/images/khabanh2.png) no-repeat center / cover;
   background-position: 50%;
   position: fixed;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   animation: vibrate 2s infinite;
-  z-index:-1;
+  z-index: -1;
 }
 
 /* animation vibrate image */
@@ -98,5 +90,4 @@ body {
   100% {
     transform: rotate(0deg);
   }
-  
 }

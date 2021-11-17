@@ -699,7 +699,7 @@ html[data-theme="light"] {
 }
 
 html[data-theme="light"] .bg-neutral {
-  background: transparent;
+  background-color: transparent;
 }
 
 .container {
@@ -2064,6 +2064,10 @@ html[data-theme="light"] .bg-neutral {
   --tw-translate-y: -0.75rem;
 }
 
+.hover\:-translate-y-1:hover {
+  --tw-translate-y: -0.25rem;
+}
+
 .group:hover .group-hover\:scale-105 {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
@@ -2592,6 +2596,10 @@ html[data-theme="light"] .bg-neutral {
 .hover\:text-teal-400:hover {
   --tw-text-opacity: 1;
   color: rgba(45, 212, 191, var(--tw-text-opacity));
+}
+
+.hover\:opacity-60:hover {
+  opacity: 0.6;
 }
 
 *, ::before, ::after {

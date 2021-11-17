@@ -5,6 +5,7 @@ import signInRoute from "./signin.route";
 import filmListRoute from "./filmList.route";
 import filmDetailRoute from "./filmDetail.route";
 import topViewRoute from "./topView.route";
+import shopRoute from "./shop.route";
 
 const router = express.Router();
 
@@ -32,6 +33,10 @@ const defaultRoutes = [
   {
     path: "/top-luot-xem",
     route: topViewRoute,
+  },
+  {
+    path: "/shop",
+    route: shopRoute,
   },
 ];
 

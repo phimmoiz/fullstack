@@ -1,5 +1,5 @@
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl font-bold">Giải Cứu ‘Guy’ – Free Guy</h2>
+  <h2 class="text-xl font-bold mb-1">Giải Cứu ‘Guy’ – Free Guy</h2>
   <div class="grid grid-cols-5">
     <div class="col-span-1 overflow-hidden">
       <img
@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="justify-self-end my-2">
+      {{!-- <div class="justify-self-end my-2">
         <select class="select select-bordered select-success w-full max-w-xs">
           <option disabled="disabled" selected="selected">Chọn tập</option> 
           <option>Tập 1</option> 
@@ -107,12 +107,12 @@
 
 
 
-      </div>
+      </div> --}}
     </div>
   </div>
 
   <h2 class="text-xl font-bold mt-4">Mô tả</h2>
-  <p class="p-2" id="description">
+  <p class="px-2" id="description">
     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
     perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
     tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
@@ -133,6 +133,7 @@
 
 
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+  <h2 class="text-xl font-bold">Chọn tập</h2>
   <div class="tabs">
   <a class="tab tab-lifted">Phần 1</a> 
   <a class="tab tab-lifted tab-active">Phần 2</a> 
@@ -166,10 +167,10 @@
 </script>
 
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl">Phim lẻ mới</h2>
+  <h2 class="text-xl mb-1">Phim lẻ mới</h2>
   {{> carousel barId="phimMoi" slidesPerView="4"}}
 </div>
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl">Phim bộ random</h2>
+  <h2 class="text-xl mb-1">Phim bộ random</h2>
   {{> carousel barId="phimBoRandom" slidesPerView=4}}
 </div>

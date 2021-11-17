@@ -693,6 +693,15 @@ html {
   --tab-radius: 0.5rem;
 }
 
+html[data-theme="light"] {
+  background-attachment: fixed;
+  background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+}
+
+html[data-theme="light"] .bg-neutral {
+  background: transparent;
+}
+
 .container {
   width: 100%;
 }
@@ -1722,6 +1731,37 @@ html {
   box-shadow: 0 0 0 2px hsl(var(--b1));
 }
 
+#navbar {
+  top: 0;
+  transition: top 0.3s;
+}
+
+.card-badge {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgba(225, 29, 72, var(--tw-bg-opacity));
+}
+
+.card-title {
+  font-size: 1rem;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 0;
+}
+
 .static {
   position: static;
 }
@@ -1843,6 +1883,10 @@ html {
 
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .mb-2 {
@@ -2020,14 +2064,14 @@ html {
   --tw-translate-y: -0.75rem;
 }
 
+.group:hover .group-hover\:scale-105 {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+}
+
 .group:hover .group-hover\:scale-110 {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
-}
-
-.hover\:scale-105:hover {
-  --tw-scale-x: 1.05;
-  --tw-scale-y: 1.05;
 }
 
 .hover\:scale-110:hover {
@@ -2230,11 +2274,6 @@ html {
   border-color: rgba(94, 234, 212, var(--tw-border-opacity));
 }
 
-.border-emerald-400 {
-  --tw-border-opacity: 1;
-  border-color: rgba(52, 211, 153, var(--tw-border-opacity));
-}
-
 .border-gray-100 {
   --tw-border-opacity: 1;
   border-color: rgba(244, 244, 245, var(--tw-border-opacity));
@@ -2247,6 +2286,11 @@ html {
 
 .border-transparent {
   border-color: transparent;
+}
+
+.border-base-300 {
+  --tw-border-opacity: 1;
+  border-color: hsla(var(--b3) / var(--tw-border-opacity));
 }
 
 .hover\:border-teal-100:hover {
@@ -2338,6 +2382,11 @@ html {
   background-color: hsla(var(--b2) / var(--tw-bg-opacity));
 }
 
+.group:hover .group-hover\:bg-base-300 {
+  --tw-bg-opacity: 1;
+  background-color: hsla(var(--b3) / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(212, 212, 216, var(--tw-bg-opacity));
@@ -2346,11 +2395,6 @@ html {
 .hover\:bg-base-200:hover {
   --tw-bg-opacity: 1;
   background-color: hsla(var(--b2) / var(--tw-bg-opacity));
-}
-
-.hover\:bg-base-300:hover {
-  --tw-bg-opacity: 1;
-  background-color: hsla(var(--b3) / var(--tw-bg-opacity));
 }
 
 .hover\:bg-success:hover {
@@ -2515,9 +2559,9 @@ html {
   color: rgba(212, 212, 216, var(--tw-text-opacity));
 }
 
-.text-gray-600 {
+.text-gray-400 {
   --tw-text-opacity: 1;
-  color: rgba(82, 82, 91, var(--tw-text-opacity));
+  color: rgba(161, 161, 170, var(--tw-text-opacity));
 }
 
 .text-gray-800 {
@@ -2623,41 +2667,6 @@ html {
 
 .duration-300 {
   transition-duration: 300ms;
-}
-
-html[data-theme="light"] {
-  background-attachment: fixed;
-  background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
-}
-
-html[data-theme="light"] .bg-neutral {
-  background: transparent;
-}
-
-#navbar {
-  top: 0;
-  transition: top 0.3s;
-}
-
-.card.image-full > figure img {
-  height: 12rem;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.card-badge {
-  position: absolute;
-  top: 0;
-  z-index: 1;
-  padding: 0.5rem;
-  font-weight: bold;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgba(255, 255, 255, var(--tw-text-opacity));
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgba(225, 29, 72, var(--tw-bg-opacity));
 }
 
 html[data-theme="dark"] .card-badge {

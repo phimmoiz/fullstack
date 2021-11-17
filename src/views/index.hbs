@@ -29,9 +29,15 @@
 
 <div class="md:row-span-2 order-first md:order-last place-self-start flex flex-col gap-2 w-full">
  <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl mb-2">
-   Top phim tuần
+  <h2 class="text-xl">
+   Bảng xếp hạng
   </h2>
+  <div class="tabs mb-1">
+    <div class="tab tab-lifted">ngày</div>
+    <div class="tab tab-lifted tab-active">tuần</div>
+    <div class="tab tab-lifted">tháng</div>
+    <div class="tab tab-lifted">mùa</div>
+  </div>
   <div class="flex flex-col gap-1 text-base-content">
     {{> topweek_card}}
     {{> topweek_card}}

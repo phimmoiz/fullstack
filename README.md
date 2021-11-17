@@ -14,6 +14,8 @@ Sử dụng một số mã nguồn mở
 
 - [node.js] - evented I/O for the backend
 - [Express] - fast node.js network app framework [@tjholowaychuk]
+- [DaisyUI] - daisyUIClean HTML with component classes and Customizable and themeable
+- [Tailwindcss] - A utility-first CSS framework
 
 [Xem thêm tại đây](/package.json)
 

@@ -17,6 +17,11 @@ Sử dụng một số mã nguồn mở
 
 [Xem thêm tại đây](/package.json)
 
+## Hình ảnh
+
+![dark theme home](/images/home_dark_theme.png "Dark Theme Home")
+![light theme home](/images/home_light_theme.png "Light Theme Home")
+
 ## Installation
 
 Yêu cầu [Node.js](https://nodejs.org/) v10+ để chạy.

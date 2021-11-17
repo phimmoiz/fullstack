@@ -1,10 +1,10 @@
 <div id="navbar" class="navbar fixed mb-2 shadow left-0 right-0 z-50 bg-neutral text-neutral-content">
   <div class="flex-1 px-2 mx-2">
     <a href="/" class="navbar-brand">
-      <span class="text-lg font-bold relative">
+      <span class="font-bold relative">
         <span class="khabanh z-10"></span>
-        <span class="absolute z-20">
-          PhimCatMoi.net
+        <span class="absolute z-20 -bottom-4">
+          PhimMoiz.net
         </span>
       </span>
     </a>
@@ -12,12 +12,14 @@
   </div>
 
   <div class="flex-none px-2 lg:flex [ fixed top-0 bottom-0 left-0 right-0 ] md:static bg-gray-700 md:bg-transparent z-50" id="nav">
-    <div class="flex items-stretch flex-col md:flex-row w-full gap-2">
-      <div class="relative" x-data="{ open: false }">
+    <div class="flex items-stretch flex-col md:flex-row w-full gap-1">
+      <div class="relative text-center" x-data="{ open: false }">
         <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" @click="open = true;  console.log($('#searchInput')[0].focus());">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-        </svg> Tìm kiếm </a>
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 mr-2 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+</svg>
+        
+        Tìm kiếm </a>
         <span x-show="open" x-cloak>
           {{> search}}
         </span>

@@ -12,7 +12,16 @@
 </div>
 
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2 col-span-2">
-  <h2 class="text-xl mb-1">Tâm sự tuổi hồng</h2>
+  <h2 class="flex text-xl mb-1 items-center">
+    <span class="flex-grow">
+      {{!-- icon size small --}}
+      <i class="fas fa-comments fa-xs"></i>
+    Tâm sự tuổi hồng
+    </span>
+      <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-1 hover:opacity-60 transition"></i>
+
+
+  </h2>
   <input type="text" class="input my-2 w-full input-bordered" placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)">
   <button class="button btn-purple">Gửi</button>
   <div class="flex flex-col gap-2">
@@ -27,7 +36,7 @@
 
   </div>
 
-<div class="md:row-span-2 order-first md:order-last place-self-start flex flex-col gap-2 w-full">
+<div class="md:row-span-2 order-first md:order-last place-self-start flex flex-col md:gap-2 w-full">
  <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
   <h2 class="text-xl mb-1">
    Bảng xếp hạng

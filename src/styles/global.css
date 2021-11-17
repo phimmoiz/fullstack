@@ -2,35 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-html[data-theme="light"] {
-  background-attachment: fixed;
+@layer base {
+  html[data-theme="light"] {
+    background-attachment: fixed;
 
-  background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+    background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+  }
+
+  html[data-theme="light"] .bg-neutral {
+    background: transparent;
+  }
 }
+@layer components {
+  #navbar {
+    top: 0;
+    transition: top 0.3s;
+  }
 
-html[data-theme="light"] .bg-neutral {
-  background: transparent;
-}
+  .card.image-full > figure img {
+    @apply h-48;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
 
-#navbar {
-  top: 0;
-  transition: top 0.3s;
-}
-
-.card.image-full > figure img {
-  @apply h-48;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.card-badge {
-  position: absolute;
-  top: 0;
-  z-index: 1;
-  padding: 0.5rem;
-  font-weight: bold;
-  @apply text-white text-sm;
-  @apply rounded-md bg-rose-600;
+  .card-badge {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    padding: 0.5rem;
+    font-weight: bold;
+    @apply text-white text-sm;
+    @apply rounded-md bg-rose-600;
+  }
+  .card-title {
+    font-size: 1rem;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 0;
+  }
 }
 
 html[data-theme="dark"] .card-badge {

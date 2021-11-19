@@ -4,9 +4,12 @@ import dotenv from "dotenv";
 import path from "path";
 import hbs from "hbs";
 import morgan from "morgan";
+import mongoose from "mongoose";
 
-const PORT = process.env.PORT || 3000;
 dotenv.config();
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost/film-streaming";
 
 const app = express();
 
@@ -20,6 +23,22 @@ hbs.registerPartials(
   path.join(__dirname, "/views/partials"),
   function (err) {}
 );
+
+// Add body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Connect mongoose and console log if connect successfully
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
+// mongoose.connection.on("connected", () => {
+//   console.log("Mongoose is connected");
+// });
 
 // Morgan
 app.use(morgan("dev"));
@@ -43,7 +62,6 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-console.log(path.join(__dirname, "/views/partials"));
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

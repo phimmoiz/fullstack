@@ -1,26 +1,9 @@
 import express from "express";
-import User from "../models/user.model";
+import { getUser, createUser } from "../controllers/user.controller";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const { name } = req.query;
-
-  const user = await User.findOne({ username: name });
-
-  if (user) {
-    res.json({
-      user: user.username,
-      email: user.email,
-      id: user._id,
-    });
-    return;
-  }
-
-  res.json({
-    success: false,
-    message: "User not found",
-  });
-});
+router.get("/", getUser);
+router.post("/", createUser);
 
 export default router;

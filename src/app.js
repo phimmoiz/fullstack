@@ -5,6 +5,7 @@ import path from "path";
 import hbs from "hbs";
 import morgan from "morgan";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +28,9 @@ hbs.registerPartials(
 // Add body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// cookie parser
+app.use(cookieParser());
 
 // Connect mongoose and console log if connect successfully
 mongoose

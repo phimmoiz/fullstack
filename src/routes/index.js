@@ -46,7 +46,7 @@ defaultRoutes.forEach((route) => {
 });
 
 router.route("/").get((req, res) => {
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "Trang chủ" });
 });
 
 export default router;

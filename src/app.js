@@ -36,9 +36,6 @@ mongoose
   })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
-// mongoose.connection.on("connected", () => {
-//   console.log("Mongoose is connected");
-// });
 
 // Morgan
 app.use(morgan("dev"));

@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
         fullname: user.fullname,
         username: user.username,
         email: user.email,
+        role: user.role,
       },
       process.env.JWT_SECRET
     );
@@ -36,7 +37,9 @@ router.post("/", async (req, res) => {
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
-    res.json({ success: true, user });
+    // res.json({ success: true, user });
+
+    res.redirect("/");
   } catch (err) {
     // res 403
     console.log(err);

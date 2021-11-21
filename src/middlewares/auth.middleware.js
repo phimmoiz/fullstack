@@ -26,12 +26,25 @@ export async function checkAuth(req, res, next) {
     jwt.verify(req.cookies.token, process.env.JWT_SECRET, function (err, user) {
       if (err) {
         res.clearCookie("token");
-        return res.redirect("/login");
+        return res.redirect("/signin");
       }
       res.locals.user = user;
       next();
     });
   } else {
     next();
+  }
+}
+
+export function requireAdmin(req, res, next) {
+  try {
+    // console.log(res.locals);
+    if (res.locals?.user.role !== "admin") {
+      throw new Error("User not authorized");
+    }
+
+    next();
+  } catch (err) {
+    next(createError(403, err.message));
   }
 }

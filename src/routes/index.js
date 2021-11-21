@@ -6,6 +6,7 @@ import filmListRoute from "./filmList.route";
 import filmRoute from "./film.route";
 import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
+import adminRoute from "./admin.route";
 
 const router = express.Router();
 
@@ -37,6 +38,10 @@ const defaultRoutes = [
   {
     path: "/shop",
     route: shopRoute,
+  },
+  {
+    path: "/admin",
+    route: adminRoute,
   },
 ];
 

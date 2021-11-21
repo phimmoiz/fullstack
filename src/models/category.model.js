@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const filmSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -17,11 +17,25 @@ const filmSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  // category: {
-  //   //
-  //   type: String,
+  movies: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Movie",
+  },
 });
 
-const Film = mongoose.model("Film", filmSchema);
+// Remove category from movie reference to
+categorySchema.pre("remove", async function (next) {
+  try {
+    await this.model("Movie").updateMany(
+      { categories: this._id },
+      { $pull: { categories: this._id } }
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
-export default Film;
+const Category = mongoose.model("category", categorySchema);
+
+export default Category;

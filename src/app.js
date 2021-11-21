@@ -6,6 +6,8 @@ import hbs from "hbs";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import createError from "http-errors";
+import { checkAuth } from "./middlewares/auth.middleware";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -43,6 +45,9 @@ mongoose
 
 // Morgan
 app.use(morgan("dev"));
+
+// Auth check
+app.use(checkAuth);
 
 // Routing
 app.use(routes);

@@ -39,10 +39,17 @@
         <span> Shop Merch <span class="absolute transform -translate-y-3 text-xs -translate-x-2 bg-red-500 rounded p-0.5 bg-opacity-60">new</span>
         </span>
       </a>
-      <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/signin">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-        </svg> Đăng nhập </a>
+      {{#if user}}
+        <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/signout">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+          </svg> {{user.username}} | Đăng xuất </a>
+      {{else}}
+        <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/signin">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+          </svg> Đăng nhập </a>
+      {{/if}}
     </div>
   </div>
   <div class="flex-none fixed right-2 md:static" id="navbarToggle" style="z-index: 50;">
@@ -107,6 +114,7 @@
 });*/
 </script>
 <div class="max-w-6xl mx-auto mt-20">
+  {{#unless user}}
   <div class="alert mx-2 text-base-content">
     <div class="flex-1">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
@@ -115,6 +123,7 @@
       <label>Bạn chưa đăng nhập, <a class="link link-hover font-bold" href="/signin">đăng nhập</a> hoặc <a class="link link-hover font-bold" href="/signup">đăng ký</a>. </label>
     </div>
   </div>
+  {{/unless}}
 </div>
 
 <script>

@@ -1,0 +1,11 @@
+<p>
+  Tên phim:
+  {{movie.title}}
+</p>
+
+<p>
+  Thể loại:
+  {{#each movie.categories}}
+    {{this.title}}
+  {{/each}}
+</p>

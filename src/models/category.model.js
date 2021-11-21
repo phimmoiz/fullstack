@@ -7,15 +7,11 @@ const categorySchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
   },
-  releaseDate: {
-    type: Date,
+  slug: {
+    type: String,
     required: true,
-  },
-  rating: {
-    type: Number,
-    required: true,
+    unique: true,
   },
   movies: {
     type: [mongoose.Schema.Types.ObjectId],

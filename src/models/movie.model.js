@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Category from "./category.model";
 
 const movieSchema = new mongoose.Schema({
   title: {
@@ -8,14 +9,26 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  releaseDate: {
-    type: Date,
+  releaseYear: {
+    type: Number,
+    required: true,
+    // validate releaseYear to be integer, greater than 1900 and less than 2100
+    validate: {
+      validator: function (releaseYear) {
+        return releaseYear > 1900 && releaseYear < 2100;
+      },
+    },
   },
   rating: {
     type: Number,
   },
   imdbId: {
     type: String,
+  },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
   },
   categories: [
     {
@@ -26,14 +39,21 @@ const movieSchema = new mongoose.Schema({
 });
 
 // set pre save for movieSchema
-movieSchema.pre("save", function (next) {
+movieSchema.pre("save", async function (next) {
   // update category
+
+  console.log("categories", this.categories);
   if (this.categories) {
-    this.categories.forEach((category) => {
+    this.categories.forEach(async (category) => {
       // add movie to category if not exist
-      if (!category.movies.includes(this._id)) {
-        category.movies.push(this._id);
+      const cat = await Category.findById(category);
+
+      if (!cat.movies.includes(this._id)) {
+        cat.movies.push(this._id);
+        cat.save();
       }
+
+      console.log(cat);
     });
   }
   next();

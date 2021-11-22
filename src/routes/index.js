@@ -1,7 +1,7 @@
 import express from "express";
 import userRoute from "./user.route";
-import signUpRoute from "./signup.route";
-import signInRoute from "./signin.route";
+import registerRoute from "./register.route";
+import logInRoute from "./login.route";
 import filmListRoute from "./filmList.route";
 import filmRoute from "./film.route";
 import topViewRoute from "./topView.route";
@@ -19,12 +19,12 @@ const defaultRoutes = [
     route: userRoute,
   },
   {
-    path: "/signin",
-    route: signInRoute,
+    path: "/login",
+    route: logInRoute,
   },
   {
-    path: "/signup",
-    route: signUpRoute,
+    path: "/register",
+    route: registerRoute,
   },
   {
     path: "/logout",

@@ -66,7 +66,7 @@ export const createUser = async (req, res) => {
     return res.redirect("/login");
   } catch (err) {
     console.log(err);
-    return res.render("signup", {
+    return res.render("register", {
       title: "Đăng ký",
       error: err,
     });

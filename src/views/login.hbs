@@ -1,9 +1,13 @@
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h1 class="text-xl mb-2">Đăng nhập</h1>
-  <form action="/signin" method="post" class="flex flex-col gap-2">
+  <h1 class="text-xl mb-2">
+    Đăng nhập
+  </h1>
+  <form action="/login" method="post" class="flex flex-col gap-2">
     <div class="form-control">
       <label class="label">
-        <span class="label-text">Email</span>
+        <span class="label-text">
+          Email
+        </span>
         <a href="#" class="label-text-alt">
           Need help?
         </a>
@@ -17,7 +21,9 @@
     </div>
     <div class="form-control">
       <label class="label">
-        <span class="label-text">Mật khẩu</span>
+        <span class="label-text">
+          Mật khẩu
+        </span>
       </label>
       <input
         type="password"
@@ -26,9 +32,10 @@
         name="password"
       />
     </div>
-
-    <button type="submit" class="btn btn-primary mt-2 hover:bg-opacity-75">Đăng
-      nhập</button>
+    <button type="submit" class="btn btn-primary mt-2 hover:bg-opacity-75">
+      Đăng
+      nhập
+    </button>
     <div class="mt-2">
       {{! Login with Facebook }}
       <button
@@ -47,11 +54,13 @@
         Đăng nhập bằng Google
       </button>
     </div>
-
     <div class="text-center mt-3">
-      <span class="text-sm text-base-600">Chưa có tài khoản?</span>
-      <a href="/signup" class="link link-hover text-base-600">Đăng ký</a>
+      <span class="text-sm text-base-600">
+        Chưa có tài khoản?
+      </span>
+      <a href="/register" class="link link-hover text-base-600">
+        Đăng ký
+      </a>
     </div>
   </form>
-
 </div>

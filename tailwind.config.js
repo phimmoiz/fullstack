@@ -24,4 +24,5 @@ module.exports = {
       mixBlendMode: ["hover"],
     },
   },
+  darkMode: "class",
 };

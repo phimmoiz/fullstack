@@ -7,7 +7,7 @@ import filmRoute from "./film.route";
 import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
 import adminRoute from "./admin.route";
-import signOutRoute from "./signout.route";
+import logOutRoute from "./logout.route";
 import categoryRoute from "./category.route";
 import movieRoute from "./movie.route";
 
@@ -27,8 +27,8 @@ const defaultRoutes = [
     route: signUpRoute,
   },
   {
-    path: "/signout",
-    route: signOutRoute,
+    path: "/logout",
+    route: logOutRoute,
   },
   {
     path: "/danh-sach",

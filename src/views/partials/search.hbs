@@ -2,12 +2,13 @@
   class="fixed z-50 top-0 bottom-0 left-0 right-0 grid w-full min-h-screen bg-gray-900 bg-opacity-60 place-content-center"
   x-cloak
 >
-  <div @click="open = false" class="absolute top-0 right-0 left-0 bottom-0">
-
-  </div>
+  <div
+    @click="searchOpen = false"
+    class="absolute top-0 right-0 left-0 bottom-0"
+  ></div>
   <div
     class="flex items-center max-w-md mx-auto bg-white rounded-full z-10"
-    x-data="{ search: '' } "
+    x-data="{ search: '' }"
   >
     <div class="w-full">
       <input

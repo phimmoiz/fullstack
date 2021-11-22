@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{! Description: description }}">
-    <meta name="author" content="{{! Author: author }}">
-    <link rel="icon" href="{{! Site: url }}/favicon.ico">
-    <title>{{ title }} - PhimCatMoi.net</title>
+    <meta name="description" content="Web xem phim hang dau Dong Lao">
+    <meta name="author" content="Trung Tin Nguyen, Xuan Phat Nguyen, Thanh Kien Nguyen">
+    <link rel="icon" href="/favicon.ico">
+    <title>{{ title }} - PhimMoiZ.net</title>
     {{!-- <link rel="stylesheet" href="/styles/style.css"> --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,10 +28,11 @@
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
   </head>
-  <body>
+  <body class="bg-white text-black dark:bg-black dark:text-white">
 
     {{!-- Main layout --}}
     {{> header }}
+    {{> darkmode_toggle}}
     <div class="container max-w-screen-xl mx-auto my-2">
       {{{body}}}
     </div>

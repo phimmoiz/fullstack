@@ -53,6 +53,7 @@ body {
   right: 0;
   animation: vibrate 2s infinite;
   z-index: -1;
+  opacity: 0.7;
 }
 
 /* animation vibrate image */

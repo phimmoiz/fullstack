@@ -1,12 +1,8 @@
-<div
-  id="navbar"
-  class="fixed top-0 inset-x-0 flex justify-between items-center z-50 md:mx-4 dark:text-black"
-  x-data="{    
+<div id="navbar"
+  class="fixed top-0 inset-x-0 flex justify-between items-center z-50 md:mx-4 dark:text-black bg-opacity-70" x-data="{    
     nav: window.innerWidth >= 768,
     searchOpen: false,
-  }"
-  @resize.window="nav = window.innerWidth >= 768"
->
+  }" @resize.window="nav = window.innerWidth >= 768">
   <a @click="nav = !nav" class="flex items-center ml-2 md:hidden">
     <i class="fas fa-bars fa-2x text-base-content"></i>
   </a>
@@ -22,19 +18,15 @@
   {{! Menu }}
   <nav
     class="[ w-full absolute top-14 flex-col ] md:static flex md:flex-row md:items-center md:gap-2 justify-center flex-grow"
-    x-show="nav"
-  >
-    <a
-      href="/"
-      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
-    >
+    x-show="nav" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
+    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    <a href="/" class="px-4 py-2 md:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-home fa-1x"></i>
       Trang chủ
     </a>
-    <a
-      @click="searchOpen = true"
-      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
-    >
+    <a @click="searchOpen = true"
+      class="px-4 py-2 md:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-search fa-1x"></i>
       Tìm kiếm
 
@@ -44,68 +36,52 @@
       {{> search}}
     </div>
 
-    <a
-      href="/danh-sach"
-      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
-    >
+    <a href="/danh-sach"
+      class="px-4 py-2 md:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-list fa-1x"></i>
       Danh sách phim
     </a>
-    <a
-      href="/shop"
-      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
-    >
+    <a href="/shop" class="px-4 py-2 md:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-store fa-1x"></i>
       Shop
     </a>
   </nav>
-  <div
-    class="flex items-center upercase p-2 gap-2 relative"
-    x-data="{open: false}"
-  >
+  <div class="flex items-center upercase p-2 gap-2 relative" x-data="{open: false}">
     {{#unless user}}
-      <a
-        href="/login"
-        class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70 whitespace-nowrap"
-      >
-        <i class="fas sign-in-alt fa-1x"></i>
-        Đăng nhập
-      </a>
+    <a href="/login" class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70 whitespace-nowrap">
+      <i class="fas sign-in-alt fa-1x"></i>
+      Đăng nhập
+    </a>
     {{else}}
-      <a
-        @click="open = !open"
-        class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70 flex items-center gap-1"
-      >
-        <i class="fas fa-user fa-1x"></i>
-        {{user.username}}
-      </a>
-      <div
-        x-show="open"
-        x-transition:enter="transition ease-out duration-100"
-        x-transition:enter-start="opacity-0 transform scale-90"
-        x-transition:enter-end="opacity-100 transform scale-100"
-        x-transition:leave="transition ease-in duration-100"
-        x-transition:leave-start="opacity-100 transform scale-100"
-        x-transition:leave-end="opacity-0 transform scale-90"
-        class="absolute right-0 top-14 w-48 bg-white rounded-lg shadow-lg"
-      >
-        <div class="flex flex-col justify-between p-4">
-          <a
-            href="/profile"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition rounded-sm"
-          >
-            <i class="fas fa-user fa-1x"></i>
-            Trang cá nhân
-          </a>
-          <a
-            href="/logout"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition rounded-sm"
-          >
-            <i class="fas fa-sign-out-alt fa-1x"></i>
-            Đăng xuất
-          </a>
-        </div>
+    <a @click="open = !open"
+      class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70 flex items-center gap-1">
+      <i class="fas fa-user fa-1x"></i>
+      {{user.username}}
+    </a>
+    <div x-show="open" x-transition:enter="transition ease-out duration-100"
+      x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
+      x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 transform scale-100"
+      x-transition:leave-end="opacity-0 transform scale-90"
+      class="absolute right-0 top-14 w-48 bg-white rounded-lg shadow-lg">
+      <div class="flex flex-col justify-between p-4">
+        {{!-- check if user.role == admin --}}
+        {{#ifEquals user.role "admin"}}
+        <a href="/admin" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition rounded-sm">
+          <i class="fas fa-cog fa-1x"></i>
+          Quản trị
+        </a>
+        {{/ifEquals}}
+
+        <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition rounded-sm">
+          <i class="fas fa-user fa-1x"></i>
+          Trang cá nhân
+        </a>
+        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 transition rounded-sm">
+          <i class="fas fa-sign-out-alt fa-1x"></i>
+          Đăng xuất
+        </a>
       </div>
+    </div>
     {{/unless}}
     <a href="#" class="p-2 rounded-full bg-white hover:bg-opacity-70 flex">
       <i class="fas fa-ellipsis-h"></i>
@@ -114,34 +90,25 @@
 </div>
 <div class="max-w-6xl mx-auto mt-20">
   {{#unless user}}
-    <div class="dark:bg-pink-400 rounded p-2 mx-2 text-base-content">
-      <div class="flex">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="w-6 h-6 mx-2 stroke-current"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        <label>
-          Bạn chưa đăng nhập,
-          <a class="link link-hover font-bold" href="/login">
-            đăng nhập
-          </a>
-          hoặc
-          <a class="link link-hover font-bold" href="/register">
-            đăng ký
-          </a>
-          .
-        </label>
-      </div>
+  <div class="dark:bg-pink-400 rounded p-2 mx-2 text-base-content">
+    <div class="flex">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <label>
+        Bạn chưa đăng nhập,
+        <a class="link link-hover font-bold" href="/login">
+          đăng nhập
+        </a>
+        hoặc
+        <a class="link link-hover font-bold" href="/register">
+          đăng ký
+        </a>
+        .
+      </label>
     </div>
+  </div>
   {{/unless}}
 </div>
 <script>
@@ -165,4 +132,13 @@
   } else {
     document.documentElement.classList.remove('dark')
   }
+
+  // Toggle black backgroudn for id navbar when scroll down 
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 100) {
+      document.getElementById('navbar').classList.add('bg-black')
+    } else {
+      document.getElementById('navbar').classList.remove('bg-black')
+    }
+  })
 </script>

@@ -26,6 +26,9 @@ hbs.registerPartials(
   path.join(__dirname, "/views/partials"),
   function (err) {}
 );
+hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+});
 
 // Add body parser
 app.use(express.json());

@@ -27,6 +27,7 @@ module.exports = {
       scale: ["group-hover"],
       width: ["group-hover"],
       height: ["group-hover"],
+      opacity: ["group-hover"],
       mixBlendMode: ["hover"],
       borderWidth: ["dark"],
     },

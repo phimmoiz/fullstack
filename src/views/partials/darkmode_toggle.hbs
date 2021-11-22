@@ -1,0 +1,20 @@
+<div class="fixed bottom-8 right-8" id="modeToggle">
+  <i
+    class="fas fa-moon fa-3x text-base-content rounded p-3 hover:opacity-60"
+  ></i>
+</div>
+<script>
+  const darkModeToggle = document.getElementById('modeToggle');
+  darkModeToggle.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+
+    // change i class to sun
+    if (darkModeToggle.firstElementChild.classList.contains('fa-moon')) {
+      darkModeToggle.firstElementChild.classList.remove('fa-moon');
+      darkModeToggle.firstElementChild.classList.add('fa-sun');
+    } else {
+      darkModeToggle.firstElementChild.classList.remove('fa-sun');
+      darkModeToggle.firstElementChild.classList.add('fa-moon');
+    }
+  });
+</script>

@@ -1,77 +1,117 @@
-<div class="fixed top-0 inset-x-0 flex justify-between z-50 md:mx-4">
+<div
+  id="navbar"
+  class="fixed top-0 inset-x-0 flex justify-between items-center z-50 md:mx-4 dark:text-black"
+  x-data="{    
+    nav: window.innerWidth >= 768,
+    searchOpen: false,
+  }"
+  @resize.window="nav = window.innerWidth >= 768"
+>
+  <a @click="nav = !nav" class="flex items-center ml-2 md:hidden">
+    <i class="fas fa-bars fa-2x text-base-content"></i>
+  </a>
   {{! Logo }}
-  <div class="p-2 text-white">
-    <a href="/" class="flex items-center gap-1 upercase">
-      <i class="fas fa-circle fa-3x"></i>
-      <span class="font-bold">
+  <div class="p-2 dark:text-white">
+    <a href="/" class="flex items-center gap-1">
+      <i class="fas fa-circle fa-1x"></i>
+      <span class="font-bold uppercase">
         PhimmoiZ
       </span>
     </a>
   </div>
-
   {{! Menu }}
-  <nav class="flex items-center gap-2 justify-center flex-grow">
-    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+  <nav
+    class="[ w-full absolute top-14 flex-col ] md:static flex md:flex-row md:items-center md:gap-2 justify-center flex-grow"
+    x-show="nav"
+  >
+    <a
+      href="/"
+      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
+    >
       <i class="fas fa-home fa-1x"></i>
       Trang chủ
     </a>
-    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+    <a
+      @click="searchOpen = true"
+      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
+    >
       <i class="fas fa-search fa-1x"></i>
       Tìm kiếm
+
     </a>
-    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+
+    <div x-show="searchOpen">
+      {{> search}}
+    </div>
+
+    <a
+      href="/danh-sach"
+      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
+    >
       <i class="fas fa-list fa-1x"></i>
       Danh sách phim
     </a>
-    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+    <a
+      href="/shop"
+      class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0"
+    >
       <i class="fas fa-store fa-1x"></i>
       Shop
     </a>
   </nav>
-
-  {{! Search }}
-  <div class="flex items-center upercase p-2 gap-2">
-    <a
-      href="/"
-      class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70"
-    >
-      <i class="fas fa-home fa-1x"></i>
-      Đăng nhập
-    </a>
-
-    <a href="/" class="p-2 rounded-full bg-white hover:bg-opacity-70 flex">
+  <div
+    class="flex items-center upercase p-2 gap-2 relative"
+    x-data="{open: false}"
+  >
+    {{#unless user}}
+      <a
+        href="/login"
+        class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70"
+      >
+        <i class="fas sign-in-alt fa-1x"></i>
+        Đăng nhập
+      </a>
+    {{else}}
+      <a
+        @click="open = !open"
+        class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70 flex items-center gap-1"
+      >
+        <i class="fas fa-user fa-1x"></i>
+        {{user.username}}
+      </a>
+      <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="opacity-0 transform scale-90"
+        x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-100"
+        x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-90"
+        class="absolute right-0 top-14 w-48 bg-white rounded-lg shadow-lg"
+      >
+        <div class="flex flex-col justify-between p-4">
+          <a
+            href="/profile"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-opacity-70"
+          >
+            <i class="fas fa-user fa-1x"></i>
+            Trang cá nhân
+          </a>
+          <a
+            href="/logout"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-opacity-70"
+          >
+            <i class="fas fa-sign-out-alt fa-1x"></i>
+            Đăng xuất
+          </a>
+        </div>
+      </div>
+    {{/unless}}
+    <a href="#" class="p-2 rounded-full bg-white hover:bg-opacity-70 flex">
       <i class="fas fa-ellipsis-h"></i>
     </a>
-
   </div>
-
 </div>
-<script>
-  $("#navbarToggle").click(function() { console.log('click handle')
-  $("#nav").toggleClass("hiddeni"); }); if ($(window).width() < 768) {
-  $("#nav").addClass("hiddeni"); } else {
-  $("#navbarToggle").addClass("hiddeni"); } $(window).resize(function() { if
-  ($(window).width() <= 768) { $("#navbarToggle").removeClass("hiddeni");
-  $("#nav").addClass("hiddeni"); } else {
-  $("#navbarToggle").addClass("hiddeni"); $("#nav").removeClass("hiddeni"); }
-  });
-</script>
-<script>
-  const themeVal = localStorage.getItem("theme") || "dark"; if(themeVal) {
-  document.querySelector("html").setAttribute("data-theme", themeVal); }
-  $("#themeToggle").click(function() { const el =
-  document.querySelector("html"); const themeVal = localStorage.getItem("theme")
-  || "dark"; if (themeVal === "dark") { el.dataset.theme = "light";
-  localStorage.setItem("theme", "light"); //change svg path $("#themeToggle svg
-  path").attr("d", "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012
-  21a9.003 9.003 0 008.354-5.646z"); } else { el.dataset.theme = "dark";
-  localStorage.setItem("theme", "dark"); $("#themeToggle svg path").attr("d",
-  "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343
-  6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0
-  4 4 0 018 0z"); } }); // change dataset html tag to dark
-  /*$("#search").click(function() { $("#search-form").toggleClass("hiddeni");
-  });*/
-</script>
 <div class="max-w-6xl mx-auto mt-20">
   {{#unless user}}
     <div class="alert mx-2 text-base-content">
@@ -89,21 +129,40 @@
             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <label>Bạn chưa đăng nhập,
-          <a class="link link-hover font-bold" href="/signin">đăng nhập</a>
+        <label>
+          Bạn chưa đăng nhập,
+          <a class="link link-hover font-bold" href="/signin">
+            đăng nhập
+          </a>
           hoặc
-          <a class="link link-hover font-bold" href="/signup">đăng ký</a>.
+          <a class="link link-hover font-bold" href="/signup">
+            đăng ký
+          </a>
+          .
         </label>
       </div>
     </div>
   {{/unless}}
 </div>
-
 <script>
-  var prevScrollpos = window.pageYOffset; window.onscroll = function() { var
-  currentScrollPos = window.pageYOffset; if (prevScrollpos > currentScrollPos) {
-  document.getElementById("navbar").style.top = "0"; } else {
-  document.getElementById("navbar").style.top = "-50px"; } prevScrollpos =
-  currentScrollPos; }
+  var prevScrollpos = window.pageYOffset;
 
+  window.onscroll = function () {
+    var currentScrollPos = window.pageYOffset;
+
+    if (prevScrollpos > currentScrollPos) {
+      document.getElementById("navbar").style.top = "0";
+    } else {
+      document.getElementById("navbar").style.top = "-50px";
+    } prevScrollpos =
+      currentScrollPos;
+  }
+
+  // dark theme
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
 </script>

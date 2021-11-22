@@ -1,143 +1,109 @@
-<div id="navbar" class="navbar fixed mb-2 shadow left-0 right-0 z-50 bg-neutral text-neutral-content">
-  <div class="flex-1 px-2 mx-2">
-    <a href="/" class="navbar-brand">
-      <span class="font-bold relative">
-        <span class="khabanh z-10"></span>
-        <span class="absolute z-20 -bottom-4">
-          PhimMoiz.net
-        </span>
+<div class="fixed top-0 inset-x-0 flex justify-between z-50 md:mx-4">
+  {{! Logo }}
+  <div class="p-2 text-white">
+    <a href="/" class="flex items-center gap-1 upercase">
+      <i class="fas fa-circle fa-3x"></i>
+      <span class="font-bold">
+        PhimmoiZ
       </span>
+    </a>
+  </div>
+
+  {{! Menu }}
+  <nav class="flex items-center gap-2 justify-center flex-grow">
+    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+      <i class="fas fa-home fa-1x"></i>
+      Trang chủ
+    </a>
+    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+      <i class="fas fa-search fa-1x"></i>
+      Tìm kiếm
+    </a>
+    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+      <i class="fas fa-list fa-1x"></i>
+      Danh sách phim
+    </a>
+    <a href="/" class="px-4 py-2 rounded-full bg-white hover:bg-opacity-70">
+      <i class="fas fa-store fa-1x"></i>
+      Shop
+    </a>
+  </nav>
+
+  {{! Search }}
+  <div class="flex items-center upercase p-2 gap-2">
+    <a
+      href="/"
+      class="px-4 py-2 rounded-full bg-blue-400 text-white hover:bg-opacity-70"
+    >
+      <i class="fas fa-home fa-1x"></i>
+      Đăng nhập
+    </a>
+
+    <a href="/" class="p-2 rounded-full bg-white hover:bg-opacity-70 flex">
+      <i class="fas fa-ellipsis-h"></i>
     </a>
 
   </div>
 
-  <div class="flex-none px-2 lg:flex [ fixed top-0 bottom-0 left-0 right-0 ] md:static bg-gray-700 md:bg-transparent z-50" id="nav">
-    <div class="flex items-stretch flex-col md:flex-row w-full gap-1">
-      <div class="relative text-center" x-data="{ open: false }">
-        <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" @click="open = true;  console.log($('#searchInput')[0].focus());">
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 mr-2 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-</svg>
-        
-        Tìm kiếm </a>
-        <span x-show="open" x-cloak>
-          {{> search}}
-        </span>
-      </div>
-      <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/danh-sach">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-        </svg> Danh sách phim </a>
-      <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/top-luot-xem">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-        </svg> Top lượt xem </a>
-      <a class="btn btn-ghost btn-md md:btn-sm rounded-btn relative" href="/shop">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
-        </svg>
-        <span> Shop Merch <span class="absolute transform -translate-y-3 text-xs -translate-x-2 bg-red-500 rounded p-0.5 bg-opacity-60">new</span>
-        </span>
-      </a>
-      {{#if user}}
-        <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/signout">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-          </svg> {{user.username}} | Đăng xuất </a>
-      {{else}}
-        <a class="btn btn-ghost btn-md md:btn-sm rounded-btn" href="/signin">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 mr-2 stroke-current">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-          </svg> Đăng nhập </a>
-      {{/if}}
-    </div>
-  </div>
-  <div class="flex-none fixed right-2 md:static" id="navbarToggle" style="z-index: 50;">
-    <button class="btn btn-square btn-ghost">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
-    </button>
-  </div>
 </div>
-<a id="themeToggle" class="fixed z-50 bottom-5 right-5 rounded-full cursor-pointer hover:bg-gray-300 hover:text-black p-5 transition">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-  </svg>
-</a>
 <script>
-  $("#navbarToggle").click(function() {
-    console.log('click handle')
-    $("#nav").toggleClass("hiddeni");
-  });
-  if ($(window).width() < 768) {
-    $("#nav").addClass("hiddeni");
-
-  }
-  else {
-    $("#navbarToggle").addClass("hiddeni");
-  }
-  $(window).resize(function() {
-    if ($(window).width() <= 768) {
-      $("#navbarToggle").removeClass("hiddeni");
-      $("#nav").addClass("hiddeni");
-    } else {
-      $("#navbarToggle").addClass("hiddeni");
-      $("#nav").removeClass("hiddeni");
-    }
+  $("#navbarToggle").click(function() { console.log('click handle')
+  $("#nav").toggleClass("hiddeni"); }); if ($(window).width() < 768) {
+  $("#nav").addClass("hiddeni"); } else {
+  $("#navbarToggle").addClass("hiddeni"); } $(window).resize(function() { if
+  ($(window).width() <= 768) { $("#navbarToggle").removeClass("hiddeni");
+  $("#nav").addClass("hiddeni"); } else {
+  $("#navbarToggle").addClass("hiddeni"); $("#nav").removeClass("hiddeni"); }
   });
 </script>
 <script>
-  const themeVal = localStorage.getItem("theme") || "dark";
-
-  if(themeVal) {
-    document.querySelector("html").setAttribute("data-theme", themeVal);
-  }
-
-  $("#themeToggle").click(function() {
-    const el = document.querySelector("html");
-    const themeVal = localStorage.getItem("theme") || "dark";
-    if (themeVal === "dark") {
-      el.dataset.theme = "light";
-      localStorage.setItem("theme", "light");
-      //change svg path
-      $("#themeToggle svg path").attr("d", "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z");
-    } else {
-      el.dataset.theme = "dark";
-      localStorage.setItem("theme", "dark");
-      $("#themeToggle svg path").attr("d", "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z");
-    }
-  }); // change dataset html tag to dark
-
-/*$("#search").click(function() {
-  $("#search-form").toggleClass("hiddeni");
-});*/
+  const themeVal = localStorage.getItem("theme") || "dark"; if(themeVal) {
+  document.querySelector("html").setAttribute("data-theme", themeVal); }
+  $("#themeToggle").click(function() { const el =
+  document.querySelector("html"); const themeVal = localStorage.getItem("theme")
+  || "dark"; if (themeVal === "dark") { el.dataset.theme = "light";
+  localStorage.setItem("theme", "light"); //change svg path $("#themeToggle svg
+  path").attr("d", "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012
+  21a9.003 9.003 0 008.354-5.646z"); } else { el.dataset.theme = "dark";
+  localStorage.setItem("theme", "dark"); $("#themeToggle svg path").attr("d",
+  "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343
+  6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0
+  4 4 0 018 0z"); } }); // change dataset html tag to dark
+  /*$("#search").click(function() { $("#search-form").toggleClass("hiddeni");
+  });*/
 </script>
 <div class="max-w-6xl mx-auto mt-20">
   {{#unless user}}
-  <div class="alert mx-2 text-base-content">
-    <div class="flex-1">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <label>Bạn chưa đăng nhập, <a class="link link-hover font-bold" href="/signin">đăng nhập</a> hoặc <a class="link link-hover font-bold" href="/signup">đăng ký</a>. </label>
+    <div class="alert mx-2 text-base-content">
+      <div class="flex-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="w-6 h-6 mx-2 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <label>Bạn chưa đăng nhập,
+          <a class="link link-hover font-bold" href="/signin">đăng nhập</a>
+          hoặc
+          <a class="link link-hover font-bold" href="/signup">đăng ký</a>.
+        </label>
+      </div>
     </div>
-  </div>
   {{/unless}}
 </div>
 
 <script>
-  var prevScrollpos = window.pageYOffset;
-
-  window.onscroll = function() {
-var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById("navbar").style.top = "0";
-  } else {
-    document.getElementById("navbar").style.top = "-50px";
-
-  }
-  prevScrollpos = currentScrollPos;
-}
+  var prevScrollpos = window.pageYOffset; window.onscroll = function() { var
+  currentScrollPos = window.pageYOffset; if (prevScrollpos > currentScrollPos) {
+  document.getElementById("navbar").style.top = "0"; } else {
+  document.getElementById("navbar").style.top = "-50px"; } prevScrollpos =
+  currentScrollPos; }
 
 </script>

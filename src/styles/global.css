@@ -6,7 +6,7 @@
 }
 @layer components {
   .input {
-    @apply p-2 border border-gray-400;
+    @apply p-2 border rounded;
   }
 
   .tabs {
@@ -32,7 +32,11 @@
     animation: button-pop var(--animation-btn, 0.25s) ease-out;
   }
 
-  @keyframe button-pop {
+  .btn-primary {
+    @apply bg-blue-400;
+  }
+
+  @keyframes button-pop {
     0% {
       transform: scale(1);
     }
@@ -43,8 +47,6 @@
       transform: scale(1);
     }
   }
-
-  @keyframes button-pop{0%{transform:scale(var(--btn-focus-scale,.95))}40%{trans
 }
 @layer components {
   #navbar {

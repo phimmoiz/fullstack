@@ -3,7 +3,7 @@
 
     <h2 class="text-2xl uppercase mx-2">Phim mới</h2>
     <div class="p-2 col-span-2">
-      {{> carousel barId="phimMoi" slidesPerView=3 }} 
+      {{> carousel barId="phimMoi" slidesPerView=3 }}
     </div>
 
     <h2 class="text-2xl uppercase mx-2">Phim hành động</h2>
@@ -12,59 +12,86 @@
     </div>
 
     <div class="p-2 my-2 col-span-2">
-      <h2 class="flex text-xl mb-1 items-center">
+      <h2 class="flex text-xl items-center dark:bg-purple-700 p-2 rounded-t-md">
         <span class="flex-grow">
           {{!-- icon size small --}}
           <i class="fas fa-comments fa-xs"></i>
-        Tâm sự tuổi hồng
+          Tâm sự tuổi hồng
         </span>
-          <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
-
+        <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
 
       </h2>
-      <input type="text" class="input my-2 w-full text-black" placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)">
-      <button class="button btn-purple">Gửi</button>
-      <div class="flex flex-col gap-2">
-        {{>message}}
-        {{>message}}
-        {{>message}}
-        {{>message}}
-        {{>message}}
-        {{>message}}
+      <div class="rounded-b-md p-2 border dark:border-purple-700">
+        <input type="text" class="input my-2 w-full text-black"
+          placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)">
+        <button class="button btn-purple">Gửi</button>
+        <div class="flex flex-col gap-2">
+          {{>message}}
+          {{>message}}
+          {{>message}}
+          {{>message}}
+          {{>message}}
+          {{>message}}
+        </div>
       </div>
     </div>
 
   </div>
 
-<div class="md:row-span-2 place-self-start flex flex-col gap-2 w-full">
- <div class="p-2 shadow-md rounded-md bg-base-200">
-  <h2 class="text-xl mb-1 uppercase">
-   Bảng xếp hạng
-  </h2>
-  <div class="tabs mb-1">
-    <div class="tab tab-lifted">ngày</div>
-    <div class="tab tab-lifted tab-active">tuần</div>
-    <div class="tab tab-lifted">tháng</div>
-    <div class="tab tab-lifted">mùa</div>
-  </div>
-  <div class="flex flex-col gap-1 text-base-content" style="height:800px">
-    {{> bangxephang barId="bangXepHang" slidesPerView=6 direction="vertical"}}
-  </div>
-  </div>
+  <div class="md:row-span-2 place-self-start flex flex-col gap-2 w-full">
+    <div>
+      <h2 class="flex text-xl items-center bg-blue-400 dark:bg-purple-700 p-2 rounded-t-md">
+        <span class="flex-grow">
+          {{!-- icon size small --}}
+          <i class="fas fa-chess-king fa-xs"></i>
+          Bảng xếp hạng
+        </span>
+        <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
 
- <div class="p-2 shadow-md rounded-md bg-base-200 grid gap-2">
-  Xem tiếp
-  </h2>
-  {{> topweek_card}}
-  {{> topweek_card}}
-  </div>
+      </h2>
 
- <div class="p-2 shadow-md rounded-md bg-base-200 grid gap-2">
-  Quảng cáo
-  </h2>
-    <img src="https://via.placeholder.com/400" class="object-cover" style="width: 22rem; height: 18.5rem;" />
+      <div class="rounded-b-md p-2 border dark:border-purple-700">
+      <div class="tabs mb-1">
+        <div class="tab tab-lifted">ngày</div>
+        <div class="tab tab-lifted tab-active">tuần</div>
+        <div class="tab tab-lifted">tháng</div>
+        <div class="tab tab-lifted">mùa</div>
+      </div>
+      <div class="flex flex-col gap-1 text-base-content">
+        {{>card}}
+        {{>card}}
+        {{>card}}
+        {{>card}}
+        {{>card}}
+        {{>card}}
+        {{>card}}
+      </div>
+      </div> 
+    </div>
+
+    <div>
+      <h2 class="flex text-xl items-center bg-blue-400 dark:bg-purple-700 p-2 rounded-t-md">
+        <span class="flex-grow">
+          {{!-- icon size small --}}
+          <i class="fas fa-play fa-xs"></i>
+          Xem tiếp
+        </span>
+        <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
+
+      </h2>
+      <div class="rounded-b-md p-2 border dark:border-purple-700">
+      {{>card}}
+      {{>card}}
+      </div>
+    </div>
+
+    <div class="bg-base-200 grid gap-2">
+      <h2 class="text-xl">
+      Quảng cáo
+      </h2>
+      <img src="https://via.placeholder.com/400" class="object-cover" style="width: 22rem; height: 18.5rem;" />
+    </div>
   </div>
-</div>
 
 
 </div>

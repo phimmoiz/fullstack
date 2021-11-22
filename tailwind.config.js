@@ -4,6 +4,7 @@ module.exports = {
   purge: {
     enabled: true,
     content: ["./src/**/*.hbs", "./src/**/*.js"],
+    development: true,
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -23,5 +24,4 @@ module.exports = {
       mixBlendMode: ["hover"],
     },
   },
-  plugins: [require("daisyui")],
 };

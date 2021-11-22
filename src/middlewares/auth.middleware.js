@@ -26,7 +26,7 @@ export async function checkAuth(req, res, next) {
     jwt.verify(req.cookies.token, process.env.JWT_SECRET, function (err, user) {
       if (err) {
         res.clearCookie("token");
-        return res.redirect("/signin");
+        return res.redirect("/login");
       }
       res.locals.user = user;
       next();

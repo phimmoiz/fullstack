@@ -1,5 +1,5 @@
 <div id="navbar"
-  class="fixed top-0 inset-x-0 flex justify-between items-center z-50 md:mx-4 dark:text-black bg-opacity-70" x-data="{    
+  class="fixed top-0 inset-x-0 flex justify-between items-center z-50 md:px-4 dark:text-black bg-opacity-70" x-data="{    
     nav: window.innerWidth >= 768,
     searchOpen: false,
   }" @resize.window="nav = window.innerWidth >= 768">
@@ -136,9 +136,14 @@
   // Toggle black backgroudn for id navbar when scroll down 
   window.addEventListener('scroll', function () {
     if (window.scrollY > 100) {
-      document.getElementById('navbar').classList.add('bg-black')
+      if (document.documentElement.classList.contains('dark')) {
+        document.getElementById('navbar').classList.add('bg-black')
+      } else {
+        document.getElementById('navbar').classList.add('bg-white')
+      }
     } else {
       document.getElementById('navbar').classList.remove('bg-black')
+      document.getElementById('navbar').classList.remove('bg-white')
     }
   })
 </script>

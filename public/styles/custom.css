@@ -93,8 +93,13 @@ body {
   }
 }
 
-/* Scroll bar */
+/* Create a pink scroll bar */
 ::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.25rem;
+}
+
+/* make scroll bar pink */
+::-webkit-scrollbar-thumb {
+  background: #ffc0cb;
+  border-radius: 10px;
 }

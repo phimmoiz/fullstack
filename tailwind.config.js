@@ -1,4 +1,5 @@
 const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   purge: {
@@ -14,6 +15,11 @@ module.exports = {
       google: "#EA4335",
     },
 
+    borderWidth: {
+      ...defaultTheme.borderWidth,
+      0: "0",
+    },
+
     extend: {},
   },
   variants: {
@@ -22,6 +28,7 @@ module.exports = {
       width: ["group-hover"],
       height: ["group-hover"],
       mixBlendMode: ["hover"],
+      borderWidth: ["dark"],
     },
   },
   darkMode: "class",

@@ -9,10 +9,42 @@
     @apply p-2 border border-gray-400;
   }
 
-  .tab,
   .tabs {
-    flex-wrap: wrap;
+    display: flex;
   }
+
+  .tabs .tab-lifted {
+    border: 1px solid;
+    border-width: 0 0px 1px 0px;
+    padding: 0 0.5rem;
+  }
+
+  .tabs .tab-active {
+    border: 1px solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-width: 1px 1px 0px 1px;
+    padding: 0 0.5rem;
+  }
+
+  .btn {
+    @apply p-2 rounded transform;
+    animation: button-pop var(--animation-btn, 0.25s) ease-out;
+  }
+
+  @keyframe button-pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes button-pop{0%{transform:scale(var(--btn-focus-scale,.95))}40%{trans
 }
 @layer components {
   #navbar {

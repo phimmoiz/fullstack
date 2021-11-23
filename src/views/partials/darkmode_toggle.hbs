@@ -16,5 +16,19 @@
       darkModeToggle.firstElementChild.classList.remove('fa-sun');
       darkModeToggle.firstElementChild.classList.add('fa-moon');
     }
+
+    // save to local storage
+    if (document.documentElement.classList.contains('dark')) {
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      localStorage.setItem('darkMode', 'false');
+    }
   });
+  
+  // check if dark mode is set in local storage
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.documentElement.classList.add('dark');
+    darkModeToggle.firstElementChild.classList.remove('fa-moon');
+    darkModeToggle.firstElementChild.classList.add('fa-sun');
+  }
 </script>

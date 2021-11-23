@@ -93,6 +93,19 @@ body {
   }
 }
 
+.fadeIn {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Create a pink scroll bar */
 ::-webkit-scrollbar {
   width: 0.25rem;

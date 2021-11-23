@@ -6,7 +6,7 @@
 }
 @layer components {
   .input {
-    @apply p-2 border rounded;
+    @apply p-2 border rounded text-black;
   }
 
   .tabs {
@@ -33,7 +33,17 @@
   }
 
   .btn-primary {
-    @apply bg-blue-400;
+    @apply bg-blue-400 text-white;
+  }
+
+  .form-control {
+    @apply flex flex-col;
+  }
+  .label {
+    @apply flex;
+  }
+  .label-text {
+    @apply flex-grow;
   }
 
   @keyframes button-pop {

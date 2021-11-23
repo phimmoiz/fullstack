@@ -25,8 +25,13 @@
     }
   });
   
-  // check if dark mode is set in local storage
-  if (localStorage.getItem('darkMode') === 'true') {
+  // check if dark mode is set in local storage, or set if darkMode is not set and prefers dark mode
+  if (
+    localStorage.getItem('darkMode') === 'true' ||
+    (localStorage.getItem('darkMode') === null &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
     document.documentElement.classList.add('dark');
     darkModeToggle.firstElementChild.classList.remove('fa-moon');
     darkModeToggle.firstElementChild.classList.add('fa-sun');

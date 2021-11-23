@@ -43,7 +43,12 @@ router.post("/", async (req, res) => {
   } catch (err) {
     // res 403
     console.log(err);
-    res.status(403).json({ success: false, message: err.message });
+    // res.status(403).json({ success: false, message: err.message });
+
+    res.render("login", {
+      title: "Đăng nhập",
+      error: err.message,
+    });
   }
 });
 export default router;

@@ -30,12 +30,12 @@
   </head>
   <body class="bg-white text-black dark:bg-black dark:text-white">
 
+    {{> darkmode_toggle}}
     {{!-- Main layout --}}
     {{> header }}
     <div class="container max-w-screen-xl mx-auto my-2">
       {{{body}}}
     </div>
     {{> footer }}
-    {{> darkmode_toggle}}
   </body>
 </html>

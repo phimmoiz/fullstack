@@ -581,6 +581,8 @@ video {
   border-radius: 0.25rem;
   border-width: 1px;
   padding: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
 }
 
 .tabs {
@@ -619,6 +621,21 @@ video {
 .btn-primary {
   --tw-bg-opacity: 1;
   background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: flex;
+}
+
+.label-text {
+  flex-grow: 1;
 }
 
 @-webkit-keyframes button-pop {
@@ -820,10 +837,6 @@ video {
 
 .inline-block {
   display: inline-block;
-}
-
-.inline {
-  display: inline;
 }
 
 .flex {
@@ -1342,6 +1355,11 @@ video {
   background-color: rgba(126, 34, 206, var(--tw-bg-opacity));
 }
 
+.dark .dark\:bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+}
+
 .bg-opacity-40 {
   --tw-bg-opacity: 0.4;
 }
@@ -1734,11 +1752,6 @@ html[data-theme="dark"] .card-badge {
     grid-row: span 2 / span 2;
   }
 
-  .md\:mx-4 {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
   .md\:mt-0 {
     margin-top: 0px;
   }
@@ -1773,6 +1786,11 @@ html[data-theme="dark"] .card-badge {
 
   .md\:rounded-full {
     border-radius: 9999px;
+  }
+
+  .md\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .md\:pb-0 {

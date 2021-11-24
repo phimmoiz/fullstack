@@ -5,11 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./src/app.js",
-    "css:dev": "nodemon -e js,css,hbs --exec \"npm run tailwind:build && npx babel-node src/app.js\"",
-    "dev": "nodemon -e js,css,hbs --exec npx babel-node src/app.js",
-    "tailwind:build": "postcss src/styles/global.css -o public/styles/style.css",
-    "tailwind:watch": "postcss src/styles/global.css -o public/styles/style.css -w",
-    "start2": "node --experimental-specifier-resolution=node src/app.js"
+    "dev": "nodemon -e js,css,hbs --exec \"npm run tailwind:build && npx babel-node src/app.js\"",
+    "tailwind:build": "postcss src/styles/global.css -o public/styles/style.css"
   },
   "keywords": [],
   "author": "",

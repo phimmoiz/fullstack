@@ -10,6 +10,7 @@ import adminRoute from "./admin.route";
 import logOutRoute from "./logout.route";
 import categoryRoute from "./category.route";
 import movieRoute from "./movie.route";
+import profileRoute from "./profile.route";
 
 const router = express.Router();
 
@@ -58,6 +59,10 @@ const defaultRoutes = [
     path: "/movie",
     route: movieRoute,
   },
+  {
+    path: "/profile",
+    route: profileRoute,
+  }
 ];
 
 // set router for defaultRoutes

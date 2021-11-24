@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "./routes";
 import dotenv from "dotenv";
-import path from "path";
+import path, { dirname } from "path";
 import hbs from "hbs";
 import morgan from "morgan";
 import mongoose from "mongoose";

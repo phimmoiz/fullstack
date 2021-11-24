@@ -52,10 +52,16 @@
       <input
         class="input"
         type="text"
-        placeholder="Description"
+        placeholder="Mô tả"
         name="description"
+        required
       />
-      <input class="input" type="text" placeholder="Năm" name="releaseYear" />
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="Năm" 
+        name="releaseYear" 
+        />
       <input
         class="input"
         type="text"
@@ -63,15 +69,47 @@
         name="slug"
         required
       />
-
       <input
         class="input"
         type="text"
-        placeholder="Imdb ID"
+        placeholder="IMDB"
         name="imdbId"
         required
       />
-
+      <input
+        class="input"
+        type="text"
+        placeholder="Hình ảnh"
+        name="image"
+        required
+      />
+       <input
+        class="input"
+        type="text"
+        placeholder="Thời lượng"
+        name="time"
+        required
+      />
+       <input
+        class="input"
+        type="text"
+        placeholder="Trailer"
+        name="trailer"
+        required
+      />
+      <input
+        class="input"
+        type="text"
+        placeholder="Khởi chiếu"
+        name="premiere"
+        required
+      />
+      <input
+        class="input"
+        type="text"
+        placeholder="Đánh giá"
+        name="rating"
+      />
       <select class="select" name="categories[]" multiple>
         <option disabled="disabled" selected="selected">Chọn chuyên mục</option>
         {{#each categories}}

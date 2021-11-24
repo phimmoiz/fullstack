@@ -1,27 +1,20 @@
-{{! 404 page }}
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="error-template">
-        <h1>
-          Oops!</h1>
-        <h2>
-          404 Not Found</h2>
-        <div class="error-details">
-          Sorry, an error has occured, Requested page not found!
-        </div>
-        <div class="error-actions">
-          <a href="/" class="btn btn-primary btn-lg"><span
-              class="glyphicon glyphicon-home"
-            ></span>
-            Take Me Home
-          </a><a href="mailto:{{email}}" class="btn btn-default btn-lg"><span
-              class="glyphicon glyphicon-envelope"
-            ></span>
-            Contact Support
-          </a>
-        </div>
-      </div>
-    </div>
+{{! error page without header/footer tailwind }}
+<div class="flex flex-col items-center justify-center h-screen">
+  <div class="text-center">
+    <h1 class="text-6xl text-gray-800">
+      {{error.status}}
+    </h1>
+    <h2 class="text-3xl text-gray-800">
+      {{error.message}}
+    </h2>
+    <p class="text-gray-600">
+      {{error.description}}
+    </p>
+    <a
+      href="/"
+      class="text-blue-500 hover:underline px-10 bg-gray-200 rounded-full block"
+    >
+      Go back home
+    </a>
   </div>
 </div>

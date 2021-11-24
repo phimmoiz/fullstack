@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Admin\scoop\apps\yarn\current\Yarn\bin\yarn.js css:dev
+  C:\Program Files\nodejs\node.exe C:\Users\Admin\scoop\apps\yarn\current\Yarn\bin\yarn.js dev
 
 PATH: 
-  C:\Users\Admin\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Admin\bin;C:\Program Files\nodejs;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\DTS\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\Admin\scoop\apps\python\current\Scripts;C:\Users\Admin\scoop\apps\python\current;C:\Ruby30-x64\bin;C:\Users\Admin\scoop\apps\yarn\current\global\node_modules\.bin;C:\Users\Admin\scoop\apps\yarn\current\Yarn\bin;C:\Users\Admin\scoop\apps\nodejs\current\bin;C:\Users\Admin\scoop\apps\nodejs\current;C:\Users\Admin\scoop\apps\gdb\current\bin;C:\Users\Admin\scoop\apps\gcc\current\bin;C:\Users\Admin\scoop\shims;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\.dotnet\tools;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\android-ndk-r21d;C:\Program Files\JetBrains\CLion 2020.2.4\bin;C:\Program Files\Azure Data Studio\bin;D:\Program Files\IntelliJ IDEA Community Edition 2021.2.2\bin;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2021.2.2\bin;C:\Users\Admin\.jdks\openjdk-17\bin;C:\Windows\System32;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\Git\usr\bin;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;C:\Users\Admin\.rvm\bin
+  C:\Users\Admin\bin;C:\Program Files\git\mingw64\bin;C:\Program Files\git\usr\local\bin;C:\Program Files\git\usr\bin;C:\Program Files\git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Admin\bin;C:\Program Files\nodejs;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\DTS\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\Admin\scoop\apps\python\current\Scripts;C:\Users\Admin\scoop\apps\python\current;C:\Ruby30-x64\bin;C:\Users\Admin\scoop\apps\yarn\current\global\node_modules\.bin;C:\Users\Admin\scoop\apps\yarn\current\Yarn\bin;C:\Users\Admin\scoop\apps\nodejs\current\bin;C:\Users\Admin\scoop\apps\nodejs\current;C:\Users\Admin\scoop\apps\gdb\current\bin;C:\Users\Admin\scoop\apps\gcc\current\bin;C:\Users\Admin\scoop\shims;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\.dotnet\tools;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\android-ndk-r21d;C:\Program Files\JetBrains\CLion 2020.2.4\bin;C:\Program Files\Azure Data Studio\bin;D:\Program Files\IntelliJ IDEA Community Edition 2021.2.2\bin;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2021.2.2\bin;C:\Users\Admin\.jdks\openjdk-17\bin;C:\Windows\System32;C:\Users\Admin\AppData\Roaming\npm;C:\Program Files\Git\bin;C:\Program Files\Azure Data Studio\bin;C:\Program Files\git\usr\bin\vendor_perl;C:\Program Files\git\usr\bin\core_perl;C:\Users\Admin\.rvm\bin
 
 Yarn version: 
   1.22.15
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: D:\3rd-year\Coding\expressjs\film-streaming\package.json: Unexpected token } in JSON at position 506
+  SyntaxError: D:\3rd-year\Coding\expressjs\film-streaming\package.json: Unexpected token } in JSON at position 322
       at JSON.parse (<anonymous>)
       at C:\Users\Admin\scoop\apps\yarn\1.22.15\Yarn\lib\cli.js:1625:59
       at Generator.next (<anonymous>)
@@ -28,22 +28,19 @@ npm manifest:
     "description": "",
     "main": "index.js",
     "scripts": {
-      "start": "npm run tailwind:build && babel-node ./src/app.js",
-      "css:dev": "nodemon -e js,css,hbs --exec \"npm run tailwind:build && npx babel-node src/app.js\"",
-      "dev": "nodemon -e js,css,hbs --exec npx babel-node src/app.js",
+      "start": "babel-node ./src/app.js",
+      "dev": "nodemon -e js,css,hbs --exec \"npm run tailwind:build && npx babel-node src/app.js\"",
       "tailwind:build": "postcss src/styles/global.css -o public/styles/style.css",
-      "tailwind:watch": "postcss src/styles/global.css -o public/styles/style.css -w",
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+      "@tailwindcss/line-clamp": "^0.2.2",
       "cookie-parser": "^1.4.6",
       "cors": "^2.8.5",
-      "daisyui": "^1.16.2",
       "dotenv": "^10.0.0",
       "express": "^4.17.1",
-      "express-handlebars": "^5.3.4",
       "hbs": "^4.1.2",
       "jsonwebtoken": "^8.5.1",
       "mongoose": "^6.0.12",
@@ -61,7 +58,11 @@ npm manifest:
       "npm-run-all": "^4.1.5",
       "postcss": "^8.3.11",
       "postcss-cli": "^9.0.2",
+      "rollup": "^2.60.1",
       "webpack-cli": "^4.9.1"
+    },
+    "engines": {
+      "node": "16.x"
     }
   }
 

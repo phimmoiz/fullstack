@@ -11,25 +11,21 @@ router.post("/", async (req, res) => {
   console.log(req.body);
 
   try {
-    const { title, description, releaseYear, slug, categories } = req.body;
-
-    // create movie
-    // const newMovie = await Movie.create({
-    //   title,
-    //   description,
-    //   slug,
-    //   releaseYear,
-    //   category,
-    // });
+    const { title, image, time, trailer, premiere, description, releaseYear, rating, imdbId, slug, categories } = req.body;
 
     // create movie with mongoose
     const newMovie = await Movie.create({
-      title,
-      description,
-      slug,
-      releaseYear,
-      // category as array
-      categories,
+      title, 
+      image, 
+      time, 
+      trailer,
+      premiere, 
+      description, 
+      releaseYear, 
+      rating, 
+      imdbId, 
+      slug, 
+      categories
     });
 
     console.log(newMovie);

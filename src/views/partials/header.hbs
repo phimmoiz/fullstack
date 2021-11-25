@@ -23,7 +23,10 @@
     class="[ w-full absolute top-14 flex-col ] md:static flex md:flex-row md:items-center md:gap-2 justify-center flex-grow"
     x-show="nav" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0"
     x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
-    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+    {{!-- hide when click away on mobile --}}
+    @click.away="nav = window.innerWidth >= 768"
+    >
     <a href="/" class="px-4 py-2 md:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-home fa-1x"></i>
       Trang chủ
@@ -65,7 +68,9 @@
       x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
       x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 transform scale-100"
       x-transition:leave-end="opacity-0 transform scale-90"
-      class="absolute right-0 top-14 w-48 bg-white rounded-lg shadow-lg">
+      class="absolute right-0 top-14 w-48 bg-white rounded-lg shadow-lg"
+      @click.away="open = false"
+      >
       <div class="flex flex-col justify-between p-4">
         {{!-- check if user.role == admin --}}
         {{#ifEquals user.role "admin"}}

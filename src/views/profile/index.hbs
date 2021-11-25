@@ -1,31 +1,44 @@
 <div>
-    {{#if user}}
-    <div class="bg-green-200 text-white mx-2 my-2 py-2 rounded-xl text-center">Bạn đã đăng nhập với {{user.username}}
+  {{#if user}}
+    <div>
+      <div class="relative">
+        <div class="bg-green-200 max-h-72 h-screen"></div>
+        <div
+          class="flex h-44 w-44 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        >
+          <img
+            class="flex items-center rounded-full border border-gray-100 shadow-sm w-40 h-40 bg-rose-300 bg-cover"
+            src="{{user.avatar}}"
+            alt="{{user.username}}"
+          />
+        </div>
+        <div class="text-center pt-24 bg-gray-100 h-36 w-full">
+          {{user.fullname}}
+        </div>
+      </div>
     </div>
     <div>
-        <div class="relative">
-            <div class="bg-green-200 max-h-72 h-screen"></div>
-            <div class=" flex h-44 w-44 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <img class="flex items-center rounded-full border border-gray-100 shadow-sm " src="{{user.avatar}}"
-                    alt="{{user.username}}" />
+      <div class="mx-10 bg-red-200 h-10 my-10"></div>
+      <div class="flex justify-center">
+        <div class="flex my-20 w-2/3 bg-green-200 justify-center">
+          <div class="grid grid-cols-3 grid-flow-row">
+            <div class="flex col-span-2">
+              Username:
+              {{user.username}}
             </div>
-            <div class="text-center pt-24 bg-gray-100 h-36 w-full">{{user.fullname}}</div>
-        </div>
-    </div>
-    <div>
-        <div class="mx-10 bg-red-200 h-10 my-10"></div>
-        <div class="flex justify-center">
-            <div class="flex my-20 w-2/3 bg-green-200 justify-center">
-                <div class="grid grid-cols-3 grid-flow-row">
-                    <div class="flex col-span-2">Username:     {{user.username}}</div>
-                    <div class="col-span-2">Email:     {{user.email}}</div>
-                    <div class="col-span-2">Fullname:     {{user.fullname}}</div>
-                </div>
+            <div class="col-span-2">
+              Email:
+              {{user.email}}
             </div>
+            <div class="col-span-2">
+              Fullname:
+              {{user.fullname}}
+            </div>
+          </div>
         </div>
-
+      </div>
     </div>
-    {{else}}
+  {{else}}
     {{t "profile.noUser"}}
-    {{/if}}
+  {{/if}}
 </div>

@@ -2,7 +2,6 @@
   .top-100 {top: 100%} .bottom-100 {bottom: 100%} .max-h-select { max-height:
   300px; }
 </style>
-
 <div
   class="w-full flex flex-col items-center mx-auto"
   x-data="{
@@ -19,19 +18,19 @@
     }
   }"
 >
-  <div class="w-full px-4">
+  <div class="w-full">
     <div class="flex flex-col items-center relative">
       <div class="w-full svelte-1l8159u">
         <div
           class="my-2 p-1 flex flex-col items-center text-base-content bg-base-100 rounded"
         >
-
-          <label for="" class="text-sm">Chọn thể loại</label>
-          <div class="flex flex-wrap">
+          <label for="" class="text-sm">
+            Chọn thể loại
+          </label>
+          <div class="flex relative">
             <div
               class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded text-teal-700 bg-teal-100 border border-teal-300 flex-grow flex-wrap"
             >
-
               <template x-for="item in selected" :key="item.name">
                 <div
                   class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300"
@@ -93,27 +92,35 @@
                 </svg>
               </button>
             </div>
-          </div>
-        </div>
-        <div
-          class="absolute shadow top-100 bg-base-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto"
-          x-show="open"
-        >
-          <div class="flex flex-col w-full">
-            <template x-for="item in items" :key="item">
-              <div
-                class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-base-200"
-              >
-                <div
-                  class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
-                  @click="item.selected = true"
-                >
-                  <div class="w-full items-center flex">
-                    <div x-text="item.name" class="mx-2 leading-6"></div>
+            {{! Multi selection }}
+            <div
+              class="absolute shadow top-100 bg-base-100 z-40 left-0 right-0 rounded max-h-select overflow-y-auto"
+              x-show="open"
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0 transform scale-95"
+              x-transition:enter-end="opacity-100 transform scale-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100 transform scale-100"
+              x-transition:leave-end="opacity-0 transform scale-95"
+              @click.away="open = false"
+            >
+              <div class="flex flex-col w-full">
+                <template x-for="item in items" :key="item">
+                  <div
+                    class="cursor-pointer w-full border-gray-100 bg-gray-300 dark:bg-gray-700 border-b hover:bg-base-200"
+                  >
+                    <div
+                      class="flex w-full items-center p-2 pl-2 border-transparent relative hover:border-teal-100"
+                      @click="item.selected = !item.selected"
+                    >
+                      <div class="w-full items-center flex">
+                        <div x-text="item.name" class="mx-2 leading-6"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </template>
               </div>
-            </template>
+            </div>
           </div>
         </div>
       </div>

@@ -1,16 +1,112 @@
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl mb-2">Shop Phimmoi</h2>
+  <h2 class="text-xl mb-2">
+    Shop Phimmoi
+  </h2>
+  <div id="wallets" class="p-2 flex gap-2 divide-x rounded border my-2"></div>
   <div class="tabs">
-    <a class="tab tab-lifted tab-active">Áo thun</a>
-    <a class="tab tab-lifted">Hoodie</a>
-    <a class="tab tab-lifted">Quần</a>
-    <a class="tab tab-lifted">Mặt nạ</a>
-    <a class="tab tab-lifted">Set</a>
-    <a class="tab tab-lifted">Voucher</a>
+    <a class="tab tab-lifted tab-active">
+      Áo thun
+    </a>
+    <a class="tab tab-lifted">
+      Hoodie
+    </a>
+    <a class="tab tab-lifted">
+      Quần
+    </a>
+    <a class="tab tab-lifted">
+      Mặt nạ
+    </a>
+    <a class="tab tab-lifted">
+      Set
+    </a>
+    <a class="tab tab-lifted">
+      Voucher
+    </a>
   </div>
-
   <div class="p-2">
     Update soon...
-
+    {{! connect wallet button }}
   </div>
 </div>
+<script>
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  // set provider to matic
+  //const provider = new ethers.providers.Web3Provider()
+
+  // change network to matic
+  provider.changeNetwork(1);
+
+
+  const signer = provider.getSigner()
+
+  // connect to wallet
+  const connectWallet = async () => {
+    const accounts = await provider.listAccounts()
+    const address = accounts[0]
+    const balance = await provider.getBalance(address)
+    const ether = ethers.utils.formatEther(balance)
+    const wallet = {
+      address,
+      ether
+    }
+    localStorage.setItem('wallet', JSON.stringify(wallet))
+    window.location.reload()
+  }
+
+  const disconnectWallet = async () => {
+    localStorage.removeItem('wallet')
+    window.location.reload()
+  }
+
+  // get wallet
+  const getWallet = () => {
+    const wallet = localStorage.getItem('wallet')
+    if (wallet) {
+      return JSON.parse(wallet)
+    }
+    return null
+  }
+
+  const wallet = getWallet()
+
+  if(!wallet) {
+    // set #wallets
+    const wallets = document.getElementById('wallets')
+
+    wallets.innerHTML = `
+  <button class="btn btn-primary" onclick="connectWallet()">
+    <span class="icon icon-wallet"></span>
+    <span class="text-sm">
+      Connect wallet
+    </span>
+  </button>
+  `
+  }
+  else {
+    // set #wallets
+    const wallets = document.getElementById('wallets')
+
+    wallets.innerHTML = `
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center gap-1">
+      <i class="fa fa-wallet fa-1x"></i>
+      <span class="text-sm">
+        ${wallet.address}
+      </span>
+    </div>
+    <div class="flex flex-row items-center gap-1">
+      <i class="fab fa-ethereum fa-1x"></i>
+      <span class="text-sm">
+        ${wallet.ether}
+      </span>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="disconnectWallet()">
+    <span class="icon icon-wallet"></span>
+    <span class="text-sm">
+      Disconnect wallet
+    </span>
+  `
+  }
+</script>

@@ -8,8 +8,8 @@ import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
 import adminRoute from "./admin.route";
 import logOutRoute from "./logout.route";
-import categoryRoute from "./category.route";
-import movieRoute from "./movie.route";
+import categoriesRoute from "./categories.route";
+import movieRoute from "./movies.route";
 import profileRoute from "./profile.route";
 
 const router = express.Router();
@@ -52,17 +52,17 @@ const defaultRoutes = [
     route: adminRoute,
   },
   {
-    path: "/category",
-    route: categoryRoute,
+    path: "/categories",
+    route: categoriesRoute,
   },
   {
-    path: "/movie",
+    path: "/movies",
     route: movieRoute,
   },
   {
     path: "/profile",
     route: profileRoute,
-  }
+  },
 ];
 
 // set router for defaultRoutes

@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <div class="md:row-span-2 place-self-start flex flex-col gap-2 w-full">
+  <div class="md:row-span-2 place-self-start flex flex-col gap-2 w-full px-2">
     <div x-data="{bxhOpen: true}">
       <h2 class="flex text-xl items-center bg-pink-500 text-white dark:bg-purple-700 p-2 rounded-t-md">
         <span class="flex-grow">
@@ -107,12 +107,16 @@
 
 </div>
 
-<div>
+<div class="my-2 mx-2">
   <h2 class="text-2xl mx-2 uppercase">Phim kinh dị</h2>
-  {{> carousel barId="phimKinhDi" slidesPerView=4 }}
+    <div class="p-2">
+      {{> carousel barId="phimKinhDi" slidesPerView=4 }}
+    </div>
 </div>
 
-<div>
+<div class="my-2 mx-2">
   <h2 class="text-2xl mx-2 uppercase">Phim hoạt hình</h2>
-  {{> carousel barId="phimHoatHinh" slidesPerView=4 }}
+  <div class="p-2">
+    {{> carousel barId="phimHoatHinh" slidesPerView=4 }}
+  </div>
 </div>

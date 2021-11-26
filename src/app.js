@@ -1,6 +1,5 @@
 import express from "express";
 import routes from "./routes";
-import dotenv from "dotenv";
 import path, { dirname } from "path";
 import hbs from "hbs";
 import morgan from "morgan";
@@ -8,11 +7,11 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import createError from "http-errors";
 import { checkAuth } from "./middlewares/auth.middleware";
+import { connect } from "./lib/mongodb";
 
-dotenv.config();
+require("dotenv").config();
+
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost/film-streaming";
 
 const app = express();
 
@@ -37,14 +36,16 @@ app.use(express.urlencoded({ extended: true }));
 // cookie parser
 app.use(cookieParser());
 
-// Connect mongoose and console log if connect successfully
-mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+// Mongodb connect
+connect();
+
+// Middleware to check if mongoose is connected
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState === 0) {
+    return next(createError(503, "MongoDB connection is not established"));
+  }
+  next();
+});
 
 // Morgan
 app.use(morgan("dev"));
@@ -68,9 +69,9 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", { title: "Error" });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`[server] Server running at http://localhost:${PORT}`);
 });

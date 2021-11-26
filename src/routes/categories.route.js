@@ -19,12 +19,12 @@ router.post("/", async (req, res) => {
       slug,
     });
 
-    // res.json({ success: true, data: newCat });
+    res.json({ success: true, data: newCat });
 
-    res.render("/admin/index", {
-      title: "Admin Panel",
-      data: newCat,
-    });
+    // res.render("/admin/index", {
+    //   title: "Admin Panel",
+    //   data: newCat,
+    // });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }

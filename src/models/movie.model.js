@@ -6,6 +6,10 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  englishTitle: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
     required: true,
@@ -21,6 +25,10 @@ const movieSchema = new mongoose.Schema({
   premiere: {
     type: Date,
     required: true,
+  },
+  viewCount: {
+    type: Number,
+    default: 0,
   },
   description: {
     type: String,
@@ -51,6 +59,12 @@ const movieSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
+    },
+  ],
+  seasons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Season",
     },
   ],
 });

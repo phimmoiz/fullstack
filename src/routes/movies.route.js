@@ -4,17 +4,24 @@ import Category from "../models/category.model";
 import { requireAdmin } from "../middlewares/auth.middleware";
 import createError from "http-errors";
 import {
-  createMovie,
-  getMovie,
+  postMovie,
+  getSingleMovie,
   getMovies,
+  getTopMovies,
+  getSeason,
+  getEpisode,
 } from "../controllers/movies.controller";
 
 const router = Router();
 
 router.use(requireAdmin);
 
-router.post("/", createMovie);
+router.post("/", postMovie);
+
 router.get("/", getMovies);
-router.get("/:slug", getMovie);
+router.get("/ranking", getTopMovies);
+router.get("/:slug/season/", getSeason);
+router.get("/:slug/season-:season/episode-:episode/", getEpisode);
+router.get("/:slug", getSingleMovie);
 
 export default router;

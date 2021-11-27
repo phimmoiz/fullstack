@@ -1,0 +1,110 @@
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+  <div id="notify"></div>
+  <h2 class="text-xl mb-2">
+    Admin Panel
+  </h2>
+  {{#if data.newCat}}
+    <div class="flex flex-wrap bg-lime-400 text-white">
+      Đã tạo chuyên mục
+      <a href="/categories/{{data.newCat.slug}}">
+        {{data.newCat.title}}
+      </a>
+    </div>
+  {{/if}}
+  <div class="grid grid-cols-6">
+    <div class="col-span-2">
+      <h3 class="text-lg mb-2">
+        Menu
+      </h3>
+      <ul class="divide-y divide-pink-500">
+        <li class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700">
+          <a href="/admin/movies">
+            <div
+              class="transform hover:translate-x-2  transition duration-300 p-2"
+            >
+              Đăng phim
+            </div>
+          </a>
+        </li>
+        <li class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700">
+          <a href="/admin/categories">
+            <div
+              class="transform hover:translate-x-2  transition duration-300 p-2"
+            >
+              Chuyên mục
+            </div>
+          </a>
+        </li>
+        <li class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700">
+          <a href="/admin/users">
+            <div
+              class="transform hover:translate-x-2  transition duration-300 p-2"
+            >
+              Người dùng
+            </div>
+          </a>  
+        </li>
+      </ul>
+    </div>
+    <div class="col-span-4">
+      <div class="p-2">
+        {{> @partial-block }}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function onCategorySubmit(event) {
+    event.preventDefault();
+
+    const { description, slug, title } = event.target.elements;
+
+    if(!description.value || !slug.value || !title.value) {
+      return;
+    }
+
+    const data = {
+      description: description.value,
+      slug: slug.value,
+      title: title.value,
+    };
+
+    // JQuery AJAX
+    $.ajax({
+      url: '/categories',
+      method: 'POST',
+      data,
+      success: ({data}) => {
+        console.log('tindeptrai', data);
+
+        $("#notify").html(`
+  <div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
+    Đã tạo chuyên mục
+    <a href="/categories/${data.slug}">
+      ${data.title}
+    </a>
+  </div>
+  `);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
+  }
+</script>
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeInClass {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+  }
+</style>

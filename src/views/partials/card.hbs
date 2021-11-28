@@ -1,40 +1,46 @@
-<a href="/movies/{{slug}}">
-  <div
-    class="group rounded box-border shadow-md relative overflow-hidden"
-    style="height: 96%"
-  >
-    <figure class="h-full w-full">
-      <img
-        src="{{image}}"
-        class="object-cover object-top transform transition group-hover:scale-105 h-full w-full"
-      />
-    </figure>
+{{#if image}}
+  <a href="/movies/{{slug}}">
     <div
-      class="text-white p-1 card-body z-20 absolute bottom-4 md:pb-0 left-0 right-0 bg-opacity-40 h-10"
+      class="group rounded box-border shadow-md relative overflow-hidden"
+      style="height: 96%"
     >
-      <h3 class="line-clamp-1">
-        {{title}}
-      </h3>
-      <p class="line-clamp-1 text-xs font-light text-opacity-60 text-white">
-        {{englishTitle}}
-        {{episode}}
-      </p>
-    </div>
-    <div
-      class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-60"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-32 h-32 opacity-0 transition-opacity group-hover:opacity-90 duration-300 z-20"
-        viewBox="0 0 20 20"
-        fill="#fff"
+      <figure class="h-full w-full">
+        <img
+          src="{{image}}"
+          data-card="image"
+          class="object-cover object-top transform transition group-hover:scale-105 h-full w-full"
+        />
+      </figure>
+      <div
+        class="text-white p-1 card-body z-20 absolute bottom-4 md:pb-0 left-0 right-0 bg-opacity-40 h-10"
       >
-        <path
-          fill-rule="evenodd"
-          d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
+        <h3 class="line-clamp-1" data-card="title">
+          {{title}}
+        </h3>
+        <p
+          class="line-clamp-1 text-xs font-light text-opacity-60 text-white"
+          data-card="subtitle"
+        >
+          {{englishTitle}}
+          {{episode}}
+        </p>
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-60"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-32 h-32 opacity-0 transition-opacity group-hover:opacity-90 duration-300 z-20"
+          viewBox="0 0 20 20"
+          fill="#fff"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </div>
     </div>
-  </div>
-</a>
+  </a>
+{{/if}}

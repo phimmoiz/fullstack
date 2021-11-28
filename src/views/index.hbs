@@ -71,13 +71,9 @@
           x-transition:leave="transition ease-in duration-300"
           x-transition:leave-start="opacity-100 transform scale-100"
           x-transition:leave-end="opacity-0 transform scale-90">
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
+          
+          <div id="ranking" class="flex flex-col gap-2"></div>
+
         </div>
       </div>
     </div>
@@ -120,3 +116,42 @@
     {{> carousel barId="phimHoatHinh" slidesPerView=4 items=data.phimHoatHinh }}
   </div>
 </div>
+
+<script>
+  const $rank = $("#ranking");
+  const $card = $(".group.rounded.box-border.shadow-md.relative.overflow-hidden").first().parent();
+
+  // fetch api rank using ajax
+  jQuery.ajax({
+    url: "/movies/ranking/",
+    dataType: "json",
+    success: function (res) {
+      const { data } = res;
+
+      data.forEach((item, index) => {
+        const { title, image, englishTitle, slug } = item; 
+
+        const cardClone = $card.clone();
+
+        try {        
+          cardClone.attr("href", `/movies/${slug}`);
+          cardClone.children().first().css("height", "7rem");
+          cardClone.find("[data-card='title']").text(title);
+          cardClone.find("[data-card='image']").attr("src", image).attr("alt", title).css("object-fit", "cover").css("object-position", "center");
+          cardClone.find("[data-card='subtitle']").text(englishTitle);
+
+          $rank.append(cardClone);
+        } 
+        catch (e) {
+          console.log(e);
+        }
+
+        // append to $rank
+        $rank.append(cardClone);
+      });
+
+    }
+  });
+
+
+</script>

@@ -1,47 +1,30 @@
 {{#> admin}}
-    <div class="p-2">
-      {{! List all category from categories }}
-      <h3 class="text-lg mb-2">
-        Categories
-      </h3>
-      <ul class="list-inside list-none flex flex-col gap-1">
-        {{#each categories}}
-          <li class="p-2 border border-pink-400 rounded">
-            <a href="/categories/{{this.slug}}">
-              {{this.title}}
-            </a>
-          </li>
-        {{/each}}
-      </ul>
-      <form class="flex flex-col gap-4" onsubmit="onCategorySubmit(event)">
-        <h1 class="text-xl">
-          Tạo chuyên mục
-        </h1>
-        <input
-          class="input"
-          type="text"
-          placeholder="Tiêu đề"
-          name="title"
-          required
-        />
-        <input
-          class="input"
-          type="text"
-          placeholder="Description"
-          name="description"
-        />
-        <input
-          class="input"
-          type="text"
-          placeholder="Slug"
-          name="slug"
-          required
-        />
-        <button class="btn btn-primary">
-          Tạo
-        </button>
-      </form>
-    </div>
+<div class="p-2">
+  {{! List all category from categories }}
+  <h3 class="text-lg mb-2">
+    Categories
+  </h3>
+  <ul class="list-inside list-none flex flex-col gap-1">
+    {{#each categories}}
+    <li class="p-2 border border-pink-400 rounded">
+      <a href="/categories/{{this.slug}}">
+        {{this.title}}
+      </a>
+    </li>
+    {{/each}}
+  </ul>
+  <form class="flex flex-col gap-4" onsubmit="onCategorySubmit(event)">
+    <h1 class="text-xl">
+      Tạo chuyên mục
+    </h1>
+    <input class="input" type="text" placeholder="Tiêu đề" name="title" required />
+    <input class="input" type="text" placeholder="Description" name="description" />
+    <input class="input" type="text" placeholder="Slug" name="slug" required />
+    <button class="btn btn-primary">
+      Tạo
+    </button>
+  </form>
+</div>
 
 {{/admin}}
 <script>
@@ -50,7 +33,7 @@
 
     const { description, slug, title } = event.target.elements;
 
-    if(!description.value || !slug.value || !title.value) {
+    if (!description.value || !slug.value || !title.value) {
       return;
     }
 
@@ -65,8 +48,7 @@
       url: '/categories',
       method: 'POST',
       data,
-      success: ({data}) => {
-        console.log('tindeptrai', data);
+      success: ({ data }) => {
 
         $("#notify").html(`
   <div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
@@ -89,6 +71,7 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }

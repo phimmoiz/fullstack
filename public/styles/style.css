@@ -744,14 +744,17 @@ video {
 .left-4 {
 	left: 1rem;
 }
+.right-0 {
+	right: 0px;
+}
+.top-0 {
+	top: 0px;
+}
 .bottom-4 {
 	bottom: 1rem;
 }
 .left-0 {
 	left: 0px;
-}
-.right-0 {
-	right: 0px;
 }
 .bottom-0 {
 	bottom: 0px;
@@ -765,11 +768,11 @@ video {
 .right-8 {
 	right: 2rem;
 }
-.top-0 {
-	top: 0px;
-}
 .top-14 {
 	top: 3.5rem;
+}
+.top-12 {
+	top: 3rem;
 }
 .top-4 {
 	top: 1rem;
@@ -870,6 +873,9 @@ video {
 }
 .inline-block {
 	display: inline-block;
+}
+.inline {
+	display: inline;
 }
 .flex {
 	display: flex;
@@ -1074,6 +1080,9 @@ video {
 .flex-wrap {
 	flex-wrap: wrap;
 }
+.flex-nowrap {
+	flex-wrap: nowrap;
+}
 .place-content-center {
 	place-content: center;
 }
@@ -1215,6 +1224,10 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
+.bg-fuchsia-600 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(192, 38, 211, var(--tw-bg-opacity));
+}
 .bg-rose-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(251, 113, 133, var(--tw-bg-opacity));
@@ -1234,6 +1247,10 @@ video {
 .bg-blue-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
+}
+.bg-pink-400 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(244, 114, 182, var(--tw-bg-opacity));
 }
 .bg-black {
 	--tw-bg-opacity: 1;
@@ -1605,6 +1622,11 @@ html[data-theme="dark"] .card-badge {
 	border-color: rgba(204, 251, 241, var(--tw-border-opacity));
 }
 
+.hover\:bg-fuchsia-300:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(240, 171, 252, var(--tw-bg-opacity));
+}
+
 .hover\:bg-pink-400:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(244, 114, 182, var(--tw-bg-opacity));
@@ -1623,6 +1645,10 @@ html[data-theme="dark"] .card-badge {
 	--tw-bg-opacity: 0.75;
 }
 
+.hover\:bg-opacity-80:hover {
+	--tw-bg-opacity: 0.8;
+}
+
 .hover\:bg-opacity-70:hover {
 	--tw-bg-opacity: 0.7;
 }
@@ -1630,6 +1656,11 @@ html[data-theme="dark"] .card-badge {
 .hover\:text-teal-400:hover {
 	--tw-text-opacity: 1;
 	color: rgba(45, 212, 191, var(--tw-text-opacity));
+}
+
+.hover\:text-gray-700:hover {
+	--tw-text-opacity: 1;
+	color: rgba(63, 63, 70, var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
@@ -1698,6 +1729,11 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(63, 63, 70, var(--tw-bg-opacity));
 }
 
+.dark .dark\:bg-fuchsia-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(217, 70, 239, var(--tw-bg-opacity));
+}
+
 .dark .dark\:text-white {
 	--tw-text-opacity: 1;
 	color: rgba(255, 255, 255, var(--tw-text-opacity));
@@ -1706,6 +1742,11 @@ html[data-theme="dark"] .card-badge {
 .dark .dark\:text-black {
 	--tw-text-opacity: 1;
 	color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+
+.dark .dark\:hover\:bg-fuchsia-700:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(162, 28, 175, var(--tw-bg-opacity));
 }
 
 .dark .dark\:hover\:bg-pink-600:hover {
@@ -1734,6 +1775,10 @@ html[data-theme="dark"] .card-badge {
 
 	.md\:mt-0 {
 		margin-top: 0px;
+	}
+
+	.md\:inline-block {
+		display: inline-block;
 	}
 
 	.md\:hidden {

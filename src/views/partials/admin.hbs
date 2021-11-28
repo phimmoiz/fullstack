@@ -4,12 +4,12 @@
     Admin Panel
   </h2>
   {{#if data.newCat}}
-    <div class="flex flex-wrap bg-lime-400 text-white">
-      Đã tạo chuyên mục
-      <a href="/categories/{{data.newCat.slug}}">
-        {{data.newCat.title}}
-      </a>
-    </div>
+  <div class="flex flex-wrap bg-lime-400 text-white">
+    Đã tạo chuyên mục
+    <a href="/categories/{{data.newCat.slug}}">
+      {{data.newCat.title}}
+    </a>
+  </div>
   {{/if}}
   <div class="grid grid-cols-6">
     <div class="col-span-2">
@@ -19,31 +19,27 @@
       <ul class="divide-y divide-pink-500">
         <li class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700">
           <a href="/admin/movies">
-            <div
-              class="transform hover:translate-x-2  transition duration-300 p-2"
-            >
-              Đăng phim
+            <div class="transform hover:translate-x-2  transition duration-300 p-2">
+              Quản lý phim
             </div>
           </a>
         </li>
         <li class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700">
           <a href="/admin/categories">
-            <div
-              class="transform hover:translate-x-2  transition duration-300 p-2"
-            >
+            <div class="transform hover:translate-x-2  transition duration-300 p-2">
               Chuyên mục
             </div>
           </a>
         </li>
         <li class="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700">
           <a href="/admin/users">
-            <div
-              class="transform hover:translate-x-2  transition duration-300 p-2"
-            >
+            <div class="transform hover:translate-x-2  transition duration-300 p-2">
               Người dùng
             </div>
-          </a>  
+          </a>
         </li>
+        {{!-- Movies --}}
+
       </ul>
     </div>
     <div class="col-span-4">
@@ -59,7 +55,7 @@
 
     const { description, slug, title } = event.target.elements;
 
-    if(!description.value || !slug.value || !title.value) {
+    if (!description.value || !slug.value || !title.value) {
       return;
     }
 
@@ -74,8 +70,7 @@
       url: '/categories',
       method: 'POST',
       data,
-      success: ({data}) => {
-        console.log('tindeptrai', data);
+      success: ({ data }) => {
 
         $("#notify").html(`
   <div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
@@ -98,6 +93,7 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }

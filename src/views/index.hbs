@@ -20,12 +20,13 @@
 
   <div class="md:row-span-2 place-self-start flex flex-col gap-2 w-full px-2">
     <div x-data="{bxhOpen: true}">
-      <h2 class="flex text-xl items-center p-2 rounded-t-md">
+      <h2 class="flex text-xl items-center p-2 rounded-t-md hover:bg-fuchsia-300 dark:hover:bg-fuchsia-700 transition"
+        @click="bxhOpen = !bxhOpen">
         <span class="flex-grow">
           <i class="fas fa-chess-king fa-xs"></i>
           Bảng xếp hạng
         </span>
-        <i @click="bxhOpen = !bxhOpen" :class="{'rotate-180': bxhOpen}"
+        <i :class="{'rotate-180': bxhOpen}"
           class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
 
       </h2>

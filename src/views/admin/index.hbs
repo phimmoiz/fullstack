@@ -4,7 +4,8 @@
     <div class="flex justify-center items-center px-4">
       {{!-- User icon --}}
       <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>
     </div>
 
@@ -25,7 +26,8 @@
     <div class="flex justify-center items-center px-4">
       {{!-- Category icon --}}
       <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     </div>
 
@@ -46,7 +48,8 @@
     <div class="flex justify-center items-center px-4">
       {{!-- Movies icon --}}
       <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     </div>
 
@@ -64,59 +67,3 @@
 
 </div>
 {{/admin}}
-  <script>
-    function onCategorySubmit(event) {
-      event.preventDefault();
-
-      const { description, slug, title } = event.target.elements;
-
-      if (!description.value || !slug.value || !title.value) {
-        return;
-      }
-
-      const data = {
-        description: description.value,
-        slug: slug.value,
-        title: title.value,
-      };
-
-      // JQuery AJAX
-      $.ajax({
-        url: '/categories',
-        method: 'POST',
-        data,
-        success: ({ data }) => {
-          console.log('tindeptrai', data);
-
-          $("#notify").html(`
-  <div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
-    Đã tạo chuyên mục
-    <a href="/categories/${data.slug}">
-      ${data.title}
-    </a>
-  </div>
-  `);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-
-    }
-  </script>
-  <style>
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .fadeInClass {
-      animation-name: fadeIn;
-      animation-duration: 1s;
-    }
-  </style>

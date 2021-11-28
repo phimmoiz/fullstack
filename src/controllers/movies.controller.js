@@ -214,7 +214,7 @@ export const getEpisode = async (req, res) => {
 };
 
 export const postMovie = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     const {
@@ -246,7 +246,7 @@ export const postMovie = async (req, res) => {
       categories,
     });
 
-    console.log(newMovie);
+    // console.log(newMovie);
     // res.json({ success: true, data: newCat });
 
     res.redirect("/admin/");

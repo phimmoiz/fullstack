@@ -3,22 +3,25 @@
   <h2 class="text-xl font-bold mb-1">{{movie.title}}</h2>
   <div class="grid grid-cols-1 md:grid-cols-5">
     <div class="col-span-1 overflow-hidden">
-      <img
-        src="{{movie.image}}"
-        class="w-full object-contain transform hover:scale-110 transition-transform duration-400"
-        alt=""
-      />
+      <img src="{{movie.image}}"
+        class="w-full object-contain transform hover:scale-110 transition-transform duration-400" alt="" />
     </div>
-    <div class="col-span-4 p-2 flex flex-col">
-      <div class="flex flex-col divide-y divide-base-300">
-        <p class="p-2 text-sm">{{movie.title}} - {{movie.englishTitle}}</p>
+    <div class="col-span-4 p-2 flex flex-col relative">
+      {{#ifEquals user.role "admin"}}
+      <div id="filmAdmin">
+        <span onclick="editFilmClickHandler()"
+          class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white absolute rounded-lg right-0 top-0">
+          Chỉnh sửa
+        </span>
+      </div>
+
+      {{/ifEquals}}
+      <div class="flex flex-col divide-y divide-base-300" {{#ifEquals user.role "admin" }} id="filmEditForm"
+        {{/ifEquals}}>
+        <p class="p-2 text-base-content text-lg">{{movie.title}} - {{movie.englishTitle}}</p>
         <p class="p-2 text-base-content">Mới cập nhật:
-          <a
-            class="halim-episode"
-            href="/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"
-          ><span
-              class="bg-accent p-2 shadow-sm text-white font-bold rounded hover:bg-success transition duration-300"
-            >{{newestEpisode}}</span></a>
+          <a class="halim-episode" href="/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"><span
+              class="bg-accent p-2 shadow-sm text-white font-bold rounded hover:bg-success transition duration-300">{{movie.newestEpisode}}</span></a>
         </p>
         <p class="p-2 text-base-content">
           Tình trạng:
@@ -28,38 +31,23 @@
         </p>
         <p class="p-2 text-base-content">
           <span class="title-year">Năm:
-            <a
-              href="/release/{{releaseYear}}/"
-              rel="tag"
-              class="font-bold"
-            >{{movie.releaseYear}}</a></span>
+            <a href="/release/{{releaseYear}}/" rel="tag" class="font-bold">{{movie.releaseYear}}</a></span>
         </p>
         <p class="p-2 text-base-content">Thể loại:
           {{#each movie.categories}}
 
-          <a
-            href="/categories/{{slug}}/"
-            rel="tag"
+          <a href="/categories/{{slug}}/" rel="tag"
             class="inline-block p-1 bg-rose-400 text-white rounded hover:bg-success transition duration-300 font-bold"
-            title="{{description}}"
-          >{{title}}</a>
+            title="{{description}}">{{title}}</a>
 
           {{/each}}
         </p>
-        <p class="p-2 ">Quốc gia: <a
-            href="/country/my"
-            title="Mỹ"
-            class="font-bold"
-          >Mỹ</a></p>
+        <p class="p-2 ">Quốc gia: <a href="/country/my" title="Mỹ" class="font-bold">Mỹ</a></p>
 
       </div>
       <div class="ratings_wrapper">
-        <div
-          class="halim_imdbrating taq-score"
-          itemprop="aggregateRating"
-          itemscope=""
-          itemtype="http://schema.org/AggregateRating"
-        >
+        <div class="halim_imdbrating taq-score" itemprop="aggregateRating" itemscope=""
+          itemtype="http://schema.org/AggregateRating">
           <span class="hidden" itemprop="name">Giải Cứu ‘Guy’ – Free Guy</span>
           <span class="hidden" itemprop="description">Giải Cứu 'Guy' - Free Guy,
             Free Guy 2021 Full Guy – Nhân viên giao dịch ngân hàng, phát hiện
@@ -69,23 +57,17 @@
           <span class="score" itemprop="ratingValue">
             <i class="fas fa-star">
             </i>
-            
+
             4.35</span><i>/</i>
           <span class="max-ratings" itemprop="bestRating">5</span>
-            <br>
+          <br>
           <i class="fas fa-comment">
           </i>
-          <span class="total_votes" itemprop="ratingCount">108</span><span
-            class="vote-txt"
-          > đánh giá</span>
+          <span class="total_votes" itemprop="ratingCount">108</span><span class="vote-txt"> đánh giá</span>
           <meta itemprop="worstRating" content="1" />
         </div>
         <div class="rate-this">
-          <div
-            data-rate="86.907407407407"
-            data-id="102379"
-            class="user-rate user-rate-active"
-          >
+          <div data-rate="86.907407407407" data-id="102379" class="user-rate user-rate-active">
             <span class="user-rate-image post-large-rate stars-large">
               <span style="width: 86.907407407407%"></span>
             </span>
@@ -94,11 +76,11 @@
       </div>
       {{!-- <div class="justify-self-end my-2">
         <select class="select select-bordered select-success w-full max-w-xs">
-          <option disabled="disabled" selected="selected">Chọn tập</option> 
-          <option>Tập 1</option> 
-          <option>Tập 2</option> 
-          <option>Tập 3</option> 
-          <option>Tập 4</option> 
+          <option disabled="disabled" selected="selected">Chọn tập</option>
+          <option>Tập 1</option>
+          <option>Tập 2</option>
+          <option>Tập 3</option>
+          <option>Tập 4</option>
         </select>
 
 
@@ -131,12 +113,12 @@
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
   <h2 class="text-xl font-bold">Chọn tập</h2>
   <div class="tabs">
-  <a class="tab tab-lifted">Phần 1</a> 
-  <a class="tab tab-lifted tab-active">Phần 2</a> 
-  <a class="tab tab-lifted">Phần 3</a>
-  <a class="tab tab-lifted">Phần 4</a>
-  <a class="tab tab-lifted">Phần 5</a>
-  <a class="tab tab-lifted">Phần 6</a>
+    <a class="tab tab-lifted">Phần 1</a>
+    <a class="tab tab-lifted tab-active">Phần 2</a>
+    <a class="tab tab-lifted">Phần 3</a>
+    <a class="tab tab-lifted">Phần 4</a>
+    <a class="tab tab-lifted">Phần 5</a>
+    <a class="tab tab-lifted">Phần 6</a>
   </div>
 
   <div class="p-2 grid md:grid-cols-2 gap-2">
@@ -155,10 +137,13 @@
 
 <script>
   const desc = document.querySelector("#description"); const fullText =
-  desc.textContent; const clamped = desc.textContent.slice(0, 500) + '...';
+    desc.textContent; const clamped = desc.textContent.slice(0, 500) + '...';
   desc.textContent = clamped; desc.textContent += "..."; let show = false;
-  desc.addEventListener("click", () => { show = !show; if(show) {
-  desc.textContent = fullText; return; } desc.textContent = clamped; });
+  desc.addEventListener("click", () => {
+    show = !show; if (show) {
+      desc.textContent = fullText; return;
+    } desc.textContent = clamped;
+  });
 
 </script>
 
@@ -171,3 +156,9 @@
   {{> carousel barId="phimBoRandom" slidesPerView=4}}
 </div>
 {{/if}}
+
+<script>
+  function editFilmClickHandler(e) {
+    console.log(e);
+  }
+</script>

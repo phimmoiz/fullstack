@@ -12,6 +12,7 @@ export const getNewMovies = async ({
   sortByViews = false,
   lean = false,
   populate = false,
+  matchName = "",
 }) => {
   // set querystring for category
   let query = {};
@@ -25,6 +26,20 @@ export const getNewMovies = async ({
       categories: { $in: categoryIds },
     };
   }
+
+  // set querystring for name
+  if (matchName) {
+    query = {
+      ...query,
+      // title and englishTitle
+      $or: [
+        { title: { $regex: matchName, $options: "i" } },
+        { englishTitle: { $regex: matchName, $options: "i" } },
+      ],
+    };
+  }
+
+  console.log(query);
 
   // populate if needed
   const movies = await Movie.find(query)
@@ -79,18 +94,30 @@ export const getMovies = async (req, res, next) => {
   const page = req.query.page || 1;
   // limit
   const limit = req.query.limit || 10;
+  // by name
+  const matchName = req.query.matchName || "";
+  // by category
+  const categorySlugs = req.query.categorySlugs || [];
+
+  console.log("categorySlugs", categorySlugs);
 
   try {
-    const movies = await getNewMovies(page, limit);
+    const movies = await getNewMovies({
+      page,
+      limit,
+      matchName,
+      categorySlugs,
+    });
 
     //set nextPage as link to next page as current domain
     res.json({
       success: true,
       data: movies,
+      page: page,
       length: movies.length,
-      nextPage: `${req.protocol}://${req.get("host")}/movies?page=${
+      nextPage: `${req.protocol}://${req.get("host")}/api/movies?page=${
         page + 1
-      }&limit=${limit}`,
+      }&limit=${limit}&matchName=${matchName}`,
     });
   } catch (error) {
     next(createError(error));

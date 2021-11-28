@@ -100,10 +100,10 @@
 
 @layer utilities {
   .text-base-content {
-    color: #000;
+    @apply text-black;
   }
   .dark .text-base-content {
-    color: #fff;
+    @apply text-white;
   }
 }
 

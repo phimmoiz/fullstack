@@ -8,13 +8,20 @@
     <i class="fas fa-bars fa-1x text-base-content p-2 hover:text-gray-700"></i>
   </a>
   {{! Logo }}
-  <div class="p-2 dark:text-white">
+  <div class="p-2 dark:text-white flex items-center gap-2">
     <a href="/" class="flex items-center gap-1">
       <i class="fas fa-circle fa-1x"></i>
       <span class="font-bold uppercase">
         PhimmoiZ
       </span>
     </a>
+    <a @click="searchOpen = true" class="">
+      <i
+        class="fas fa-search fa-1x text-black p-2 lg:rounded-full bg-white hover:bg-gray-400 border border-gray-400 dark:border-0"></i>
+    </a>
+    <div x-show="searchOpen">
+      {{> search}}
+    </div>
   </div>
   {{! Menu }}
   <nav
@@ -23,22 +30,15 @@
     x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" {{!-- hide when click away on mobile --}}
     @click.away="nav = window.innerWidth >= 1024">
-
-    <a @click="searchOpen = true"
-      class="px-4 py-2 lg:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
-      <i class="fas fa-search fa-1x"></i>
-      Tìm kiếm
-
-    </a>
-
-    <div x-show="searchOpen">
-      {{> search}}
-    </div>
-
     <a href="/danh-sach"
       class="px-4 py-2 lg:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
+      <i class="fas fa-search fa-1x"></i>
+      Tìm kiếm nâng cao
+    </a>
+    <a href="/categories"
+      class="px-4 py-2 lg:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-list fa-1x"></i>
-      Danh sách phim
+      Thể loại
     </a>
     <a href="/shop" class="px-4 py-2 lg:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
       <i class="fas fa-store fa-1x"></i>

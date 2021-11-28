@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Episode from "./episode.model";
 
 const seasonSchema = new mongoose.Schema({
   name: {

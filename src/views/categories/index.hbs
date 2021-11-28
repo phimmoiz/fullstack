@@ -1,0 +1,54 @@
+<div id="grid">
+  <div class="grid-sizer"></div>
+
+  {{#each categories}}
+  <a href="/categories/{{slug}}" class="block grid-item random-width float-left">
+    <div class="p-2 shadow-md rounded-md bg-base-200 my-2 bg-gray-100 dark:bg-gray-700">
+      <h2 class="text-xl">{{title}}</h2>
+      <span class="text-sm mb-1 text-gray-400">{{description}}</span>
+
+      {{!-- {{#if movies.length}}
+      <div class="grid grid-cols-2 gap-2">
+        {{#each movies}}
+        <div class="p-2 shadow-md rounded-md bg-base-200 my-2 ">
+          <h2 class="text-xl">{{title}}</h2>
+          <span class="text-sm mb-1 text-gray-400">{{description}}</span>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}} --}}
+    </div>
+  </a>
+  {{/each}}
+</div>
+
+<style>
+  /* fluid 5 columns */
+
+  .grid-sizer {
+    width: 98%;
+  }
+
+  /*md screen*/
+  @media screen and (min-width: 768px) {
+
+    .grid-sizer {
+      width: 20%;
+    }
+  }
+
+  #grid {
+    margin: 0 auto;
+  }
+</style>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+<script>
+  const $grid = $("#grid");
+
+  $grid.masonry({
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    fitWidth: true
+  });
+</script>

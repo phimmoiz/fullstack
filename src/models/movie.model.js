@@ -73,7 +73,7 @@ const movieSchema = new mongoose.Schema({
 movieSchema.pre("save", async function (next) {
   // update category
 
-  console.log("categories", this.categories);
+  // console.log("categories", this.categories);
   if (this.categories) {
     this.categories.forEach(async (category) => {
       // add movie to category if not exist
@@ -84,7 +84,7 @@ movieSchema.pre("save", async function (next) {
         cat.save();
       }
 
-      console.log(cat);
+      // console.log(cat);
     });
   }
   next();

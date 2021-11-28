@@ -1,15 +1,47 @@
 {{#> admin}}
 <div class="p-2">
-  {{! List all category from categories }}
   <h3 class="text-lg mb-2">
     Movies
+    {{!-- button to uncollapse all --}}
+    <button class="btn btn-sm btn-primary ml-2" @click="">
+      <i class="fas fa-angle-double-down"></i>
+    </button>
   </h3>
+
   <ul class="list-inside list-none flex flex-col gap-1">
     {{#each categories}}
-    <li class="p-2 border border-pink-400 rounded">
-      <a href="/categories/{{this.slug}}">
-        {{this.title}}
-      </a>
+    <li x-data="{ show: true }">
+      <div data-testid="category-item"
+        class="rounded flex items-center bg-pink-100 dark:bg-gray-700 hover:bg-pink-200 dark:hover:bg-pink-500 p-2"
+        @click="show = !show">
+        <span class="flex-grow">
+          {{this.title}}
+        </span>
+
+        {{!-- Chevron down --}}
+        <i class="fas fa-chevron-down ml-2" :class="show ? 'rotate-180' : ''"></i>
+      </div>
+
+      {{!-- List all movies in category --}}
+      <ul class="list-inside list-none flex flex-col gap-1" x-show="show">
+        {{#each movies}}
+        <li class="pl-6 flex items-center p-2 hover:bg-pink-200 dark:hover:bg-pink-500">
+          <span class="mr-2">
+            {{this.title}}
+          </span>
+
+          {{!-- Delete movie --}}
+          <form action="/admin/movies/{{this.id}}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button type="submit" class="text-red-500 hover:text-red-700">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </form>
+        </li>
+        {{/each}}
+      </ul>
+
     </li>
     {{/each}}
   </ul>
@@ -96,6 +128,7 @@
     });
 
   }
+
 </script>
 <style>
   @keyframes fadeIn {

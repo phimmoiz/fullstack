@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Season from "./season.model";
+import { isUrl } from "../utils/";
 
 const episodeSchema = new mongoose.Schema({
   title: {
@@ -47,19 +49,28 @@ const episodeSchema = new mongoose.Schema({
   },
 });
 
-// Remove category from movie reference to
-categorySchema.pre("remove", async function (next) {
+episodeSchema.pre("save", function (next) {
+  this.lastUpdate = new Date();
+  next();
+});
+
+episodeSchema.pre("update", function (next) {
+  this.lastUpdate = new Date();
+  next();
+});
+
+episodeSchema.pre("remove", function (next) {
   try {
-    await this.model("Movie").updateMany(
-      { categories: this._id },
-      { $pull: { categories: this._id } }
+    Season.updateMany(
+      { episodes: this._id },
+      { $pull: { episodes: this._id } }
     );
-    next();
   } catch (error) {
     next(error);
   }
+  next();
 });
 
-const Season = mongoose.model("season", seasonSchema);
+const Episode = mongoose.model("episode", episodeSchema);
 
-export default Season;
+export default Episode;

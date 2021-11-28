@@ -7,7 +7,7 @@ const router = Router();
 router.post("*", requireAdmin);
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     const { title, description, slug } = req.body;
@@ -27,6 +27,19 @@ router.post("/", async (req, res) => {
     // });
   } catch (err) {
     res.json({ success: false, message: err.message });
+  }
+});
+
+router.get("/", async (req, res, next) => {
+  try {
+    const categories = await Category.find().populate("movies");
+
+    res.render("categories/index", {
+      title: "Danh sách chuyên mục",
+      categories,
+    });
+  } catch (err) {
+    next(createError(403, err));
   }
 });
 

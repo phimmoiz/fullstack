@@ -7,7 +7,7 @@
         class="w-full object-contain transform hover:scale-110 transition-transform duration-400" alt="" />
     </div>
     <div class="col-span-4 p-2 flex flex-col relative">
-      {{#ifEquals user.role "admin"}}
+      {{!-- {{#ifEquals user.role "admin"}}
       <div id="filmAdmin">
         <span onclick="editFilmClickHandler()"
           class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white absolute rounded-lg right-0 top-0">
@@ -15,25 +15,26 @@
         </span>
       </div>
 
-      {{/ifEquals}}
+      {{/ifEquals}} --}}
       <div class="flex flex-col divide-y divide-base-300" {{#ifEquals user.role "admin" }} id="filmEditForm"
         {{/ifEquals}}>
         <p class="p-2 text-base-content text-lg">{{movie.title}} - {{movie.englishTitle}}</p>
-        <p class="p-2 text-base-content">Mới cập nhật:
-          <a class="halim-episode" href="/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"><span
+        <div class="p-2 text-base-content">Mới cập nhật:
+          {{!-- <a class="halim-episode" href="/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"><span
               class="bg-accent p-2 shadow-sm text-white font-bold rounded hover:bg-success transition duration-300">{{movie.newestEpisode}}</span></a>
-        </p>
-        <p class="p-2 text-base-content">
+          --}}
+        </div>
+        <div class="p-2 text-base-content">
           Tình trạng:
           <span class="font-bold">
             {{movie.status}}
           </span>
-        </p>
-        <p class="p-2 text-base-content">
+        </div>
+        <div class="p-2 text-base-content">
           <span class="title-year">Năm:
             <a href="/release/{{releaseYear}}/" rel="tag" class="font-bold">{{movie.releaseYear}}</a></span>
-        </p>
-        <p class="p-2 text-base-content">Thể loại:
+        </div>
+        <div class="p-2 text-base-content">Thể loại:
           {{#each movie.categories}}
 
           <a href="/categories/{{slug}}/" rel="tag"
@@ -41,71 +42,29 @@
             title="{{description}}">{{title}}</a>
 
           {{/each}}
-        </p>
-        <p class="p-2 ">Quốc gia: <a href="/country/my" title="Mỹ" class="font-bold">Mỹ</a></p>
+        </div>
+        <div class="p-2">Quốc gia: <a href="/country/my" title="Mỹ" class="font-bold">Mỹ</a></div>
 
-      </div>
-      <div class="ratings_wrapper">
-        <div class="halim_imdbrating taq-score" itemprop="aggregateRating" itemscope=""
-          itemtype="http://schema.org/AggregateRating">
-          <span class="hidden" itemprop="name">Giải Cứu ‘Guy’ – Free Guy</span>
-          <span class="hidden" itemprop="description">Giải Cứu 'Guy' - Free Guy,
-            Free Guy 2021 Full Guy – Nhân viên giao dịch ngân hàng, phát hiện
-            anh ấy thực chất là người chơi nền trong trò chơi điện tử thế giới
-            mở. Guy quyết định trở thành người anh hùng và viết lại câu chuyện
-            của chính mình. Giờ đây, trong […]</span>
-          <span class="score" itemprop="ratingValue">
-            <i class="fas fa-star">
-            </i>
-
-            4.35</span><i>/</i>
-          <span class="max-ratings" itemprop="bestRating">5</span>
-          <br>
+        {{!-- Overview --}}
+        <div class="p-2">
+          <i class="fas fa-star">
+          </i>
+          4.35<i>/</i>5
+        </div>
+        <div class="p-2">
           <i class="fas fa-comment">
           </i>
-          <span class="total_votes" itemprop="ratingCount">108</span><span class="vote-txt"> đánh giá</span>
-          <meta itemprop="worstRating" content="1" />
-        </div>
-        <div class="rate-this">
-          <div data-rate="86.907407407407" data-id="102379" class="user-rate user-rate-active">
-            <span class="user-rate-image post-large-rate stars-large">
-              <span style="width: 86.907407407407%"></span>
-            </span>
-          </div>
+          108 đánh giá
         </div>
       </div>
-      {{!-- <div class="justify-self-end my-2">
-        <select class="select select-bordered select-success w-full max-w-xs">
-          <option disabled="disabled" selected="selected">Chọn tập</option>
-          <option>Tập 1</option>
-          <option>Tập 2</option>
-          <option>Tập 3</option>
-          <option>Tập 4</option>
-        </select>
 
 
-
-      </div> --}}
     </div>
   </div>
 
   <h2 class="text-xl font-bold mt-4">Mô tả</h2>
   <p class="px-2" id="description">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
-    perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
-    tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
-    perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
-    tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
-    perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
-    tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
-    perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
-    tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
-    perferendis excepturi ex unde voluptates, tempora aliquid quam eius quae
-    tenetur non porro deleniti libero error beatae. Pariatur sunt aliquam illo.
+    {{movie.description}}
   </p>
 </div>
 
@@ -160,5 +119,10 @@
 <script>
   function editFilmClickHandler(e) {
     console.log(e);
+
+    // turn all p to input
+    $("#filmEditForm").find("p").each(function () {
+      $(this).replaceWith(`<input type="text" name="${$(this).attr("name")}" value="${$(this).text()}">`);
+    });
   }
 </script>

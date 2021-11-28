@@ -11,20 +11,27 @@
 
   .tabs {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    grid-gap: 0.25rem;
+    @apply border-b border-black;
   }
 
   .tabs .tab-lifted {
     border: 1px solid;
-    border-width: 0 0px 1px 0px;
-    padding: 0 0.5rem;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-width: 1px 1px 0px 1px;
+    @apply px-4;
+  }
+
+  .tabs .tab-lifted:hover {
+    @apply bg-pink-200 dark:bg-pink-500;
   }
 
   .tabs .tab-active {
-    border: 1px solid;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-width: 1px 1px 0px 1px;
-    padding: 0 0.5rem;
+    @apply bg-fuchsia-300;
   }
 
   .btn {

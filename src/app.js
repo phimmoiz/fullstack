@@ -11,6 +11,7 @@ import { connect } from "./lib/mongodb";
 import csurf from "csurf";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import session from "express-session";
 
 //
 import cookie from "cookie";
@@ -36,6 +37,9 @@ hbs.registerPartials(
 hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
+
+// Session middleware
+app.use(session({secret: process.env.SESSION_SECRET || "MYSUPERSECRET", resave: false, saveUninitialized: false}));
 
 // Add body parser
 app.use(express.json());
@@ -94,6 +98,10 @@ io.on("connection", (socket) => {
     const cookies = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
     const token = cookies.token; // get token from the cookies
 
+    if(!token) {
+      return;
+    }
+
     let user = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!user) return; // TODO: Tell user that he is not authorized
@@ -108,7 +116,7 @@ io.on("connection", (socket) => {
           `[Message] User ${user.username} has just sent a meesage.`,
           message
         );
-        io.emit("chat message", msg, user.username, message.author.avatar);
+        io.emit("chat message", msg, user.username, message.author.avatar, message.time);
       })
       .catch((error) => {
         console.log("[message error]", error);

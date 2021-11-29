@@ -1,0 +1,70 @@
+<div class="grid grid-cols-5">
+  <div class="col-span-4">
+    <h1 class="text-2xl font-bold">Edit Movie</h1>
+
+    {{!-- Input to edit movie --}}
+    <form action="/admin/movies/{{movie.id}}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_method" value="PUT">
+      <input type="hidden" name="_token" value="{{ csrf_token }}">
+
+      {{!-- Movie title --}}
+      <div class="mb-4">
+        <label for="title" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+          Title
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-base-content text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+          id="title" type="text" name="title" value="{{movie.title}}" />
+      </div>
+
+      {{!-- Movie description --}}
+      <div class="mb-4">
+        <label for="description" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+          Description
+        </label>
+        <textarea
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-base-content text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+          id="description" name="description">{{movie.description}}</textarea>
+      </div>
+
+      {{!-- Movie image --}}
+      <div class="mb-4">
+        <label for="image" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+          Image
+        </label>
+
+        <div class="p-2 shadow-md">
+
+          <input type="hidden" role="uploadcare-uploader" name="image" />
+        </div>
+      </div>
+
+      {{!-- Movie trailer --}}
+      <div class="mb-4">
+        <label for="trailer" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+          Trailer
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-base-content text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+          id="trailer" type="text" name="trailer" value="{{movie.trailer}}" />
+      </div>
+
+
+  </div>
+  <div class="shadow-md">
+    <h2 class="text-lg">
+      Xem trước
+    </h2>
+
+    <div class="h-96">
+      {{> card image=movie.image title=movie.title englishTitle=movie.englishTitle slug=movie.slug }}
+    </div>
+
+    <div class="h-28">
+      {{> card image=movie.image title=movie.title englishTitle=movie.englishTitle slug=movie.slug }}
+    </div>
+  </div>
+</div>
+
+<script>UPLOADCARE_PUBLIC_KEY = "533d4b8f6a11de77ba81";</script>
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>

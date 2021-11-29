@@ -163,12 +163,12 @@ export const getSingleMovie = async (req, res) => {
       })
       .lean();
 
-    // Increase view count
-    increaseViewCount(movie._id);
-
     if (!movie) {
       throw new Error("Movie not found");
     }
+
+    // Increase view count
+    increaseViewCount(movie._id);
 
     res.render("movies/single-movie", { title: movie.title, movie });
   } catch (err) {

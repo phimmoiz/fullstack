@@ -36,6 +36,8 @@ router.get("/movies/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
+  const error = req.session?.error; 
+
   // get all category then populate movies, season, episode
   const categories = await Category.find({})
     .sort({ createdAt: -1 })
@@ -64,6 +66,7 @@ router.get("/movies/", async (req, res) => {
     categories,
     movieCount,
     csrfToken: req.csrfToken(),
+    error,
   });
 });
 
@@ -86,6 +89,32 @@ router.get("/movies/:slug", async (req, res) => {
       csrfToken: req.csrfToken(),
     });
   } catch (err) {
+    res.redirect("/admin/movies");
+  }
+});
+
+router.get("/movies/:slug/edit", async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    const movie = await Movie.findOne({ slug }).populate({
+      path: "seasons",
+      model: Season,
+      populate: {
+        path: "episodes",
+        model: Episode,
+      },
+    });
+
+    if (!movie) throw new Error("Movie not found");
+
+    res.render("admin/movie-edit", {
+      title: "Admin",
+      movie
+    });
+  }
+  catch (err) {
+    req.session.error = err.message;
     res.redirect("/admin/movies");
   }
 });

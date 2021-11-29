@@ -62,6 +62,15 @@
     </div>
   </div>
 
+  {{!-- Button add to favorite --}}
+  <div class="flex justify-start my-2">
+    <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+      onclick="addToFavorite('{{movie.slug}}')">
+      <i class="fas fa-heart"></i>
+      Thêm vào yêu thích
+    </button>
+  </div>
+
   <h2 class="text-xl font-bold mt-4">Mô tả</h2>
   <p class="px-2" id="description">
     {{movie.description}}
@@ -123,6 +132,25 @@
     // turn all p to input
     $("#filmEditForm").find("p").each(function () {
       $(this).replaceWith(`<input type="text" name="${$(this).attr("name")}" value="${$(this).text()}">`);
+    });
+  }
+
+  function addToFavorite(slug) {
+    $.ajax({
+      url: "/favorite",
+      type: "POST",
+      data: {
+        slug: slug,
+        _csrf: `{{ _csrfToken }}`
+      },
+      success: function (data) {
+        console.log('addToFavorite', data);
+        if (data.status == "success") {
+          alert("Đã thêm vào yêu thích");
+        } else {
+          alert("Đã có trong danh sách yêu thích");
+        }
+      }
     });
   }
 </script>

@@ -12,6 +12,7 @@ import movieRoute from "./movies.route";
 import profileRoute from "./profile.route";
 import homeRoute from "./home.route";
 import messagesRoute from "./messages.route";
+import favoriteRoute from "./favorite.route";
 
 const router = express.Router();
 
@@ -64,6 +65,10 @@ const defaultRoutes = [
   {
     path: "/messages",
     route: messagesRoute,
+  },
+  {
+    path: "/favorite",
+    route: favoriteRoute,
   },
   {
     path: "/",

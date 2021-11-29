@@ -1,0 +1,46 @@
+
+<div class="grid">
+  <div class="grid-sizer"></div>
+  {{#each favoriteMovies}}
+    <div class="grid-item">
+      {{> card englishTitle=englishTitle title=title image=image slug=slug}}
+    </div>
+  {{/each}}
+</div>
+
+<style>
+  .grid {
+    margin: 0 auto;
+  }
+
+  /* fluid 5 columns */
+  .grid-sizer,
+  .grid-item { width: 19%; }
+
+  .grid-item {
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 600px) {
+    .grid-sizer,
+    .grid-item { width: 40%; }
+  }
+
+  /* 2 columns */
+  .grid-item--width2 { width: 40%; }
+</style>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script>
+  $('.grid').masonry({
+      // set itemSelector so .grid-sizer is not used in layout
+  itemSelector: '.grid-item',
+  // use element for option
+  columnWidth: '.grid-sizer',
+  percentPosition: true,
+  gutter: 10,
+  fitWidth: true
+
+
+
+  });
+</script>

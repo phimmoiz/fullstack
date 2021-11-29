@@ -28,10 +28,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-  // create authenticate function
-  authenticate: function (password) {
-    return this.password === password;
-  },
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Movie",
+    },
+  ],
 });
 
 // create user model

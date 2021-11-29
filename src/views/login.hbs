@@ -35,8 +35,10 @@
     </button>
     <div class="mt-2 flex gap-2">
       {{! Login with Facebook }}
-      <button href="/auth/facebook" class="btn btn-sm bg-facebook text-white hover:bg-opacity-75">
-        <i class="fab fa-facebook-square inline-block "></i>
+      <button 
+      onclick="loginWithFacebook(event)"
+      class="btn btn-sm bg-facebook text-white hover:bg-opacity-75">
+        <i class="fab fa-facebook-square inline-block"></i>
         Đăng nhập bằng Facebook
       </button>
       {{! Login with Google }}

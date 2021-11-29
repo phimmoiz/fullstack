@@ -24,7 +24,7 @@ router.post("/changepassword", async (req, res) => {
 
     const user = await User.findById(userId);
 
-    if (!user.authenticate(oldPassword)) {
+    if (user.password == oldPassword) {
       throw new Error("Mật khẩu cũ không chính xác");
     }
     if (newPassword !== confirmPassword) {

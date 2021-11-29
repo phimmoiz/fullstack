@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  // create authenticate function
+  authenticate: function (password) {
+    return this.password === password;
+  },
 });
 
 // create user model

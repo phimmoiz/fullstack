@@ -6,6 +6,10 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  englishTitle: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
     required: true,
@@ -21,6 +25,10 @@ const movieSchema = new mongoose.Schema({
   premiere: {
     type: Date,
     required: true,
+  },
+  viewCount: {
+    type: Number,
+    default: 0,
   },
   description: {
     type: String,
@@ -53,13 +61,19 @@ const movieSchema = new mongoose.Schema({
       ref: "Category",
     },
   ],
+  seasons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Season",
+    },
+  ],
 });
 
 // set pre save for movieSchema
 movieSchema.pre("save", async function (next) {
   // update category
 
-  console.log("categories", this.categories);
+  // console.log("categories", this.categories);
   if (this.categories) {
     this.categories.forEach(async (category) => {
       // add movie to category if not exist
@@ -70,7 +84,7 @@ movieSchema.pre("save", async function (next) {
         cat.save();
       }
 
-      console.log(cat);
+      // console.log(cat);
     });
   }
   next();

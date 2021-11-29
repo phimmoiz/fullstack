@@ -1,14 +1,17 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
+import csrf from "csurf";
+
+var csrfProtection = csrf({ cookie: true });
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.render("login", { title: "Đăng nhập" });
+router.get("/", csrfProtection, (req, res) => {
+  res.render("login", { title: "Đăng nhập", csrfToken: req.csrfToken() });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", csrfProtection, async (req, res) => {
   try {
     const { email, password } = req.body;
 

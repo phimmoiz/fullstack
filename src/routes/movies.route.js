@@ -14,9 +14,7 @@ import {
 
 const router = Router();
 
-router.use(requireAdmin);
-
-router.post("/", postMovie);
+router.post("/", requireAdmin, postMovie);
 
 router.get("/", getMovies);
 router.get("/ranking", getTopMovies);

@@ -59,7 +59,63 @@ router.get("/movies/", async (req, res) => {
   // get movie count
   const movieCount = await Movie.countDocuments();
 
-  res.render("admin/movies", { title: "Admin", categories, movieCount });
+  res.render("admin/movies", {
+    title: "Admin",
+    categories,
+    movieCount,
+    csrfToken: req.csrfToken(),
+  });
+});
+
+router.get("/movies/:slug", async (req, res) => {
+  try {
+    const movie = await Movie.findOne({ slug: req.params.slug }).populate({
+      path: "seasons",
+      model: Season,
+      populate: {
+        path: "episodes",
+        model: Episode,
+      },
+    });
+
+    if (!movie) throw new Error("Movie not found");
+
+    res.render("admin/movie", {
+      title: "Admin",
+      movie,
+      csrfToken: req.csrfToken(),
+    });
+  } catch (err) {
+    res.redirect("/admin/movies");
+  }
+});
+
+router.post("/movies/:slug", async (req, res) => {
+  try {
+    const movie = await Movie.findOne({ slug: req.params.slug });
+
+    if (!movie) throw new Error("Movie not found");
+
+    const { title, description, year, rating, duration, trailer } = req.body;
+
+    await Movie.findByIdAndUpdate(movie._id, {
+      title,
+      description,
+      year,
+      rating,
+      duration,
+      trailer,
+    });
+
+    res.render("admin/movie", {
+      title: "Admin",
+      movie,
+      csrfToken: req.csrfToken(),
+      success: "Movie updated successfully",
+    });
+  } catch (err) {
+    res.redirect("/admin/movies");
+  }
 });
 
 router.get("/categories", async (req, res) => {

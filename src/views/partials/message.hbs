@@ -1,15 +1,32 @@
 <div class="flex">
+  <div class="w-24 h-24">
+    <div class="relative">
 
-  <div class="relative w-24 h-24">
-    <img class="rounded-full" src="http://daisyui.com/tailwind-css-component-profile-1@94w.png" />
-    <div class="before:contents w-6 h-6 border border-lime-600 bg-lime-400 absolute top-0 right-0 rounded-full">
+      <img class="rounded-full bg-gray-400" src="http://daisyui.com/tailwind-css-component-profile-1@94w.png"
+        test-id="avatar" />
+      <div class="before:contents border  bg-lime-400 absolute top-0 right-0 rounded-full shadow-md"
+        style="width: 15%; height: 15%; top: 7%; right:7%;">
+      </div>
     </div>
   </div>
 
   <div class="rounded bg-purple-300 p-1 relative flex-grow ml-4 text-black">
     <div style="clip-path: polygon(100% 0, 0% 100%, 100% 100%);" class="bg-purple-300 absolute w-4 h-4 top-4 -left-3">
-
     </div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    <div>
+      {{!-- <span class="text-xs text-green-400" test-id="status">
+        <i class="fas fa-circle" />
+      </span> --}}
+      <span class="text-xl" test-id="name">{{ user.name }}</span>
+      {{!-- online --}}
+    </div>
+    <div class="flex flex-col justify-between h-full">
+      <p test-id="content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+
+      <div class="text-xs text-gray-500 place-self-end" test-id="time">
+      </div>
+    </div>
   </div>
 </div>

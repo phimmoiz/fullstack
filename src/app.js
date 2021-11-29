@@ -8,6 +8,14 @@ import cookieParser from "cookie-parser";
 import createError from "http-errors";
 import { checkAuth } from "./middlewares/auth.middleware";
 import { connect } from "./lib/mongodb";
+import csurf from "csurf";
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+//
+import cookie from "cookie";
+import jwt from "jsonwebtoken";
+import Message from "./models/message.model";
 
 require("dotenv").config();
 
@@ -35,6 +43,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // cookie parser
 app.use(cookieParser());
+app.use(csurf({ cookie: true }));
+app.use((req, res, next) => {
+  res.locals._csrfToken = req.csrfToken();
+  next();
+});
 
 // Mongodb connect
 connect();
@@ -72,6 +85,37 @@ app.use(function (err, req, res, next) {
   res.render("error", { title: "Error" });
 });
 
-app.listen(PORT, () => {
+// SocketIO
+const server = createServer(app);
+const io = new Server(server, {});
+
+io.on("connection", (socket) => {
+  socket.on("chat message", (msg) => {
+    const cookies = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
+    const token = cookies.token; // get token from the cookies
+
+    let user = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!user) return; // TODO: Tell user that he is not authorized
+
+    Message.create({
+      author: mongoose.Types.ObjectId(user.id),
+      content: msg,
+    })
+      .then((message) => message.populate("author", "avatar"))
+      .then((message) => {
+        console.log(
+          `[Message] User ${user.username} has just sent a meesage.`,
+          message
+        );
+        io.emit("chat message", msg, user.username, message.author.avatar);
+      })
+      .catch((error) => {
+        console.log("[message error]", error);
+      });
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`[server] Server running at http://localhost:${PORT}`);
 });

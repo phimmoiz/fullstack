@@ -855,11 +855,11 @@ video {
 .mb-2 {
 	margin-bottom: 0.5rem;
 }
-.mr-2 {
-	margin-right: 0.5rem;
-}
 .mt-3 {
 	margin-top: 0.75rem;
+}
+.mr-2 {
+	margin-right: 0.5rem;
 }
 .ml-2 {
 	margin-left: 0.5rem;
@@ -915,11 +915,17 @@ video {
 .h-96 {
 	height: 24rem;
 }
+.h-auto {
+	height: auto;
+}
 .h-0 {
 	height: 0px;
 }
 .h-4 {
 	height: 1rem;
+}
+.h-40 {
+	height: 10rem;
 }
 .h-8 {
 	height: 2rem;
@@ -936,11 +942,11 @@ video {
 .h-44 {
 	height: 11rem;
 }
-.h-40 {
-	height: 10rem;
-}
 .h-36 {
 	height: 9rem;
+}
+.max-h-10 {
+	max-height: 2.5rem;
 }
 .max-h-96 {
 	max-height: 24rem;
@@ -965,6 +971,9 @@ video {
 }
 .w-1\/3 {
 	width: 33.333333%;
+}
+.w-11\/12 {
+	width: 91.666667%;
 }
 .w-8 {
 	width: 2rem;
@@ -1132,6 +1141,9 @@ video {
 .place-self-start {
 	place-self: start;
 }
+.place-self-end {
+	place-self: end;
+}
 .overflow-hidden {
 	overflow: hidden;
 }
@@ -1180,6 +1192,9 @@ video {
 .border-b {
 	border-bottom-width: 1px;
 }
+.border-l-8 {
+	border-left-width: 8px;
+}
 .border-pink-400 {
 	--tw-border-opacity: 1;
 	border-color: rgba(244, 114, 182, var(--tw-border-opacity));
@@ -1196,13 +1211,13 @@ video {
 	--tw-border-opacity: 1;
 	border-color: rgba(244, 244, 245, var(--tw-border-opacity));
 }
+.border-lime-400 {
+	--tw-border-opacity: 1;
+	border-color: rgba(163, 230, 53, var(--tw-border-opacity));
+}
 .border-gray-400 {
 	--tw-border-opacity: 1;
 	border-color: rgba(161, 161, 170, var(--tw-border-opacity));
-}
-.border-lime-600 {
-	--tw-border-opacity: 1;
-	border-color: rgba(101, 163, 13, var(--tw-border-opacity));
 }
 .border-fuchsia-300 {
 	--tw-border-opacity: 1;
@@ -1275,6 +1290,10 @@ video {
 .bg-black {
 	--tw-bg-opacity: 1;
 	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+.bg-gray-400 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(161, 161, 170, var(--tw-bg-opacity));
 }
 .bg-purple-300 {
 	--tw-bg-opacity: 1;
@@ -1488,6 +1507,14 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(63, 63, 70, var(--tw-text-opacity));
 }
+.text-green-400 {
+	--tw-text-opacity: 1;
+	color: rgba(74, 222, 128, var(--tw-text-opacity));
+}
+.text-gray-500 {
+	--tw-text-opacity: 1;
+	color: rgba(113, 113, 122, var(--tw-text-opacity));
+}
 .text-gray-900 {
 	--tw-text-opacity: 1;
 	color: rgba(24, 24, 27, var(--tw-text-opacity));
@@ -1677,6 +1704,11 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(161, 161, 170, var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-100:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(244, 244, 245, var(--tw-bg-opacity));
+}
+
 .hover\:bg-opacity-95:hover {
 	--tw-bg-opacity: 0.95;
 }
@@ -1703,9 +1735,12 @@ html[data-theme="dark"] .card-badge {
 	color: rgba(45, 212, 191, var(--tw-text-opacity));
 }
 
-.hover\:text-gray-700:hover {
-	--tw-text-opacity: 1;
-	color: rgba(63, 63, 70, var(--tw-text-opacity));
+.hover\:text-opacity-80:hover {
+	--tw-text-opacity: 0.8;
+}
+
+.hover\:text-opacity-70:hover {
+	--tw-text-opacity: 0.7;
 }
 
 .hover\:underline:hover {
@@ -1718,6 +1753,11 @@ html[data-theme="dark"] .card-badge {
 
 .hover\:opacity-80:hover {
 	opacity: 0.8;
+}
+
+.focus\:text-gray-700:focus {
+	--tw-text-opacity: 1;
+	color: rgba(63, 63, 70, var(--tw-text-opacity));
 }
 
 .focus\:outline-none:focus {
@@ -1742,6 +1782,11 @@ html[data-theme="dark"] .card-badge {
 .dark .dark\:border-purple-600 {
 	--tw-border-opacity: 1;
 	border-color: rgba(147, 51, 234, var(--tw-border-opacity));
+}
+
+.dark .dark\:border-lime-600 {
+	--tw-border-opacity: 1;
+	border-color: rgba(101, 163, 13, var(--tw-border-opacity));
 }
 
 .dark .dark\:bg-pink-400 {
@@ -1814,6 +1859,10 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
 }
 
+.dark .dark\:hover\:bg-opacity-80:hover {
+	--tw-bg-opacity: 0.8;
+}
+
 @media (min-width: 768px) {
 
 	.md\:fixed {
@@ -1881,6 +1930,10 @@ html[data-theme="dark"] .card-badge {
 		display: none;
 	}
 
+	.lg\:w-96 {
+		width: 24rem;
+	}
+
 	.lg\:grid-cols-4 {
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
@@ -1901,7 +1954,22 @@ html[data-theme="dark"] .card-badge {
 		gap: 0.5rem;
 	}
 
+	.lg\:divide-y-0 > :not([hidden]) ~ :not([hidden]) {
+		--tw-divide-y-reverse: 0;
+		border-top-width: calc(0px * calc(1 - var(--tw-divide-y-reverse)));
+		border-bottom-width: calc(0px * var(--tw-divide-y-reverse));
+	}
+
 	.lg\:rounded-full {
 		border-radius: 9999px;
+	}
+
+	.lg\:border {
+		border-width: 1px;
+	}
+
+	.lg\:border-gray-400 {
+		--tw-border-opacity: 1;
+		border-color: rgba(161, 161, 170, var(--tw-border-opacity));
 	}
 }

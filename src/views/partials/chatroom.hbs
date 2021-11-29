@@ -1,38 +1,94 @@
-<div class="p-2 col-span-2" x-data="{chat: true, pin: false}"
-  :class="{'fixed bottom-0 right-4 z-50 bg-white p-0 rounded-t-xl': pin}">
-  <h2 class="flex text-xl items-center dark:bg-purple-700 p-2 rounded-t-md">
+<div class="p-2 col-span-2 h-auto" x-data="{
+  chat: localStorage.getItem('chat') ?  JSON.parse(localStorage.getItem('chat')) : true, 
+  pin: localStorage.getItem('pin') ?  JSON.parse(localStorage.getItem('pin')) : false,
+  }" :class="{
+    'fixed bottom-0 right-4 z-50 bg-white p-0 rounded-t-xl w-11/12 lg:w-96': pin, 
+    'max-h-10': !chat,
+  }">
+  <h2 class="flex text-xl items-center dark:bg-purple-700 dark:hover:bg-opacity-80 p-2 rounded-t-md"
+    @click="chat = !chat, localStorage.setItem('chat', JSON.stringify(chat))">
     <span class="flex-grow">
       {{!-- icon size small --}}
       <i class="fas fa-comments fa-xs p-2"></i>
       Tâm sự tuổi hồng
     </span>
     {{!-- pin --}}
-    <span class="mr-2">
+    {{!-- <span class="mr-2">
       <i class="fas fa-thumbtack fa-xs p-2 transform hover:-translate-y-0.5 duration-200"
         @click="pin = !pin, localStorage.setItem('pin', pin)"></i>
-    </span>
+    </span> --}}
 
-    <i @click="chat = !chat, localStorage.setItem('chat', chat)"
-      class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"
+    <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"
       :class="{'rotate-180': !chat}"></i>
 
   </h2>
 
-  <div class="rounded-b-md border dark:border-purple-600 flex flex-col gap-2 max-h-96 overflow-y-scroll p-2"
-    :class="{'h-0': !chat}" x-cloak x-show="chat" x-transition:enter="transition ease-out duration-500"
+  <div class="rounded-b-md border dark:border-purple-600 flex flex-col gap-2 max-h-96 overflow-y-scroll p-2" {{!--
+    :class="{'h-0': !chat}" --}} x-cloak {{!-- x-show="chat" --}} x-transition:enter="transition ease-out duration-500"
     x-transition:enter-start="opacity-0 transform scale-90" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
-    <form action="#">
+    <form action="#" x-data="{content: ''}" @submit.prevent="sendMessage(content)">
       <input type="text" class="input my-2 w-full text-black"
-        placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)">
+        placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)" x-model="content">
       <button class="button btn-purple">Gửi</button>
     </form>
-    {{>message}}
-    {{>message}}
-    {{>message}}
-    {{>message}}
-    {{>message}}
-    {{>message}}
+
+    <div id="chats" class="grid gap-1 grid-cols-1"></div>
   </div>
 </div>
+
+<div id="messageBoilerplate" class="hidden">
+  {{>message}}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"
+  integrity="sha512-nYuHvSAhY5lFZ4ixSViOwsEKFvlxHMU2NHts1ILuJgOS6ptUmAGt/0i5czIgMOahKZ6JN84YFDA+mCdky7dD8A=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{{!-- momentjs 2.29 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+  integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  // listen to new message from /socket/message
+  const socket = io();
+
+  function sendMessage(content) {
+    socket.emit("chat message", content);
+  }
+
+  socket.on("chat message", function (content, username, avatar) {
+    console.log('chat message triggered', content, username, avatar);
+    addMessage({
+      avatar,
+      name: username,
+      content,
+    });
+  });
+
+  function addMessage(message) {
+    console.log('addmessage', message)
+    var template = $("#messageBoilerplate").children().first().clone();
+
+    //add to #chat
+    template.find("[test-id='avatar']").attr('src', message.avatar);
+    template.find("[test-id='name']").text(message.name);
+    template.find("[test-id='content']").text(message.content);
+    template.find("[test-id='time']").text(moment().format('HH:mm'));
+
+    $("#chats").append(template);
+  }
+
+  // fetch messages
+  jQuery.ajax({
+    url: '/messages',
+    type: 'GET',
+    success: function ({ messages }) {
+      messages.forEach(function (message) {
+        addMessage(message);
+      });
+    }
+  });
+</script>

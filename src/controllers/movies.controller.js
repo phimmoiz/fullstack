@@ -39,7 +39,7 @@ export const getNewMovies = async ({
     };
   }
 
-  console.log(query);
+  // console.log(query);
 
   // populate if needed
   const movies = await Movie.find(query)
@@ -99,7 +99,7 @@ export const getMovies = async (req, res, next) => {
   // by category
   const categorySlugs = req.query.categorySlugs || [];
 
-  console.log("categorySlugs", categorySlugs);
+  // console.log("categorySlugs", categorySlugs);
 
   try {
     const movies = await getNewMovies({

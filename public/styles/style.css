@@ -929,6 +929,9 @@ video {
 .ml-4 {
 	margin-left: 1rem;
 }
+.mt-6 {
+	margin-top: 1.5rem;
+}
 .box-border {
 	box-sizing: border-box;
 }

@@ -379,16 +379,16 @@ export const editMovie = async (req, res) => {
     //res.json({ success: true, data: movie });
     // Get Data from body
     const {
-      description, 
-      title, 
-      image, 
-      time, 
-      trailer, 
-      premiere, 
-      releaseYear, 
-      rating, 
-      imdbId, 
-      englishTitle, 
+      description,
+      title,
+      image,
+      time,
+      trailer,
+      premiere,
+      releaseYear,
+      rating,
+      imdbId,
+      englishTitle,
     } = req.body;
     console.log(req.body);
     let query = {};
@@ -397,40 +397,34 @@ export const editMovie = async (req, res) => {
     }
     if (!title) {
       throw new Error("Not have title movie");
-    }
-    else {
+    } else {
       query.title = title;
     }
     if (!image) {
       throw new Error("Not have image url");
-    }
-    else {
+    } else {
       query.image = image;
     }
     if (!time) {
       throw new Error("Not have time of movie");
-    }
-    else {
+    } else {
       query.time = time;
     }
     if (!trailer) {
       throw new Error("Not have trailer url");
-    }
-    else {
+    } else {
       query.trailer = trailer;
     }
 
     if (!premiere) {
       throw new Error("Not have premiere date");
-    }
-    else {
+    } else {
       query.premiere = premiere;
     }
 
     if (!releaseYear) {
       throw new Error("Not have release year");
-    }
-    else {
+    } else {
       query.releaseYear = releaseYear;
     }
     if (rating) {
@@ -441,12 +435,13 @@ export const editMovie = async (req, res) => {
     }
     if (!englishTitle) {
       throw new Error("Not have english title");
-    }
-    else {
+    } else {
       query.englishTitle = englishTitle;
     }
     // edit movie in db
-    const updatedMovie = await Movie.findOneAndUpdate({ slug }, query, { new: true });
+    const updatedMovie = await Movie.findOneAndUpdate({ slug }, query, {
+      new: true,
+    });
     res.redirect("/movies/" + slug);
   } catch (err) {
     //console.log(err);

@@ -39,7 +39,7 @@
 
 
   <div id="searchResult"
-    class="overflow-y-auto bg-white dark:bg-gray-700 text-base-content rounded-md mt-2 max-w-5xl z-50 mx-1 md:mx-auto">
+    class="overflow-y-auto bg-white dark:bg-gray-700 text-base-content rounded-md mt-2 max-w-5xl z-50 mx-1 md:mx-auto md:grid grid-cols-2">
   </div>
 </main>
 
@@ -64,14 +64,14 @@
 
           const $movie = $(`
             <a href="/movies/${slug}">
-              <div class="flex flex-col md:flex-row items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 border-b border-fuchsia-300">
+              <div class="flex flex-col md:flex-row items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 border-b border-fuchsia-300 bounceUp">
                 <img src="${image}" alt="${title}" class="w-40 h-64 bg-contain">
-                <div class="flex-grow">
-                  <div class="flex items-center">
+                <div class="flex-grow divide-y mb-2">
+                  <div class="">
                     <span class="font-bold">${title}</span>
-                    <span class="ml-2 text-opacity-80">${englishTitle}</span>
+                    <span class="text-opacity-80">${englishTitle}</span>
                   </div>
-                  <div class="text-opacity-70">
+                  <div class="text-opacity-70 line-clamp-3">
                     ${movie.description}
                   </div>
                 </div>

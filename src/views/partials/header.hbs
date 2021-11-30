@@ -11,7 +11,7 @@
   <div class="p-2 dark:text-white items-center gap-2 transform flex">
     <a href="/" class="flex items-center gap-1">
       {{!-- <i class="fas fa-circle fa-1x"></i> --}}
-      <span class="font-bold uppercase font-mono">
+      <span class="font-bold uppercase font-mono p-2 md:text-3xl hover:italic hover:underline">
         PhimmoiZ
       </span>
     </a>
@@ -31,17 +31,17 @@
     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" {{!-- hide when click away on mobile --}}
     @click.away="nav = window.innerWidth >= 1024">
     <a href="/danh-sach"
-      class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0">
+      class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0 hover:scale-105 transition transform">
       <i class="fas fa-search fa-1x"></i>
       Tìm kiếm nâng cao
     </a>
     <a href="/categories"
-      class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0">
+      class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0 hover:scale-105 transition transform">
       <i class="fas fa-list fa-1x"></i>
       Thể loại
     </a>
     <a href="/shop"
-      class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0">
+      class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0 hover:scale-105 transition transform">
       <i class="fas fa-store fa-1x"></i>
       Shop
     </a>

@@ -156,6 +156,19 @@
       opacity: 0;
     }
   }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .appear {
+    animation: appear var(--animation-appear, 0.5s) ease-out;
+  }
 }
 
 @layer utilities {

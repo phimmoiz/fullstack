@@ -754,6 +754,29 @@ video {
       opacity: 0;
     }
   }
+@-webkit-keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+@keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+.appear {
+    -webkit-animation: appear var(--animation-appear, 0.5s) ease-out;
+            animation: appear var(--animation-appear, 0.5s) ease-out;
+  }
+.visible {
+	visibility: visible;
+}
 .static {
 	position: static;
 }
@@ -836,6 +859,9 @@ video {
 .left-5 {
 	left: 1.25rem;
 }
+.z-\[-1\] {
+	z-index: -1;
+}
 .z-20 {
 	z-index: 20;
 }
@@ -844,6 +870,9 @@ video {
 }
 .z-40 {
 	z-index: 40;
+}
+.z-\[100\] {
+	z-index: 100;
 }
 .z-10 {
 	z-index: 10;
@@ -921,6 +950,9 @@ video {
 .mt-20 {
 	margin-top: 5rem;
 }
+.mt-40 {
+	margin-top: 10rem;
+}
 .mt-6 {
 	margin-top: 1.5rem;
 }
@@ -957,14 +989,17 @@ video {
 .h-6 {
 	height: 1.5rem;
 }
+.h-full {
+	height: 100%;
+}
 .h-96 {
 	height: 24rem;
 }
+.h-28 {
+	height: 7rem;
+}
 .h-5 {
 	height: 1.25rem;
-}
-.h-full {
-	height: 100%;
 }
 .h-10 {
 	height: 2.5rem;
@@ -986,6 +1021,9 @@ video {
 .h-4 {
 	height: 1rem;
 }
+.h-\[320px\] {
+	height: 320px;
+}
 .h-40 {
 	height: 10rem;
 }
@@ -1004,11 +1042,11 @@ video {
 .h-64 {
 	height: 16rem;
 }
-.max-h-10 {
-	max-height: 2.5rem;
-}
 .max-h-\[calc\(80vh\)\] {
 	max-height: calc(80vh);
+}
+.max-h-10 {
+	max-height: 2.5rem;
 }
 .min-h-screen {
 	min-height: 100vh;
@@ -1058,14 +1096,14 @@ video {
 .max-w-6xl {
 	max-width: 72rem;
 }
+.max-w-4xl {
+	max-width: 56rem;
+}
 .max-w-md {
 	max-width: 28rem;
 }
 .max-w-5xl {
 	max-width: 64rem;
-}
-.max-w-4xl {
-	max-width: 56rem;
 }
 .flex-initial {
 	flex: 0 1 auto;
@@ -1130,11 +1168,8 @@ video {
 .grid-cols-2 {
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.grid-cols-7 {
-	grid-template-columns: repeat(7, minmax(0, 1fr));
-}
-.flex-row {
-	flex-direction: row;
+.grid-cols-5 {
+	grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 .flex-row-reverse {
 	flex-direction: row-reverse;
@@ -1175,8 +1210,8 @@ video {
 .gap-4 {
 	gap: 1rem;
 }
-.gap-y-5 {
-	row-gap: 1.25rem;
+.gap-16 {
+	gap: 4rem;
 }
 .divide-x > :not([hidden]) ~ :not([hidden]) {
 	--tw-divide-x-reverse: 0;
@@ -1368,6 +1403,10 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(216, 180, 254, var(--tw-bg-opacity));
 }
+.bg-green-200 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(187, 247, 208, var(--tw-bg-opacity));
+}
 .bg-gray-900 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(24, 24, 27, var(--tw-bg-opacity));
@@ -1386,11 +1425,11 @@ video {
 .bg-opacity-70 {
 	--tw-bg-opacity: 0.7;
 }
-.bg-opacity-60 {
-	--tw-bg-opacity: 0.6;
-}
 .bg-opacity-80 {
 	--tw-bg-opacity: 0.8;
+}
+.bg-opacity-60 {
+	--tw-bg-opacity: 0.6;
 }
 .bg-gradient-to-t {
 	background-image: linear-gradient(to top, var(--tw-gradient-stops));
@@ -1673,6 +1712,12 @@ video {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 1;
 }
+.line-clamp-3 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
 .text-base-content {
 	--tw-text-opacity: 1;
 	color: rgba(0, 0, 0, var(--tw-text-opacity));
@@ -1814,6 +1859,14 @@ html[data-theme="dark"] .card-badge {
 	--tw-bg-opacity: 0.7;
 }
 
+.hover\:bg-opacity-90:hover {
+	--tw-bg-opacity: 0.9;
+}
+
+.hover\:italic:hover {
+	font-style: italic;
+}
+
 .hover\:text-red-700:hover {
 	--tw-text-opacity: 1;
 	color: rgba(185, 28, 28, var(--tw-text-opacity));
@@ -1852,6 +1905,11 @@ html[data-theme="dark"] .card-badge {
 .focus\:outline-none:focus {
 	outline: 2px solid transparent;
 	outline-offset: 2px;
+}
+
+.group:hover .group-hover\:rotate-\[360deg\] {
+	--tw-rotate: 360deg;
+	transform: var(--tw-transform);
 }
 
 .group:hover .group-hover\:scale-105 {
@@ -1911,6 +1969,11 @@ html[data-theme="dark"] .card-badge {
 .dark .dark\:bg-fuchsia-500 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(217, 70, 239, var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-green-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(21, 128, 61, var(--tw-bg-opacity));
 }
 
 .dark .dark\:text-white {
@@ -1987,6 +2050,10 @@ html[data-theme="dark"] .card-badge {
 		display: inline;
 	}
 
+	.md\:grid {
+		display: grid;
+	}
+
 	.md\:grid-cols-2 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
@@ -2022,6 +2089,11 @@ html[data-theme="dark"] .card-badge {
 
 	.md\:pb-0 {
 		padding-bottom: 0px;
+	}
+
+	.md\:text-3xl {
+		font-size: 1.875rem;
+		line-height: 2.25rem;
 	}
 }
 

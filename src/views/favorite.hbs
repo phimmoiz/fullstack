@@ -1,45 +1,26 @@
-
-<div class="grid">
-  <div class="grid-sizer"></div>
-  {{#each favoriteMovies}}
-    <div class="grid-item">
+<div class="shadow-lg p-2">
+  <h2 class="text-2xl font-bold">Yêu thích</h2>
+  <div id="container" class="relative">
+    {{#each favoriteMovies}}
+    <div class="h-48 absolute">
       {{> card englishTitle=englishTitle title=title image=image slug=slug}}
     </div>
-  {{/each}}
+    {{/each}}
+  </div>
 </div>
 
+<script src="https://spope.github.io/MiniMasonry.js/minimasonry.min.js"></script>
+
 <style>
-  .grid {
-    margin: 0 auto;
+  #container {
+    height: 600px;
+    margin-top: 1rem;
   }
-
-  /* fluid 5 columns */
-  .grid-sizer,
-  .grid-item { width: 19%; }
-
-  .grid-item {
-  }
-
-  @media (max-width: 600px) {
-    .grid-sizer,
-    .grid-item { width: 47%; }
-  }
-
-  /* 2 columns */
-  .grid-item--width2 { width: 40%; }
 </style>
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script>
-  $('.grid').masonry({
-      // set itemSelector so .grid-sizer is not used in layout
-  itemSelector: '.grid-item',
-  // use element for option
-  columnWidth: '.grid-sizer',
-  percentPosition: true,
-  gutter: 10,
-  fitWidth: true
-
-
+  var exampleDefault = new MiniMasonry({
+    container: document.querySelector('#container'),
+    minify: false
 
   });
 </script>

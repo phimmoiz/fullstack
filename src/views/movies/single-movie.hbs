@@ -63,6 +63,7 @@
   </div>
 
   {{!-- Button add to favorite --}}
+  {{#unless isFavorite}}
   <div class="flex justify-start my-2">
     <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
       onclick="addToFavorite('{{movie.slug}}')">
@@ -70,6 +71,19 @@
       Thêm vào yêu thích
     </button>
   </div>
+  {{else}}
+  {{!-- Remove from favorite --}}
+  <div class="flex justify-start my-2">
+    <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+      onclick="removeFromFavorite('{{movie.slug}}')">
+      <i class="fas fa-heart"></i>
+      Xóa khỏi yêu thích
+    </button>
+  </div>
+  {{/unless}}
+
+
+
 
   <h2 class="text-xl font-bold mt-4">Mô tả</h2>
   <p class="px-2" id="description">
@@ -145,11 +159,36 @@
       },
       success: function (data) {
         console.log('addToFavorite', data);
-        if (data.status == "success") {
+        if (data.success) {
           alert("Đã thêm vào yêu thích");
         } else {
           alert("Đã có trong danh sách yêu thích");
         }
+
+        //reload 
+        location.reload();
+      }
+    });
+  }
+
+  function removeFromFavorite(slug) {
+    $.ajax({
+      url: "/favorite",
+      type: "DELETE",
+      data: {
+        slug: slug,
+        _csrf: `{{ _csrfToken }}`
+      },
+      success: function (data) {
+        console.log('removeFromFavorite', data);
+        if (data.success) {
+          alert("Đã xoá khỏi yêu thích");
+        } else {
+          alert("Đã có trong danh sách yêu thích");
+        }
+
+        //reload
+        location.reload();
       }
     });
   }

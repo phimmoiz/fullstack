@@ -1,4 +1,5 @@
 import Movie from "../models/movie.model";
+import User from "../models/user.model";
 import Category from "../models/category.model";
 import Season from "../models/season.model";
 import createError from "http-errors";
@@ -152,7 +153,7 @@ export const getTopMovies = async (req, res, next) => {
   }
 };
 
-export const getSingleMovie = async (req, res) => {
+export const getSingleMovie = async (req, res, next) => {
   try {
     const { slug } = req.params;
 
@@ -167,10 +168,20 @@ export const getSingleMovie = async (req, res) => {
       throw new Error("Movie not found");
     }
 
+    const user = await User.findById(res.locals.user.id);
+
+    const isFavorite = user.favorites.some(
+      (movieId) => movieId.toString() === movie._id.toString()
+    );
+
     // Increase view count
     increaseViewCount(movie._id);
 
-    res.render("movies/single-movie", { title: movie.title, movie });
+    res.render("movies/single-movie", {
+      title: movie.title,
+      movie,
+      isFavorite,
+    });
   } catch (err) {
     next(createError(404, err.message));
   }

@@ -46,7 +46,7 @@ router.post("/", requireAuth, async (req, res, next) => {
       favorites: user.favorites,
     });
   } catch (err) {
-    next(createError(500, err));
+    res.json({ success: false, message: err.message });
   }
 });
 
@@ -69,7 +69,7 @@ router.delete("/", async (req, res, next) => {
       favorites: user.favorites,
     });
   } catch (err) {
-    next(createError(500, err));
+    res.json({ success: false, message: err.message });
   }
 });
 export default router;

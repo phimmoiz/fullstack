@@ -1,4 +1,4 @@
-<div class="grid grid-cols-5">
+<div class="grid grid-cols-1 md:grid-cols-5 gap-2">
   <div class="col-span-4">
     <h1 class="text-2xl font-bold">Edit Movie</h1>
 
@@ -13,7 +13,7 @@
           Title
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-base-content text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
           id="title" type="text" name="title" value="{{movie.title}}" />
       </div>
 
@@ -23,7 +23,7 @@
           Description
         </label>
         <textarea
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-base-content text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+          class="resize shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
           id="description" name="description">{{movie.description}}</textarea>
       </div>
 
@@ -45,7 +45,7 @@
           Trailer
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-base-content text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
           id="trailer" type="text" name="trailer" value="{{movie.trailer}}" />
       </div>
 

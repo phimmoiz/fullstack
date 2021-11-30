@@ -28,16 +28,14 @@
       </label>
       <input type="password" placeholder="Password" class="input input-bordered" name="password" />
     </div>
-    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+    <input type="hidden" name="_csrf" value="{{_csrfToken}}" />
     <button type="submit" class="btn btn-primary mt-2 hover:bg-opacity-75">
       Đăng
       nhập
     </button>
     <div class="mt-2 flex gap-2">
       {{! Login with Facebook }}
-      <button 
-      onclick="loginWithFacebook(event)"
-      class="btn btn-sm bg-facebook text-white hover:bg-opacity-75">
+      <button onclick="loginWithFacebook(event)" class="btn btn-sm bg-facebook text-white hover:bg-opacity-75">
         <i class="fab fa-facebook-square inline-block"></i>
         Đăng nhập bằng Facebook
       </button>

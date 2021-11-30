@@ -173,11 +173,13 @@ export const getSingleMovie = async (req, res, next) => {
       throw new Error("Movie not found");
     }
 
-    const user = await User.findById(res.locals.user.id);
-
-    const isFavorite = user.favorites.some(
-      (movieId) => movieId.toString() === movie._id.toString()
-    );
+    let isFavorite = false;
+    if (res.locals.user) {
+      const user = await User.findById(res.locals.user.id);
+      isFavorite = user.favorites.some(
+        (movieId) => movieId.toString() === movie._id.toString()
+      );
+    }
 
     // Increase view count
     increaseViewCount(movie._id);

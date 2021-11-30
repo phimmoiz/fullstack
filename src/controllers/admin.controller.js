@@ -63,7 +63,6 @@ export const moviePanelGetIndex = async (req, res) => {
     title: "Admin",
     categories,
     movieCount,
-    csrfToken: req.csrfToken(),
     error,
   });
 };
@@ -84,7 +83,6 @@ export const moviePanelGetMovie = async (req, res) => {
     res.render("admin/movie", {
       title: "Admin",
       movie,
-      csrfToken: req.csrfToken(),
     });
   } catch (err) {
     res.redirect("/admin/movies");
@@ -136,7 +134,6 @@ export const moviePanelPostMovie = async (req, res) => {
     res.render("admin/movie", {
       title: "Admin",
       movie,
-      csrfToken: req.csrfToken(),
       success: "Movie updated successfully",
     });
   } catch (err) {

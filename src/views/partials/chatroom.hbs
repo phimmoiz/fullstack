@@ -29,15 +29,14 @@
 
   </h2>
 
-  <div class="rounded-b-md flex flex-col gap-2 overflow-y-scroll p-2 bg-white max-h-96" data-testid="chatroom-content"
-    x-data="{content: ''}">
+  <div class="rounded-b-md gap-2 overflow-y-scroll p-2 bg-white max-h-[calc(80vh)] overflow-x-hidden"
+    data-testid="chatroom-content" x-data="{content: ''}">
 
-
-    <input type="text" class="input my-2 w-full text-black" minlength="10"
+    <textarea class="resize border rounded-md p-2 h-[fit-content] my-2 w-full max-w-[80%] text-black"
       placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)" x-model="content" {{!-- on enter key pressed --}}
-      @keydown.enter="sendMessageHandler(content)">
+      @keydown.enter="sendMessageHandler(content)"></textarea>
 
-    <div class="flex items-center gap-1 justify-between md:justify-start">
+    <div class="flex items-center gap-1 justify-between md:justify-start mb-1">
 
       <button class="btn btn-primary px-4" @click="sendMessageHandler(content)">
         <i class="fas fa-paper-plane"></i>
@@ -59,7 +58,7 @@
       </div>
     </div>
 
-    <div id="chats" class="grid gap-1 grid-cols-1"></div>
+    <div id="chats" class="flex flex-col gap-2"></div>
 
     {{!-- on scroll here, load more --}}
     <div class="flex justify-center items-center" x-show="chat">

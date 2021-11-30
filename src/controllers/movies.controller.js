@@ -40,21 +40,28 @@ export const getNewMovies = async ({
     };
   }
 
-  // console.log(query);
+  console.log(query, limit);
+  // console.log(await Movie.find(query).limit(parseInt(limit)));
 
   // populate if needed
   const movies = await Movie.find(query)
     .sort({
-      createdAt: sortByDate ? -1 : 1,
+      // createdAt: sortByDate ? -1 : 1,
+      _id: sortByDate ? -1 : 1,
       viewCount: sortByViews ? -1 : 1,
     })
+    .limit(parseInt(limit))
     .skip((page - 1) * limit)
-    .limit(limit)
-    .lean(lean);
+    .exec();
+  // .lean(lean);
 
-  if (populate) {
-    movies.populate({ path: "categories", model: Category });
-  }
+  // if (populate) {
+  //   movies.populate({ path: "categories", model: Category });
+  // }
+
+  // const result = await movies.exec();
+
+  // console.log(result);
 
   return movies;
 };
@@ -92,7 +99,7 @@ export const increaseViewCount = async (movieId) => {
 // Routing
 export const getMovies = async (req, res, next) => {
   // page
-  const page = req.query.page || 1;
+  const page = parseInt(req.query.page) || 1;
   // limit
   const limit = req.query.limit || 10;
   // by name
@@ -100,11 +107,9 @@ export const getMovies = async (req, res, next) => {
   // by category
   const categorySlugs = req.query.categorySlugs || [];
 
-  // console.log("categorySlugs", categorySlugs);
-
   try {
     const movies = await getNewMovies({
-      page,
+      page: page,
       limit,
       matchName,
       categorySlugs,

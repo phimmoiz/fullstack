@@ -10,8 +10,9 @@
     </div>
   </div>
 
-  <div class="rounded bg-purple-300 p-1 flex-grow ml-4 text-black relative bounceUp">
-    <div style="clip-path: polygon(100% 0, 0% 100%, 100% 100%);" class="bg-purple-300 absolute w-4 h-4 top-4 -left-3">
+  <div class="rounded bg-purple-300 p-1 flex-grow md:ml-4 text-black relative bounceUp box-border">
+    <div style="clip-path: polygon(100% 0, 0% 100%, 100% 100%);"
+      class="bg-purple-300 absolute w-4 h-4 top-4 -left-3 hidden md:block">
     </div>
     <div>
       {{!-- <span class="text-xs text-green-400" test-id="status">
@@ -21,7 +22,7 @@
       {{!-- online --}}
     </div>
     <div class="flex flex-col justify-between">
-      <p test-id="content" class="pb-6">
+      <p test-id="content" class="pb-6" style="overflow-wrap: anywhere">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
 

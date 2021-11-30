@@ -90,7 +90,7 @@
         </div> {{! End multi selection }}
 
         {{!-- Choose name --}}
-        <div class="my-2 p-1 flex flex-col items-center justify-center text-base-content bg-base-100 rounded">
+        <div class="my-2 p-1 flex items-center text-base-content bg-base-100 rounded justify-end">
           <label for="" class="text-sm">
             Tên
           </label>
@@ -109,7 +109,7 @@
     </div>
 
     <div id="result" class="grid gap-1 grid-cols-2 md:grid-cols-4"></div>
-    <div id="sumary w-full"></div>
+    <div id="sumary" class="w-full"></div>
   </div>
 </div>
 
@@ -119,14 +119,16 @@
 </div>
 
 <script>
-  function fetchApi({ categories = [], name = '', page = 1, limit = 10 }) {
-    jQuery.ajax({
+  const POST_LIMIT = 10;
+
+  function fetchApi({ categories = [], name = '', page = 1, limit = POST_LIMIT }) {
+    $.ajax({
       url: '{{url}}/movies/',
       type: 'GET',
       data: {
         categorySlugs: categories.map(item => item.slug),
         matchName: name,
-        page,
+        page: parseInt(page),
         limit
       },
       success: function ({ data, nextPage, length, page }) {
@@ -154,6 +156,13 @@
         // set float right
         const $sumary = $('#sumary');
 
+        $sumary.html('');
+
+        if (length === 0) {
+          $sumary.html(`<div class="text-center text-base-content">Không tìm thấy phim nào</div>`);
+
+          return;
+        }
         // Length
         $sumary.append(`<div class="flex flex-col items-center justify-center text-base-content bg-base-100 rounded">
           <label for="" class="">
@@ -161,16 +170,19 @@
           </label>
         </div>`);
 
+        const nextPageNumber = parseInt(page) + 1;
+
         // Next page button to the right
         if (nextPage) {
-          $sumary.append(`<div class="flex flex-col items-center justify-center text-base-content bg-base-100 rounded">
-            <button class="cursor-pointer w-full h-full text-base-content outline-none focus:outline-none"
-              @click="fetchApi({categories: selected, name, page: ${page} + 1, ${limit}})">
+          $sumary.append(`<div class="flex items-center bg-gray-300 hover:bg-gray-500 transition  justify-center text-base-content bg-base-100 rounded p-2 dark:bg-gray-600 hover:bg-opacity-80 mx-2">
+            <button class="cursor-pointer w-full h-full text-base-content outline-none focus:outline-none flex items-center"
+              @click="fetchApi({categories: selected, name: name, page: ${nextPageNumber}, limit: ${limit}})">
               <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="feather feather-chevron-right w-8 h-8 transform transition" :class="{'rotate-180': open}">
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
+              Sang trang ${nextPageNumber}
             </button>
           </div>`);
         }

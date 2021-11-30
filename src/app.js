@@ -39,7 +39,13 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
 });
 
 // Session middleware
-app.use(session({secret: process.env.SESSION_SECRET || "MYSUPERSECRET", resave: false, saveUninitialized: false}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "MYSUPERSECRET",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Add body parser
 app.use(express.json());
@@ -94,33 +100,40 @@ const server = createServer(app);
 const io = new Server(server, {});
 
 io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
-    const cookies = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
-    const token = cookies.token; // get token from the cookies
+  socket.on("chat message", async (content) => {
+    try {
+      const { token } = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
 
-    if(!token) {
-      return;
-    }
+      if (!token) {
+        return;
+      }
 
-    let user = jwt.verify(token, process.env.JWT_SECRET);
+      let user = await jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!user) return; // TODO: Tell user that he is not authorized
+      if (!user) return; // TODO: Tell user that he is not authorized
 
-    Message.create({
-      author: mongoose.Types.ObjectId(user.id),
-      content: msg,
-    })
-      .then((message) => message.populate("author", "avatar"))
-      .then((message) => {
-        console.log(
-          `[Message] User ${user.username} has just sent a meesage.`,
-          message
-        );
-        io.emit("chat message", msg, user.username, message.author.avatar, message.time);
-      })
-      .catch((error) => {
-        console.log("[message error]", error);
+      //command check
+      if (content.startsWith("/clear") && user.role === "admin") {
+        await Message.deleteMany({});
+
+        content = `Admin cleared all messages (/clear)`;
+        io.emit("delete all messages", newMessage);
+      }
+
+      const newMessage = await (
+        await Message.create({
+          author: user.id,
+          content,
+        })
+      ).populate({
+        path: "author",
+        select: "username avatar role",
       });
+
+      io.emit("chat message receive", newMessage);
+    } catch (err) {
+      console.log("[socket]", err);
+    }
   });
 });
 

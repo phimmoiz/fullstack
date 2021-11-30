@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { requireAuth } from "../middlewares/auth.middleware";
 import User from "../models/user.model";
 import Movie from "../models/movie.model";
 import createError from "http-errors";
@@ -9,16 +10,16 @@ router.get("/", async (req, res) => {
   console.log(res.locals);
   //get user favorite movies
   const user = await User.findById(res.locals.user.id).populate("favorites");
-  
+
   const favoriteMovies = user.favorites;
-  
+
   res.render("favorite", { title: "Favorite", favoriteMovies });
 });
 
-router.post('/', async (req, res, next) => {
+router.post("/", requireAuth, async (req, res, next) => {
   try {
     const userId = res.locals.user.id;
-    
+
     const { slug } = req.body;
 
     const user = await User.findById(userId);
@@ -26,19 +27,30 @@ router.post('/', async (req, res, next) => {
     // slug to objectId
     const movie = await Movie.findOne({ slug });
 
+    // check if movie is already in favorites
+    const isFavorite = user.favorites.some(
+      (movieId) => movieId.toString() === movie._id.toString()
+    );
+
+    if (isFavorite) {
+      throw createError(400, "Movie already in favorites");
+    }
+
     user.favorites.push(movie._id);
 
     await user.save();
-    
-    res.json({ success: true, message: "Movie added to favorites", favorites: user.favorites });
-  }
-  catch (err) {
+
+    res.json({
+      success: true,
+      message: "Movie added to favorites",
+      favorites: user.favorites,
+    });
+  } catch (err) {
     next(createError(500, err));
   }
-
 });
 
-router.delete('/', async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const { slug } = req.body;
 
@@ -51,10 +63,13 @@ router.delete('/', async (req, res, next) => {
 
     await user.save();
 
-    res.json({ success: true, message: "Movie removed from favorites", favorites: user.favorites });
-  }
-  catch (err) {
+    res.json({
+      success: true,
+      message: "Movie removed from favorites",
+      favorites: user.favorites,
+    });
+  } catch (err) {
     next(createError(500, err));
   }
-})
+});
 export default router;

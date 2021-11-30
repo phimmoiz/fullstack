@@ -1,16 +1,16 @@
 <div class="flex">
   <div class="">
-    <div class="relative w-24 h-24 rounded-full bg-gray-400">
+    <div class="relative w-24 h-24 rounded-full bg-gray-400 hidden md:block">
 
-      <img class="" src="http://daisyui.com/tailwind-css-component-profile-1@94w.png"
+      <img class="w-full h-full rounded-full" src="http://daisyui.com/tailwind-css-component-profile-1@94w.png" alt=""
         test-id="avatar" />
-      <div class="before:contents border  bg-lime-400 absolute top-0 right-0 rounded-full shadow-md"
+      <div class="before:contents border  bg-lime-400 absolute top-0 right-0 rounded-full shadow-md hidden md:block"
         style="width: 15%; height: 15%; top: 7%; right:7%;">
       </div>
     </div>
   </div>
 
-  <div class="rounded bg-purple-300 p-1 flex-grow ml-4 text-black relative">
+  <div class="rounded bg-purple-300 p-1 flex-grow ml-4 text-black relative bounceUp">
     <div style="clip-path: polygon(100% 0, 0% 100%, 100% 100%);" class="bg-purple-300 absolute w-4 h-4 top-4 -left-3">
     </div>
     <div>
@@ -21,12 +21,35 @@
       {{!-- online --}}
     </div>
     <div class="flex flex-col justify-between">
-      <p test-id="content">
+      <p test-id="content" class="pb-6">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
 
+
+      <div class="text-xs text-gray-500 font-bold place-self-end absolute top-1 right-1" test-id="post_number">
+      </div>
       <div class="text-xs text-gray-500 place-self-end absolute bottom-0.5 right-0.5" test-id="time">
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .bounceUp {
+    animation: bounceUp 0.5s;
+  }
+
+  @keyframes bounceUp {
+    0% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+</style>

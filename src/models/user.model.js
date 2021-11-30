@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: "https://via.placeholder.com/150",
+    default: "/assets/images/question.png",
   },
   role: {
     type: String,

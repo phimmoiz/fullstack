@@ -5,11 +5,13 @@ import Message from "../models/message.model";
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-  let { limit = 10, post_id } = req.query;
+  const { skip = 0 } = req.query;
+
   try {
     var messages = await Message.find({})
       .sort({ time: "desc" })
-      .limit(limit)
+      .skip(+skip)
+      .limit(10)
       .populate([
         {
           path: "author",

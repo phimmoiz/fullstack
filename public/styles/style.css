@@ -963,9 +963,6 @@ video {
 .h-96 {
 	height: 24rem;
 }
-.h-28 {
-	height: 7rem;
-}
 .h-5 {
 	height: 1.25rem;
 }
@@ -1299,6 +1296,10 @@ video {
 .bg-red-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+}
+.bg-blue-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
 }
 .bg-pink-100 {
 	--tw-bg-opacity: 1;
@@ -1749,6 +1750,11 @@ html[data-theme="dark"] .card-badge {
 .hover\:bg-pink-400:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(244, 114, 182, var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-700:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
 }
 
 .hover\:bg-pink-200:hover {

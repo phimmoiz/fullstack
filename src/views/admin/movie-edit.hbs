@@ -1,18 +1,18 @@
-<div class="grid grid-cols-1 md:grid-cols-5 gap-2">
+<div class="grid grid-cols-1 md:grid-cols-5 gap-2 mx-2">
   <div class="col-span-4">
     <h1 class="text-2xl font-bold">Edit Movie</h1>
 
     {{!-- Input to edit movie --}}
-    <form action="/admin/movies/{{movie.id}}" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="_method" value="PUT">
-      <input type="hidden" name="_token" value="{{ csrf_token }}">
 
+    <form action="/movies/{{movie.slug}}/edit" method="POST">
+      <input type="hidden" name="_csrf" value="{{ _csrfToken }}">
+      <input type="hidden" name="_method" value="PUT">
       {{!-- Movie title --}}
       <div class="mb-4">
         <label for="title" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
           Title
         </label>
-        <input
+        <input 
           class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
           id="title" type="text" name="title" value="{{movie.title}}" />
       </div>
@@ -35,7 +35,9 @@
 
         <div class="p-2 shadow-md">
 
-          <input type="hidden" role="uploadcare-uploader" name="image" />
+          <input type="hidden" role="uploadcare-uploader" name="image"
+          value="{{movie.image}}" 
+           />
         </div>
       </div>
 
@@ -48,6 +50,73 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
           id="trailer" type="text" name="trailer" value="{{movie.trailer}}" />
       </div>
+        
+        {{!-- Movie time --}}
+        <div class="mb-4">
+          <label for="time" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+            Time
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+            id="time" type="text" name="time" value="{{movie.time}}" />
+        </div>
+
+        {{!-- Movie premiere --}}
+        <div class="mb-4">
+          <label for="premiere" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+            Premiere
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+            id="premiere" type="text" name="premiere" value="{{movie.premiere}}" />
+        </div>
+              
+          {{!-- Movie releaseyear --}}
+        <div class="mb-4">
+            <label for="releaseyear" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+              Releaseyear
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+              id="releaseyear" type="text" name="releaseYear" value="{{movie.releaseYear}}" />
+        </div>
+          
+            {{!-- Movie rating --}}
+        <div class="mb-4">
+              <label for="rating" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+                Rating
+              </label>
+              <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+                id="rating" type="text" name="rating" value="{{movie.rating}}" />
+        </div>
+                
+                {{!-- Movie imdbId --}}
+        <div class="mb-4">
+              <label for="imdbId" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+                ImdbId
+              </label>
+              <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+              id="imdbId" type="text" name="imdbId" value="{{movie.imdbId}}" />
+        </div>
+                      
+          {{!-- Movie englishTitle --}}
+          <div class="mb-4">
+            <label for="englishTitle" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+              EnglishTitle
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
+              id="englishTile" type="text" name="englishTitle" value="{{movie.englishTitle}}" />
+            </div>
+
+            <div class="mb-4">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Update
+        </button>
+      </div>
+    </form>
 
 
   </div>
@@ -57,10 +126,6 @@
     </h2>
 
     <div class="h-96">
-      {{> card image=movie.image title=movie.title englishTitle=movie.englishTitle slug=movie.slug }}
-    </div>
-
-    <div class="h-28">
       {{> card image=movie.image title=movie.title englishTitle=movie.englishTitle slug=movie.slug }}
     </div>
   </div>

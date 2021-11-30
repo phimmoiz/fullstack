@@ -5,7 +5,7 @@
     {{!-- Input to edit movie --}}
 
     <form action="/movies/{{movie.slug}}/edit" method="POST">
-      <input type="hidden" name="_csrf" value="{{ _csrfToken }}">
+      <input type="hidden" name="_csrf" value="{{ @root/_csrfToken }}">
       <input type="hidden" name="_method" value="PUT">
       {{!-- Movie title --}}
       <div class="mb-4">
@@ -114,11 +114,27 @@
       </div>
 
       <div class="mb-4">
+        <label for="englishTitle" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+          Chọn chuyên mục
+        </label>
+        <select id="categorySelect" class="shadow appearance-none border rounded w-full text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline
+        " name="categories[]" multiple>
+          {{#each categories}}
+          <option class="p-2" value="{{this._id}}">
+            {{this.title}}
+          </option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="mb-4">
         <button type="submit"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           Update
         </button>
       </div>
+
+
     </form>
 
 
@@ -130,7 +146,7 @@
       {{> card image=movie.image title=movie.title englishTitle=movie.englishTitle slug=movie.slug }}
     </div>
 
-    <h3 class="text-lg text-opacity-60 font-bold mb-2">Thẻ nhỏ</h3>
+    <h3 class="text-lg text-opacity-60 font-bold mt-4 mb-2">Thẻ nhỏ</h3>
 
     <div class="h-28">
       {{> card image=movie.image title=movie.title englishTitle=movie.englishTitle slug=movie.slug }}
@@ -180,3 +196,10 @@
     }
   }
 </style>
+
+<script>
+  const categoriesId = "{{movie.categories}}".split(',');
+
+  $("#categorySelect").val(categoriesId)
+
+</script>

@@ -63,7 +63,6 @@ export const moviePanelGetIndex = async (req, res) => {
     title: "Admin",
     categories,
     movieCount,
-    csrfToken: req.csrfToken(),
     error,
   });
 };
@@ -84,7 +83,6 @@ export const moviePanelGetMovie = async (req, res) => {
     res.render("admin/movie", {
       title: "Admin",
       movie,
-      csrfToken: req.csrfToken(),
     });
   } catch (err) {
     res.redirect("/admin/movies");
@@ -104,11 +102,15 @@ export const moviePanelEditMovie = async (req, res) => {
       },
     });
 
+    //get all categories
+    const categories = await Category.find({});
+
     if (!movie) throw new Error("Movie not found");
 
     res.render("admin/movie-edit", {
       title: "Admin",
       movie,
+      categories,
     });
   } catch (err) {
     req.session.error = err.message;
@@ -136,7 +138,6 @@ export const moviePanelPostMovie = async (req, res) => {
     res.render("admin/movie", {
       title: "Admin",
       movie,
-      csrfToken: req.csrfToken(),
       success: "Movie updated successfully",
     });
   } catch (err) {

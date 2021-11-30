@@ -16,7 +16,6 @@ const movieSchema = new mongoose.Schema({
   },
   time: {
     type: String,
-    required: true,
   },
   createAt: {
     type: Date,
@@ -24,11 +23,9 @@ const movieSchema = new mongoose.Schema({
   },
   trailer: {
     type: String,
-    required: true,
   },
   premiere: {
     type: Date,
-    required: true,
   },
   viewCount: {
     type: Number,

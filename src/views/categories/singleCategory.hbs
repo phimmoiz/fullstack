@@ -1,0 +1,46 @@
+<div class="p-2 shadow-lg">
+
+  <h2 class="text-2xl font-bold mb-2">
+    {{category.title}}
+  </h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+    {{#each category.movies}}
+    <div class="h-48">
+      {{>card image=image title=title englishTitle=englishTitle slug=slug}}
+    </div>
+    {{/each}}
+  </div>
+
+  {{!-- Pagination --}}
+  {{#if pagination}}
+  <div class="flex justify-center mt-4">
+    <ul class="pagination divide-x">
+      {{#each pagination}}
+      <a class="page-link" href="{{url}}">
+        <li
+          class="page-item bg-rose-500 dark:bg-gray-500 p-2 text-white px-4 hover:bg-opacity-80 {{#ifEquals currentPage @index}}disabled{{/ifEquals}}">
+          {{number}}
+        </li>
+      </a>
+      {{/each}}
+    </ul>
+  </div>
+  {{/if}}
+</div>
+
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pagination li {
+    list-style: none;
+  }
+
+  .page-item.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+</style>

@@ -173,11 +173,13 @@ export const getSingleMovie = async (req, res, next) => {
       throw new Error("Movie not found");
     }
 
-    const user = await User.findById(res.locals.user.id);
-
-    const isFavorite = user.favorites.some(
-      (movieId) => movieId.toString() === movie._id.toString()
-    );
+    let isFavorite = false;
+    if (res.locals.user) {
+      const user = await User.findById(res.locals.user.id);
+      isFavorite = user.favorites.some(
+        (movieId) => movieId.toString() === movie._id.toString()
+      );
+    }
 
     // Increase view count
     increaseViewCount(movie._id);
@@ -272,11 +274,13 @@ export const postMovie = async (req, res) => {
       imdbId,
       slug,
       categories,
+      englishTitle,
     } = req.body;
 
     // create movie with mongoose
     const newMovie = await Movie.create({
       title,
+      englishTitle,
       image,
       time,
       trailer,
@@ -292,7 +296,9 @@ export const postMovie = async (req, res) => {
     // console.log(newMovie);
     // res.json({ success: true, data: newCat });
 
-    res.redirect("/admin/");
+    req.session.success2 = `${title} - ${englishTitle} has been added`;
+
+    res.redirect("/admin/movies");
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: err.message });

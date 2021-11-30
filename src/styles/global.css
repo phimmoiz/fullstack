@@ -5,6 +5,44 @@
 @layer base {
 }
 @layer components {
+  [data-tooltip]:before {
+    position: absolute;
+    content: attr(data-tooltip);
+    @apply bg-white rounded p-2 text-black px-4 font-mono shadow-md border border-solid border-black;
+
+    top: 3.2rem;
+    left: 0;
+    z-index: 20;
+  }
+
+  [data-tooltip] {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  [data-tooltip]:before,
+  [data-tooltip]:after {
+    transition: all 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-tooltip]:after {
+    content: "";
+    clip-path: polygon(50% 50%, 0% 100%, 100% 100%);
+    background-color: rgb(112, 112, 112);
+    width: 0.8rem;
+    height: 0.8rem;
+    position: absolute;
+    top: 2.4rem;
+    left: 1rem;
+  }
+
+  [data-tooltip]:hover:before,
+  [data-tooltip]:hover:after {
+    @apply bg-opacity-90 opacity-100;
+  }
+
   .input {
     @apply p-2 border rounded text-black;
   }
@@ -34,9 +72,28 @@
     @apply bg-fuchsia-300;
   }
 
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #333;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
   .btn {
     @apply p-2 rounded transform;
     animation: button-pop var(--animation-btn, 0.25s) ease-out;
+  }
+
+  .btn:hover {
+    @apply bg-opacity-80;
   }
 
   .btn-primary {

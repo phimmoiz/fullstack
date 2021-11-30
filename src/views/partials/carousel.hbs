@@ -4,10 +4,10 @@
   <div class="swiper-wrapper">
     <!-- Slides -->
     {{#each items}}
-      <div class="swiper-slide">
-        {{!-- pass data to card as object --}}
-        {{> card title=title image=image slug=slug englishTitle=englishTitle }}
-      </div>
+    <div class="swiper-slide pb-4">
+      {{!-- pass data to card as object --}}
+      {{> card title=title image=image slug=slug englishTitle=englishTitle }}
+    </div>
     {{/each}}
 
   </div>
@@ -23,40 +23,40 @@
 </div>
 
 <script>
-  const swiper{{barId}} = new Swiper('.{{barId}}', {
-  // Optional parameters
-  direction: "{{direction}}" || "horizontal",
-  loop: true,
+  const swiper{{ barId }} = new Swiper('.{{barId}}', {
+    // Optional parameters
+    direction: "{{direction}}" || "horizontal",
+    loop: true,
 
-  autoplay: {
-    delay: 5000,
-  },
+    autoplay: {
+      delay: 5000,
+    },
 
-  // Default parameters
-  slidesPerView: 2,
-  spaceBetween: 10,
+    // Default parameters
+    slidesPerView: 2,
+    spaceBetween: 10,
 
-  // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 640px
-    640: {
-      slidesPerView: {{slidesPerView}},
+    // Responsive breakpoints
+    breakpoints: {
+      // when window width is >= 640px
+      640: {
+        slidesPerView: {{ slidesPerView }},
     }
   },
 
-  // If we need pagination
-  pagination: {
+    // If we need pagination
+    pagination: {
     el: 'swiper-pagination',
   },
 
-  // Navigation arrows
-  navigation: {
+    // Navigation arrows
+    navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
 
-  // And if we need scrollbar
-  scrollbar: {
+    // And if we need scrollbar
+    scrollbar: {
     el: '.swiper-scrollbar',
   },
 });

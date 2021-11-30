@@ -1641,6 +1641,11 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(161, 161, 170, var(--tw-bg-opacity));
 }
 
+.hover\:bg-pink-600:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(219, 39, 119, var(--tw-bg-opacity));
+}
+
 .hover\:bg-opacity-95:hover {
 	--tw-bg-opacity: 0.95;
 }

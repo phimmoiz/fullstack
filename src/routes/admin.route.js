@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     Category.countDocuments(),
     Movie.countDocuments(),
   ]);
-
+ 
   res.render("admin/index", {
     title: "Admin",
     count: { users, categories, movies },

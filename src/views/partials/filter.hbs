@@ -109,7 +109,7 @@
     </div>
 
     <div id="result" class="grid gap-1 grid-cols-2 md:grid-cols-4"></div>
-    <div id="sumary" class="w-full"></div>
+    <div id="sumary" class="w-full mt-4"></div>
   </div>
 </div>
 
@@ -185,9 +185,19 @@
 
         // Next page button to the right
         if (nextPage) {
-          $sumary.append(`<div class="flex items-center bg-gray-300 hover:bg-gray-500 transition  justify-center text-base-content bg-base-100 rounded p-2 dark:bg-gray-600 hover:bg-opacity-80 mx-2">
-            <button class="cursor-pointer w-full h-full text-base-content outline-none focus:outline-none flex items-center"
-              @click="fetchApi({categories: selected, name: name, page: ${nextPageNumber}, limit: ${limit}})">
+          $sumary.append(`<div class="flex items-center justify-evenly  rounded p-2  mx-2">
+            <button class="cursor-pointer py-3 px-4 rounded-md h-full text-base-content outline-none bg-gray-400 hover:bg-gray-500 transition focus:outline-none flex items-center"
+              @click="fetchApi({categories: selected, name: name, page: ${page - 1}, limit: ${limit}})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-chevron-right w-8 h-8 transform transition rotate-180">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+              Trang trước
+            </button>
+
+            <button class="cursor-pointer py-3 px-4 rounded-md h-full text-base-content outline-none bg-gray-400 hover:bg-gray-500 transition focus:outline-none flex items-center"
+              @click="fetchApi({categories: selected, name: name, page: ${parseInt(page) + 1}, limit: ${limit}})">
               <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="feather feather-chevron-right w-8 h-8 transform transition" :class="{'rotate-180': open}">

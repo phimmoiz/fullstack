@@ -10,7 +10,7 @@
   {{#> modal buttonTitle="Thêm phim" icon="fa-plus"}}
 
 
-  <div class="mb-2 p-2" x-data="">
+  <div class="mb-2" x-data="">
     <label for="title" class="text-sm">
       Get metadata from ephimmoi.net, phimgii.net:
     </label>
@@ -21,96 +21,96 @@
 
       <div class="spinner"></div>
     </div>
-  </div <form action="/movies" method="POST" id="addMovieForm"
-    class="p-2 shadow-md rounded-md my-2 overflow-y-scroll max-h-[75vh] grid md:grid-cols-2 gap-2">
-  <div class="mb-2">
-    <label for="title" class="text-sm">
-      Tên phim
-    </label>
-    <input type="text" name="title" id="title" class="w-full text-black border p-2 rounded-md" required>
   </div>
-  <div class="mb-2">
-    <label for="englishTitle" class="text-sm">
-      Tên tiếng Anh
-    </label>
-    <input type="text" name="englishTitle" id="englishTitle" class="w-full text-black border p-2 rounded-md" required>
-  </div>
-  <div class="mb-2">
-    <label for="description" class="text-sm">
-      Mô tả (optional)
-    </label>
-    <textarea name="description" id="description"
-      class="w-full text-black border p-2 rounded-md min-h-[200px]"></textarea>
-  </div>
-  <div class="mb-2">
-    <label for="poster" class="text-sm">
-      Poster
-    </label>
-    <div class="p-2 border bg-white rounded-md">
-      <div class="image-preview-single">
-        <img src="" alt="">
-        <input type="hidden" role="uploadcare-uploader" name="image" x-ref="imagePresentation" value="{{movie.image}}"
-          data-clearable data-images-only />
+  <form action="/movies" method="POST" id="addMovieForm" class="grid md:grid-cols-2 gap-2">
+    <div class="mb-2">
+      <label for="title" class="text-sm">
+        Tên phim
+      </label>
+      <input type="text" name="title" id="title" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+    <div class="mb-2">
+      <label for="englishTitle" class="text-sm">
+        Tên tiếng Anh
+      </label>
+      <input type="text" name="englishTitle" id="englishTitle" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+    <div class="mb-2">
+      <label for="description" class="text-sm">
+        Mô tả (optional)
+      </label>
+      <textarea name="description" id="description"
+        class="w-full text-black border p-2 rounded-md min-h-[200px]"></textarea>
+    </div>
+    <div class="mb-2">
+      <label for="poster" class="text-sm">
+        Poster
+      </label>
+      <div class="p-2 border bg-white rounded-md">
+        <div class="image-preview-single">
+          <img src="" alt="">
+          <input type="hidden" role="uploadcare-uploader" name="image" x-ref="imagePresentation" value="{{movie.image}}"
+            data-clearable data-images-only />
+        </div>
       </div>
     </div>
-  </div>
-  <div class="mb-2">
-    <label for="trailer" class="text-sm">
-      Trailer (optional)
-    </label>
-    <input type="text" name="trailer" id="trailer" class="w-full text-black border p-2 rounded-md">
-  </div>
-  <div class="mb-2">
-    <label for="releaseYear" class="text-sm">
-      Năm phát hành
-    </label>
-    <input type="text" name="releaseYear" id="releaseYear" class="w-full text-black border p-2 rounded-md" required>
-  </div>
-  {{!-- imDb --}}
-  <div class="mb-2">
-    <label for="imDb" class="text-sm">
-      imdbId (optional)
-    </label>
-    <input type="text" name="imdbId" id="imDb" class="w-full text-black border p-2 rounded-md">
-  </div>
-  {{!-- time --}}
-  <div class="mb-2">
-    <label for="time" class="text-sm">
-      Thời lượng (optional)
-    </label>
-    <input type="text" name="time" id="time" class="w-full text-black border p-2 rounded-md">
-  </div>
-  {{!-- Slug --}}
-  <div class="mb-2">
-    <label for="slug" class="text-sm">
-      Slug
-    </label>
-    <input type="text" name="slug" id="slug" class="w-full text-black border p-2 rounded-md" required>
-  </div>
+    <div class="mb-2">
+      <label for="trailer" class="text-sm">
+        Trailer (optional)
+      </label>
+      <input type="text" name="trailer" id="trailer" class="w-full text-black border p-2 rounded-md">
+    </div>
+    <div class="mb-2">
+      <label for="releaseYear" class="text-sm">
+        Năm phát hành
+      </label>
+      <input type="text" name="releaseYear" id="releaseYear" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+    {{!-- imDb --}}
+    <div class="mb-2">
+      <label for="imDb" class="text-sm">
+        imdbId (optional)
+      </label>
+      <input type="text" name="imdbId" id="imDb" class="w-full text-black border p-2 rounded-md">
+    </div>
+    {{!-- time --}}
+    <div class="mb-2">
+      <label for="time" class="text-sm">
+        Thời lượng (optional)
+      </label>
+      <input type="text" name="time" id="time" class="w-full text-black border p-2 rounded-md">
+    </div>
+    {{!-- Slug --}}
+    <div class="mb-2">
+      <label for="slug" class="text-sm">
+        Slug
+      </label>
+      <input type="text" name="slug" id="slug" class="w-full text-black border p-2 rounded-md" required>
+    </div>
 
-  {{!-- Ngày phát hành: premiere --}}
-  <div class="mb-2">
-    <label for="premiere" class="text-sm">
-      Ngày phát hành (optional)
-    </label>
-    <input type="date" name="premiere" id="premiere" class="w-full text-black border p-2 rounded-md">
-  </div>
+    {{!-- Ngày phát hành: premiere --}}
+    <div class="mb-2">
+      <label for="premiere" class="text-sm">
+        Ngày phát hành (optional)
+      </label>
+      <input type="date" name="premiere" id="premiere" class="w-full text-black border p-2 rounded-md">
+    </div>
 
-  <select class="select col-span-2 w-full border h-72" name="categories[]" multiple>
-    <option class="p-2" disabled="disabled" selected="selected">
-      Chọn chuyên mục (giữ Ctrl để chọn nhiều)
-    </option>
-    {{#each categories}}
-    <option class="p-2 hover:bg-gray-100 text-black" value="{{this._id}}">
-      {{this.title}}
-    </option>
-    {{/each}}
-  </select>
+    <select class="select col-span-2 w-full border h-72" name="categories[]" multiple>
+      <option class="p-2" disabled="disabled" selected="selected">
+        Chọn chuyên mục (giữ Ctrl để chọn nhiều)
+      </option>
+      {{#each categories}}
+      <option class="p-2 hover:bg-gray-100 text-black" value="{{this._id}}">
+        {{this.title}}
+      </option>
+      {{/each}}
+    </select>
 
-  <input name="_csrf" type="hidden" value="{{@root._csrfToken}}">
-  <button class="btn btn-primary">
-    Tạo
-  </button>
+    <input name="_csrf" type="hidden" value="{{@root._csrfToken}}">
+    <button class="btn btn-primary">
+      Tạo
+    </button>
   </form>
   {{/modal}}
 </h3>

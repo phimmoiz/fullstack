@@ -9,7 +9,7 @@
     x-transition:enter-end="opacity-100 transform" x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100 transform" x-transition:leave-end="opacity-0 transform" x-cloak>
     <div
-      class="rounded-md shadow-2xl p-2 bg-white w-full max-w-4xl mx-2 px-1 text-base-content dark:bg-gray-800 mt-40 md:mt-0"
+      class="rounded-md shadow-2xl p-2 bg-white w-full max-w-4xl mx-2 px-1 text-base-content dark:bg-gray-800 mt-40 md:mt-0 max-h-[80vh] overflow-y-auto"
       {{#with closeWhenClickOutside}} @click.outside="open = false" {{/with}}>
       <div class="flex justify-between p-2">
 
@@ -17,7 +17,9 @@
         {{!-- x icon --}}
         <i class="fas fa-times text-2xl text-red-500 transform transition hover:scale-125" @click="open = false"></i>
       </div>
-      {{> @partial-block }}
+      <div class="p-2">
+        {{> @partial-block }}
+      </div>
     </div>
   </div>
 

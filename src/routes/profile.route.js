@@ -17,24 +17,27 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/changepassword", async (req, res) => {
+router.post("/changepwd", async (req, res, next) => {
   try {
     const userId = res.locals.user.id;
     const { oldPassword, newPassword, confirmPassword } = req.body;
 
     const user = await User.findById(userId);
 
-    if (user.password == oldPassword) {
+    if (user.password != oldPassword) {
       throw new Error("Mật khẩu cũ không chính xác");
     }
     if (newPassword !== confirmPassword) {
       throw new Error("Mật khẩu mới không khớp");
     }
+
+    //TODO: check password length
+
     user.password = newPassword;
     await user.save();
 
-    res.json({
-      success: true,
+    res.render("profile/info", {
+      title: `${user.username} | Trang cá nhân`,
       message: "Đổi mật khẩu thành công",
     });
   } catch (error) {

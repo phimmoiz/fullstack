@@ -95,7 +95,13 @@ export const moviePanelEditSeason = async (req, res) => {
 
     const { _id: movieId } = await Movie.findOne({ slug });
 
-    const season = await Season.findOne({ slug: seasonSlug, movie: movieId });
+    const season = await Season.findOne({
+      slug: seasonSlug,
+      movie: movieId,
+    }).populate({
+      path: "episodes",
+      model: Episode,
+    });
 
     if (!season) throw new Error("Season not found");
 

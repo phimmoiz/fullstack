@@ -1,28 +1,31 @@
 {{#>profile}}
-<div class="col-span-3">
-    <h3 class="text-xl mb-2 px-2 font-semibold">
-        Đổi mật khẩu
-    </h3>
-    <h3 class="text p-2">
-        Mật khẩu cũ:
-    </h3>
-    <input type="password" class="p-2 border border-pink-400 rounded w-full" name="oldpwd" id="oldpwd"
-        placeholder="Nhập mật khẩu cũ" required>
-    <h3 class="text p-2">
-        Mật khẩu mới:
-    </h3>
-    <input type="password" class="p-2 border border-pink-400 rounded w-full" name="newpwd" id="newpwd"
-        placeholder="Nhập mật khẩu mới" required>
-    <h3 class="text p-2">
-        Nhập lại mật khẩu mới:
-    </h3>
-    <input type="password" class="p-2 border border-pink-400 rounded w-full" name="renewpwd" id="renewpwd"
-        placeholder="Nhập lại mật khẩu mới" required>
-    <button
-        class="my-4 bg-pink-400 hover:bg-pink-600 p-2 rounded dark:text-white text-base-content transition duration-300">
-        Đổi mật khẩu
-    </button>
+<form class="col-span-3" action="/profile/changepwd" method="POST">
+  <h3 class="text-xl mb-2 px-2 font-semibold">
+    Đổi mật khẩu
+  </h3>
+  <h3 class="text p-2">
+    Mật khẩu cũ:
+  </h3>
+  <input type="password" class="p-2 border text-black border-pink-400 rounded w-full" name="oldPassword" id="oldpwd"
+    placeholder="Nhập mật khẩu cũ" required>
+  <h3 class="text p-2">
+    Mật khẩu mới:
+  </h3>
+  <input type="password" class="p-2 border text-black border-pink-400 rounded w-full" name="newPassword" id="newpwd"
+    placeholder="Nhập mật khẩu mới" required>
+  <h3 class="text p-2">
+    Nhập lại mật khẩu mới:
+  </h3>
+  <input type="password" class="p-2 border text-black border-pink-400 rounded w-full" name="confirmPassword"
+    id="renewpwd" placeholder="Nhập lại mật khẩu mới" required>
 
-</div>
+  <input type="hidden" value="{{@root/_csrfToken}}" name="_csrf">
+  <button
+    class="my-4 bg-pink-400 hover:bg-pink-600 p-2 rounded dark:text-white text-base-content transition duration-300"
+    type="submit">
+    Đổi mật khẩu
+  </button>
+
+</form>
 
 {{/profile}}

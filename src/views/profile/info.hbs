@@ -1,19 +1,24 @@
 {{#>profile}}
+{{#if message}}
+<div class="bg-green-300 dark:bg-green-400 hover:bg-green-400 dark:hover:bg-green-500 p-2 rounded my-2">
+  {{message}}
+</div>
+{{/if}}
 <div class="col-span-3">
-    <h3 class="text-xl mb-2 px-2 font-semibold">
-        Thông tin cá nhân
-    </h3>
-    <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
-        Họ và tên: {{user.fullname}}
-    </h3>
-    <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
-        Tên đăng nhập: {{user.username}}
-    </h3>
-    <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
-        Email: {{user.email}}
-    </h3>
-    <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
-        Vai trò: {{user.role}}
-    </h3>
+  <h3 class="text-xl mb-2 px-2 font-semibold">
+    Thông tin cá nhân
+  </h3>
+  <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
+    Họ và tên: {{user.fullname}}
+  </h3>
+  <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
+    Tên đăng nhập: {{user.username}}
+  </h3>
+  <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
+    Email: {{user.email}}
+  </h3>
+  <h3 class="text-lg p-2 border m-1 border-pink-400 rounded">
+    Vai trò: {{user.role}}
+  </h3>
 </div>
 {{/profile}}

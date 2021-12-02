@@ -89,6 +89,26 @@ export const moviePanelGetMovie = async (req, res) => {
   }
 };
 
+export const moviePanelEditSeason = async (req, res) => {
+  try {
+    const { slug, seasonSlug } = req.params;
+
+    const { _id: movieId } = await Movie.findOne({ slug });
+
+    const season = await Season.findOne({ slug: seasonSlug, movie: movieId });
+
+    if (!season) throw new Error("Season not found");
+
+    // res.json({ success: true, season });
+    res.render("admin/season", {
+      title: "Admin",
+      season,
+    });
+  } catch (err) {
+    res.json({ success: false, err });
+  }
+};
+
 export const moviePanelEditMovie = async (req, res) => {
   const { slug } = req.params;
 

@@ -17,9 +17,10 @@
   <div class="flex justify-center mt-4">
     <ul class="pagination divide-x">
       {{#each pagination}}
-      <a class="page-link" href="{{url}}">
+      <a class="page-link" {{#ifEquals @root/currentIndex @index}} {{else}} href="{{url}}"
+        data-tooltip="Đến trang {{inc @index}}" {{/ifEquals}}>
         <li
-          class="page-item bg-rose-500 dark:bg-gray-500 p-2 text-white px-4 hover:bg-opacity-80 {{#ifEquals currentPage @index}}disabled{{/ifEquals}}">
+          class="page-item bg-rose-400 dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
           {{number}}
         </li>
       </a>

@@ -8,6 +8,7 @@ import {
   moviePanelGetMovie,
   moviePanelPostMovie,
   getCategoriesPanel,
+  moviePanelEditSeason,
 } from "../controllers/admin.controller";
 
 const router = Router();
@@ -24,6 +25,7 @@ router.get("/movies/", moviePanelGetIndex);
 router.get("/movies/:slug", moviePanelGetMovie);
 
 router.get("/movies/:slug/edit", moviePanelEditMovie);
+router.get("/movies/:slug/season/:seasonSlug", moviePanelEditSeason);
 
 router.post("/movies/:slug", moviePanelPostMovie);
 

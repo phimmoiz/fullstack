@@ -47,6 +47,12 @@ const episodeSchema = new mongoose.Schema({
       message: "Invalid URL",
     },
   },
+
+  season: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Season",
+    required: true,
+  },
 });
 
 episodeSchema.pre("save", function (next) {
@@ -57,6 +63,16 @@ episodeSchema.pre("save", function (next) {
 episodeSchema.pre("update", function (next) {
   this.lastUpdate = new Date();
   next();
+});
+
+// push episode to season
+episodeSchema.pre("save", async function (next) {
+  const season = await Season.findById(this.season);
+
+  if (season) {
+    season.episodes.push(this._id);
+    season.save();
+  }
 });
 
 episodeSchema.pre("remove", function (next) {

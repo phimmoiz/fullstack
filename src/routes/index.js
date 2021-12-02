@@ -13,6 +13,7 @@ import profileRoute from "./profile.route";
 import homeRoute from "./home.route";
 import messagesRoute from "./messages.route";
 import favoriteRoute from "./favorite.route";
+import seasonRoute from "./season.route";
 
 const router = express.Router();
 
@@ -69,6 +70,10 @@ const defaultRoutes = [
   {
     path: "/favorite",
     route: favoriteRoute,
+  },
+  {
+    path: "/season",
+    route: seasonRoute,
   },
   {
     path: "/",

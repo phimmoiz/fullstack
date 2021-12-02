@@ -19,13 +19,18 @@ export const getEpisode = async (req, res, next) => {
 
 export const postEpisode = async (req, res, next) => {
   try {
-    const episodeId = req.params.id;
+    const { title, description, image, serverFshare, serverVimeo, season } =
+      req.body;
 
-    const episode = await Episode.findById(episodeId);
-
-    if (!episode) {
-      throw new Error("Episode not found");
-    }
+    //create
+    const episode = await Episode.create({
+      title,
+      description,
+      image,
+      serverFshare,
+      serverVimeo,
+      season,
+    });
 
     return res.json({ success: true, episode });
   } catch (err) {

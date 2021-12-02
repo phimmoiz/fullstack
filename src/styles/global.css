@@ -132,6 +132,20 @@
     transition: top 0.3s;
   }
 
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeInClass {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+  }
   .card.image-full > figure img {
     @apply h-48;
     -o-object-fit: cover;

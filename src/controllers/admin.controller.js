@@ -3,8 +3,9 @@ import Movie from "../models/movie.model";
 import User from "../models/user.model";
 import Season from "../models/season.model";
 import Episode from "../models/episode.model";
+import createError from "http-errors";
 
-export const getAdmin = async (req, res) => {
+export const getAdmin = async (req, res, next) => {
   try {
     // get user count, category count, movie count
     const [users, categories, movies] = await Promise.all([
@@ -18,7 +19,7 @@ export const getAdmin = async (req, res) => {
       count: { users, categories, movies },
     });
   } catch (error) {
-    console.log(error);
+    next(createError(500));
   }
 };
 

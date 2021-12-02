@@ -20,7 +20,7 @@ router.post("/", requireAdmin, postMovie);
 router.get("/", getMovies);
 router.get("/ranking", getTopMovies);
 router.get("/:slug/season/", getSeason);
-router.get("/:slug/season-:season/episode-:episode/", getEpisode);
+router.get("/:slug/:season/episode-:episode/", getEpisode);
 router.get("/:slug", getSingleMovie);
 router.post("/:slug/edit", requireAdmin, editMovie);
 export default router;

@@ -155,12 +155,20 @@
     {{!-- Thêm season --}}
 
     <h3 class="text-lg text-opacity-60 font-bold mt-4 mb-2">Thêm season</h3>
-    {{log movie}}
     <ul class="divide-y">
       {{#each movie.seasons}}
-      <a href="./season/{{slug}}">
-        <li class="p-2 bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 hover:bg-gray-300">{{name}}</li>
-      </a>
+      <li class="flex justify-between">
+        <a class="p-2 bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 hover:bg-gray-300 flex-grow"
+          href="./season/{{slug}}">
+          {{name}}
+          {{!-- delete season --}}
+        </a>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+          onclick="deleteSeason('{{this.slug}}')">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </li>
       {{/each}}
 
       <div class="mb-4">
@@ -179,32 +187,6 @@
     </ul>
   </div>
 </div>
-
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
-<script>
-  UPLOADCARE_PUBLIC_KEY = "533d4b8f6a11de77ba81";
-  function installWidgetPreviewSingle(widget, img) {
-    widget.onChange(function (file) {
-      img.css('visibility', 'hidden')
-      img.attr('src', '')
-      if (file) {
-        file.done(function (fileInfo) {
-          console.log(fileInfo)
-          var size = '' + img.width() * 2 + 'x' + img.height() * 2;
-          var previewUrl = fileInfo.cdnUrl;
-
-          img.attr('src', previewUrl)
-          img.css('visibility', 'visible')
-        })
-      }
-    })
-  }
-
-  $('.image-preview-single').each(function () {
-    installWidgetPreviewSingle(uploadcare.SingleWidget($(this).children('input')), $(this).children('img'))
-  })
-
-</script>
 
 <style>
   .opacityIncrease {
@@ -227,5 +209,21 @@
   const categoriesId = "{{movie.categories}}".split(',');
 
   $("#categorySelect").val(categoriesId)
+
+  function deleteSeason(seasonSlug) {
+    if (confirm("Bạn có chắc chắn muốn xóa?")) {
+      $.ajax({
+        url: `/season/{{movie.slug}}/${seasonSlug}`,
+        data: {
+          _csrf: "{{@root/_csrfToken}}"
+
+        },
+        type: 'DELETE',
+        success: function (result) {
+          location.reload();
+        }
+      });
+    }
+  }
 
 </script>

@@ -14,6 +14,7 @@ import homeRoute from "./home.route";
 import messagesRoute from "./messages.route";
 import favoriteRoute from "./favorite.route";
 import seasonRoute from "./season.route";
+import episodeRoute from "./episode.route";
 
 const router = express.Router();
 
@@ -74,6 +75,10 @@ const defaultRoutes = [
   {
     path: "/season",
     route: seasonRoute,
+  },
+  {
+    path: "/episode",
+    route: episodeRoute,
   },
   {
     path: "/",

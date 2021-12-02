@@ -2,26 +2,32 @@ import mongoose from "mongoose";
 import Episode from "./episode.model";
 import Movie from "./movie.model";
 
-const seasonSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    // max length 20
-    trim: true,
-    minlength: 3,
-    maxlength: 20,
-  },
-  episodes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Episode",
+const seasonSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      // max length 20
+      trim: true,
+      minlength: 3,
+      maxlength: 20,
     },
-  ],
-  movie: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Movie",
+    episodes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Episode",
+      },
+    ],
+    movie: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Movie",
+    },
   },
-});
+  {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  }
+);
 
 seasonSchema.index({ name: 1, movie: 1 }, { unique: true });
 
@@ -52,8 +58,12 @@ seasonSchema.post("save", async function (season, next) {
   try {
     const movie = await Movie.findById(season.movie);
 
-    movie.seasons.push(season._id);
-    await movie.save();
+    // check if season is already in movie
+    if (movie.seasons.indexOf(season._id) === -1) {
+      movie.seasons.push(season._id);
+      await movie.save();
+    }
+
     next();
   } catch (error) {
     next(error);

@@ -52,16 +52,16 @@ router.post("/", requireAdmin, async (req, res, next) => {
   }
 });
 
-router.delete("/:slug/:name", requireAdmin, async (req, res, next) => {
+router.delete("/:slug/:seasonSlug", requireAdmin, async (req, res, next) => {
   try {
-    const { slug, name } = req.params;
+    const { slug, seasonSlug } = req.params;
 
     const movie = await Movie.findOne({ slug }).populate({
       path: "seasons",
       model: Season,
     });
 
-    const season = movie.seasons.find((s) => s.name === name);
+    const season = movie.seasons.find((s) => s.slug === seasonSlug);
 
     if (!season) throw new Error("Season not found");
 

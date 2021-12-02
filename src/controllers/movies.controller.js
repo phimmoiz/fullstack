@@ -2,6 +2,7 @@ import Movie from "../models/movie.model";
 import User from "../models/user.model";
 import Category from "../models/category.model";
 import Season from "../models/season.model";
+import Episode from "../models/episode.model";
 import createError from "http-errors";
 
 // Mongoose interaction
@@ -52,8 +53,8 @@ export const getNewMovies = async ({
     })
     .limit(parseInt(limit))
     .skip((page - 1) * limit)
+    .lean(lean)
     .exec();
-  // .lean(lean);
 
   // if (populate) {
   //   movies.populate({ path: "categories", model: Category });
@@ -172,11 +173,9 @@ export const getSingleMovie = async (req, res, next) => {
         model: Season,
         populate: {
           path: "episodes",
-          model: Movie,
+          model: Episode,
         },
-      })
-
-      .lean();
+      });
 
     if (!movie) {
       throw new Error("Movie not found");
@@ -232,7 +231,7 @@ export const getSeason = async (req, res) => {
   }
 };
 
-export const getEpisode = async (req, res) => {
+export const getEpisode = async (req, res, next) => {
   try {
     const { slug, season, episode } = req.params;
 
@@ -249,19 +248,23 @@ export const getEpisode = async (req, res) => {
       throw new Error("Movie not found");
     }
 
-    const seasonData = movie.seasons.find((s) => s.number === season);
+    const seasonData = movie.seasons.find((s) => s.slug === season);
 
     if (!seasonData) {
       throw new Error("Season not found");
     }
 
-    const episodeData = seasonData.episodes.find((e) => e.number === episode);
+    const episodeData = seasonData.episodes.find((e) => e.slug === episode);
 
     if (!episodeData) {
       throw new Error("Episode not found");
     }
 
-    res.render("episode", { movie, seasonData, episodeData });
+    res.render("movies/episode", {
+      movie,
+      season: seasonData,
+      episode: episodeData,
+    });
   } catch (err) {
     next(createError(404, err.message));
   }
@@ -309,7 +312,6 @@ export const postMovie = async (req, res) => {
 
     res.redirect("/admin/movies");
   } catch (err) {
-    console.log(err);
     res.json({ success: false, message: err.message });
   }
 };
@@ -405,7 +407,7 @@ export const editMovie = async (req, res) => {
       imdbId,
       englishTitle,
     } = req.body;
-    console.log(req.body);
+
     let query = {};
     if (description) {
       query.description = description;

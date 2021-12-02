@@ -2,78 +2,85 @@ import mongoose from "mongoose";
 import Season from "./season.model";
 import { isUrl } from "../utils/";
 
-const episodeSchema = new mongoose.Schema({
-  title: {
-    // Tập 4
-    type: String,
-    required: true,
-  },
+const episodeSchema = new mongoose.Schema(
+  {
+    title: {
+      // Tập 4
+      type: String,
+      required: true,
+    },
 
-  image: {
-    type: String,
-    required: true,
-  },
+    description: {
+      type: String,
+    },
 
-  uploadDate: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
+    image: {
+      type: String,
+      required: true,
+    },
 
-  lastUpdate: {
-    type: Date,
-    required: true,
-    default: Date.now,
+    uploadDate: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
 
-    // set last update to now when ever the episode is updated
-    set: function (v) {
-      return new Date();
+    lastUpdate: {
+      type: Date,
+      required: true,
+      default: Date.now,
+
+      // set last update to now when ever the episode is updated
+      set: function (v) {
+        return new Date();
+      },
+    },
+
+    serverFshare: {
+      type: String,
+    },
+
+    serverVimeo: {
+      type: String,
+    },
+
+    season: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Season",
+      required: true,
     },
   },
-
-  serverFshare: {
-    type: String,
-    required: true,
-    validate: {
-      validator: isUrl,
-      message: "Invalid URL",
+  {
+    toJSON: {
+      virtuals: true,
     },
-  },
+  }
+);
 
-  serverVimeo: {
-    type: String,
-    required: true,
-    validate: {
-      validator: isUrl,
-      message: "Invalid URL",
-    },
-  },
-
-  season: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Season",
-    required: true,
-  },
-});
-
-episodeSchema.pre("save", function (next) {
-  this.lastUpdate = new Date();
-  next();
-});
+episodeSchema.index({ title: 1, season: 1 }, { unique: true });
 
 episodeSchema.pre("update", function (next) {
   this.lastUpdate = new Date();
   next();
 });
 
+episodeSchema.virtual("slug").get(function () {
+  //convert title to slug
+  return this.title.toLowerCase().replace(/ /g, "-").toLowerCase();
+});
+
 // push episode to season
 episodeSchema.pre("save", async function (next) {
+  this.lastUpdate = new Date();
+
   const season = await Season.findById(this.season);
 
   if (season) {
+    // check if episode is already in season
     season.episodes.push(this._id);
     season.save();
   }
+  next();
 });
 
 episodeSchema.pre("remove", function (next) {

@@ -1,46 +1,92 @@
 <main
   class="fixed z-50 top-0 bottom-0 left-0 right-0 grid w-full min-h-screen bg-gray-900 bg-opacity-60 place-content-center"
-  x-cloak
->
-  <div
-    @click="searchOpen = false"
-    class="absolute top-0 right-0 left-0 bottom-0"
-  ></div>
-  <div
-    class="flex items-center max-w-md mx-auto bg-white rounded-full z-10"
-    x-data="{ search: '' }"
-  >
-    <div class="w-full">
-      <input
-        type="search"
-        class="w-full px-4 py-1 text-gray-900 rounded-full focus:outline-none"
-        placeholder="search"
-        x-model="search"
-        id="searchInput"
-      />
+  x-cloak>
+  <div @click="searchOpen = false" class="absolute top-0 right-0 left-0 bottom-0"></div>
+
+  <div class="flex items-center justify-center gap-2 mt-6">
+
+
+    <div class="flex items-center max-w-md mx-auto bg-white rounded-full z-10" x-data="{ search: '' }">
+      <div class="w-full">
+        <input type="search" class="w-full px-4 py-1 text-gray-900 rounded-full focus:outline-none" placeholder="search"
+          x-model="search" id="searchInput" {{!-- keydown enter searchButton x-ref click --}}
+          @keydown.enter="$refs.searchButton.click()" />
+      </div>
+      <div>
+        <button type="submit" class="flex items-center justify-center w-12 h-12 text-gray-100 rounded-full"
+          :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
+          :disabled="search.length == 0" @click="fetchApi(search)" x-ref="searchButton">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </div>
+
+
     </div>
-    <div>
-      <button
-        type="submit"
-        class="flex items-center justify-center w-12 h-12 text-gray-100 rounded-full"
-        :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
-        :disabled="search.length == 0"
-      >
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          ></path>
-        </svg>
-      </button>
-    </div>
+
+    {{!-- Tìm kiếm nâng cao --}}
+    {{!-- <div class="flex items-center justify-center z-50">
+      <a href="/danh-sach"
+        class="px-4 py-2 lg:rounded-full bg-white hover:bg-opacity-70 border border-gray-400 dark:border-0">
+        <i class="fas fa-list-ul fa-1x"></i>
+        Tìm kiếm nâng cao
+      </a>
+    </div> --}}
+
+  </div>
+
+
+  <div id="searchResult"
+    class="overflow-y-auto bg-white dark:bg-gray-700 text-base-content rounded-md mt-2 max-w-5xl z-50 mx-1 md:mx-auto md:grid grid-cols-2">
   </div>
 </main>
+
+<script>
+  function fetchApi(search) {
+    const data = jQuery.ajax({
+      url: '/movies/?matchName=' + search,
+      dataType: 'json',
+      success: function (data) {
+        if (!data.success) {
+          return;
+        }
+
+        const { data: movies } = data;
+
+        const $searchResult = $("#searchResult");
+
+        $searchResult.empty();
+
+        movies.forEach(movie => {
+          const { slug, id, title, englishTitle, image, description } = movie;
+
+          const $movie = $(`
+            <a href="/movies/${slug}">
+              <div class="flex flex-col md:flex-row items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 border-b border-fuchsia-300 bounceUp">
+                <img src="${image}" alt="${title}" class="w-40 h-64 bg-contain">
+                <div class="flex-grow divide-y mb-2">
+                  <div class="">
+                    <span class="font-bold">${title}</span>
+                    <span class="text-opacity-80">${englishTitle}</span>
+                  </div>
+                  <div class="text-opacity-70 line-clamp-3">
+                    ${movie.description}
+                  </div>
+                </div>
+              </div>
+            </a>
+          `);
+
+          //show movie jQuery animation
+          $movie.hide();
+          $movie.appendTo($searchResult);
+          $movie.fadeIn(500);
+
+
+        });
+      }
+    });
+  }
+</script>

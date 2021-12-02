@@ -1,59 +1,43 @@
-<style>
-  .top-100 {top: 100%} .bottom-100 {bottom: 100%} .max-h-select { max-height:
-  300px; }
-</style>
-<div
-  class="w-full flex flex-col items-center mx-auto"
-  x-data="{
+<div class="w-full flex flex-col items-center mx-auto" x-data="{
     open: false,
     items: [
-      {name: 'Phim Hồng Kông', selected: false}, 
-      {name: 'Phim Hành động', selected: false}, 
-      {name: 'Phim Hoạt hình', selected: false}, 
-      {name: 'Hài Kịch', selected: false}
+      {{#each categories}}
+      {name: '{{title}}', id: '{{_id}}', slug: '{{slug}}', selected: false},
+      {{/each}}
     ],
     
     get selected() {
       return this.items.filter(item => item.selected);
+    },
+
+    filterName: '',
+    get filterItems() {
+      if (this.filterName === '') {
+        return this.items;
+      }
+      return this.items.filter(item => item.name.toLowerCase().includes(this.filterName.toLowerCase()));
     }
-  }"
->
+  }">
   <div class="w-full">
     <div class="flex flex-col items-center relative">
-      <div class="w-full svelte-1l8159u">
-        <div
-          class="my-2 p-1 flex flex-col items-center text-base-content bg-base-100 rounded"
-        >
+      <div class="grid grid-cols-1 lg:grid-cols-2 items-center">
+        <div class="my-2 p-1 flex flex-col items-center text-base-content bg-base-100 rounded ">
           <label for="" class="text-sm">
             Chọn thể loại
           </label>
-          <div class="flex relative">
+          <div class="flex relative" @click.outside="open = false">
             <div
-              class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded text-teal-700 bg-teal-100 border border-teal-300 flex-grow flex-wrap"
-            >
-              <template x-for="item in selected" :key="item.name">
+              class="flex justify-center items-center m-1 font-medium py-1 px-2  rounded text-teal-700 bg-teal-100 border border-teal-300 flex-grow flex-wrap overflow-y-auto">
+              <template x-for="item in selected" :key="item.id">
                 <div
-                  class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300"
-                >
-                  <div
-                    class="text-xs font-normal leading-none max-w-full flex-initial"
-                    x-text="item.name"
-                  ></div>
+                  class="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-teal-700 hover:text-opacity-70 bg-teal-100 border border-teal-300"
+                  @click="item.selected = false, fetchApi({categories: selected, name})">
+                  <div class="text-xs font-normal leading-none max-w-full flex-initial" x-text="item.name"></div>
                   <div class="flex flex-auto flex-row-reverse">
                     <div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="100%"
-                        height="100%"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2"
-                        @click="item.selected = false"
-                      >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                       </svg>
@@ -62,57 +46,38 @@
                 </div>
               </template>
               <div class="flex-1">
-                <input
-                  placeholder=""
+                <input placeholder=""
                   class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
-                />
+                  @focus="open = true" x-model="filterName" />
+
               </div>
             </div>
-            <div
-              class="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200 svelte-1l8159u"
-            >
-              <button
-                class="cursor-pointer w-6 h-6 text-base-content outline-none focus:outline-none"
-                @click="open = !open"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-chevron-up w-4 h-4 transform transition"
-                  :class="{'rotate-180': open}"
-                >
+            <div class="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200 svelte-1l8159u">
+              <button class="cursor-pointer w-6 h-6 text-base-content outline-none focus:outline-none"
+                @click="open = !open">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-chevron-up w-4 h-4 transform transition" :class="{'rotate-180': open}">
                   <polyline points="18 15 12 9 6 15"></polyline>
                 </svg>
               </button>
             </div>
             {{! Multi selection }}
             <div
-              class="absolute shadow top-100 bg-base-100 z-40 left-0 right-0 rounded max-h-select overflow-y-auto"
-              x-show="open"
-              x-transition:enter="transition ease-out duration-200"
+              class="absolute shadow top-100 bg-base-100 z-40 left-0 right-0 top-14 rounded h-[320px] overflow-y-auto"
+              x-show="open" x-transition:enter="transition ease-out duration-200"
               x-transition:enter-start="opacity-0 transform scale-95"
               x-transition:enter-end="opacity-100 transform scale-100"
               x-transition:leave="transition ease-in duration-200"
               x-transition:leave-start="opacity-100 transform scale-100"
-              x-transition:leave-end="opacity-0 transform scale-95"
-              @click.away="open = false"
-            >
-              <div class="flex flex-col w-full">
-                <template x-for="item in items" :key="item">
+              x-transition:leave-end="opacity-0 transform scale-95">
+              <div class="flex flex-col w-full h-40">
+                <template x-for="item in filterItems" :key="item.id">
                   <div
                     class="cursor-pointer w-full border-gray-100 bg-gray-300 dark:bg-gray-700 border-b hover:bg-base-200"
-                  >
-                    <div
-                      class="flex w-full items-center p-2 pl-2 border-transparent relative hover:border-teal-100"
-                      @click="item.selected = !item.selected"
-                    >
+                    :class="{'border-l-8 border-lime-400 dark:border-lime-600': item.selected}">
+                    <div class="flex w-full items-center p-2 pl-2 border-transparent relative hover:border-teal-100"
+                      @click="item.selected = !item.selected, fetchApi({categories: selected, name}), filterName = ''">
                       <div class="w-full items-center flex">
                         <div x-text="item.name" class="mx-2 leading-6"></div>
                       </div>
@@ -122,8 +87,129 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> {{! End multi selection }}
+
+        {{!-- Choose name --}}
+        <div class="my-2 p-1 flex flex-col items-center text-base-content bg-base-100 rounded justify-end">
+          <label for="" class="text-sm">
+            Tên
+          </label>
+          <div class="flex relative w-full">
+            <div class="flex-1">
+              <input placeholder=""
+                class="bg-transparent input appearance-none outline-none h-full w-full text-gray-800" x-model="name"
+                {{!-- on change --}} @change="fetchApi({categories: selected, name})" />
+            </div>
+          </div>
+        </div> {{! End choose name }}
+
+
+
       </div>
     </div>
+
+    <div id="result" class="grid gap-1 grid-cols-2 md:grid-cols-4"></div>
+    <div id="sumary" class="w-full mt-4"></div>
   </div>
 </div>
+
+{{!-- --}}
+<div id="card" class="hidden">
+  {{>card image=" "}}
+</div>
+
+<script>
+  const POST_LIMIT = 10;
+
+  function fetchApi({ categories = [], name = '', page = 1, limit = POST_LIMIT }) {
+    $.ajax({
+      url: '{{url}}/movies/',
+      type: 'GET',
+      data: {
+        categorySlugs: categories.map(item => item.slug),
+        matchName: name,
+        page: parseInt(page),
+        limit
+      },
+      success: function ({ data, nextPage, length, page }) {
+        console.log(data, nextPage);
+
+        const $card = $('#card').children().first();
+        const $result = $('#result');
+
+        // reset result
+        $result.html('');
+
+        data.forEach(({ slug, image, title, englishTitle }) => {
+          const $clone = $card.clone();
+
+          $clone.attr("href", `/movies/${slug}`);
+          $clone.children().first().css("height", "8rem");
+          $clone.find("[data-card='title']").text(title);
+          $clone.find("[data-card='image']").attr("src", image).attr("alt", title).css("object-fit", "cover").css("object-position", "center");
+          $clone.find("[data-card='subtitle']").text(englishTitle);
+
+          $result.append($clone);
+        });
+
+
+        // set float right
+        const $sumary = $('#sumary');
+        const nextPageNumber = parseInt(page) + 1;
+
+        $sumary.html('');
+
+        if (length === 0) {
+          $sumary.html(`<div class="text-center text-base-content">Không tìm thấy phim nào</div>`);
+
+          $sumary.append(`<div class="flex items-center bg-gray-300 hover:bg-gray-500 transition  justify-center text-base-content bg-base-100 rounded p-2 dark:bg-gray-600 hover:bg-opacity-80 mx-2">
+            <button class="cursor-pointer w-full h-full text-base-content outline-none focus:outline-none flex items-center"
+              @click="fetchApi({categories: selected, name: name, page: ${page - 1}, limit: ${limit}})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-chevron-right w-8 h-8 transform transition rotate-180">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+              Về trang trước
+            </button>
+          </div>`);
+
+          return;
+        }
+        // Length
+        $sumary.append(`<div class="flex flex-col items-center justify-center text-base-content bg-base-100 rounded my-2">
+          <label for="" class="">
+            Tổng số phim: ${length}
+          </label>
+        </div>`);
+
+        // Next page button to the right
+        if (nextPage) {
+          $sumary.append(`<div class="flex items-center justify-evenly  rounded p-2  mx-2">
+            <button class="cursor-pointer py-3 px-4 rounded-md h-full text-base-content outline-none bg-gray-400 hover:bg-gray-500 transition focus:outline-none flex items-center"
+              @click="fetchApi({categories: selected, name: name, page: ${page - 1}, limit: ${limit}})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-chevron-right w-8 h-8 transform transition rotate-180">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+              Trang trước
+            </button>
+
+            <button class="cursor-pointer py-3 px-4 rounded-md h-full text-base-content outline-none bg-gray-400 hover:bg-gray-500 transition focus:outline-none flex items-center"
+              @click="fetchApi({categories: selected, name: name, page: ${parseInt(page) + 1}, limit: ${limit}})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-chevron-right w-8 h-8 transform transition" :class="{'rotate-180': open}">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+              Sang trang ${nextPageNumber}
+            </button>
+          </div>`);
+        }
+
+      }
+    });
+
+  }
+</script>

@@ -1,0 +1,208 @@
+{{#if movie}}
+{{log movie}}
+<div x-data='{
+    movie: {{json movie}},
+    chooseSeason: 0,
+  }'>
+
+
+  <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+    <h2 class=" text-xl font-bold mb-1">{{movie.title}}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-5">
+      <div class="col-span-1 overflow-hidden">
+        <img src="{{movie.image}}"
+          class="w-full object-contain transform hover:scale-110 transition-transform duration-400" alt="" />
+      </div>
+      <div class="col-span-4 p-2 flex flex-col relative">
+        {{!-- {{#ifEquals user.role "admin"}}
+        <div id="filmAdmin">
+          <span onclick="editFilmClickHandler()"
+            class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white absolute rounded-lg right-0 top-0">
+            Chỉnh sửa
+          </span>
+        </div>
+
+        {{/ifEquals}} --}}
+        <div class="flex flex-col divide-y divide-base-300" {{#ifEquals user.role "admin" }} id="filmEditForm"
+          {{/ifEquals}}>
+          <p class="p-2 text-base-content text-lg">{{movie.title}} - {{movie.englishTitle}}</p>
+          <div class="p-2 text-base-content">Mới cập nhật:
+            {{!-- <a class="halim-episode" href="/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"><span
+                class="bg-accent p-2 shadow-sm text-white font-bold rounded hover:bg-success transition duration-300">{{movie.newestEpisode}}</span></a>
+            --}}
+          </div>
+          <div class="p-2 text-base-content">
+            Tình trạng:
+            <span class="font-bold">
+              {{movie.status}}
+            </span>
+          </div>
+          <div class="p-2 text-base-content">
+            <span class="title-year">Năm:
+              <a href="/release/{{releaseYear}}/" rel="tag" class="font-bold">{{movie.releaseYear}}</a></span>
+          </div>
+          <div class="p-2 text-base-content">Thể loại:
+            {{#each movie.categories}}
+
+            <a href="/categories/{{slug}}/" rel="tag"
+              class="inline-block p-1 bg-rose-400 text-white rounded hover:bg-success transition duration-300 font-bold"
+              title="{{description}}">{{title}}</a>
+
+            {{/each}}
+          </div>
+          <div class="p-2">Quốc gia: <a href="/country/my" title="Mỹ" class="font-bold">Mỹ</a></div>
+
+          {{!-- Overview --}}
+          <div class="p-2">
+            <i class="fas fa-star">
+            </i>
+            4.35<i>/</i>5
+          </div>
+          <div class="p-2">
+            <i class="fas fa-comment">
+            </i>
+            108 đánh giá
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    {{!-- Button add to favorite --}}
+    {{#unless isFavorite}}
+    <div class="flex justify-start my-2 gap-2">
+      <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+        onclick="addToFavorite(' {{movie.slug}}')">
+        <i class="fas fa-heart"></i>
+        Thêm vào yêu thích
+      </button>
+
+      {{!-- button to admin --}}
+      {{#ifEquals user.role "admin"}}
+      <a class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+        href="/admin/movies/{{movie.slug}}/edit">
+        <i class="fas fa-edit"></i>
+        Chỉnh sửa
+      </a>
+      {{/ifEquals}}
+    </div>
+    {{else}}
+    {{!-- Remove from favorite --}}
+    <div class="flex justify-start my-2">
+      <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+        onclick="removeFromFavorite('{{movie.slug}}')">
+        <i class="fas fa-heart"></i>
+        Xóa khỏi yêu thích
+      </button>
+    </div>
+    {{/unless}}
+
+
+
+
+    <h2 class="text-xl font-bold mt-4">Mô tả</h2>
+    <p class="px-2" id="description">
+      {{movie.description}}
+    </p>
+  </div>
+
+
+  <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+    <h2 class="text-xl font-bold">Chọn tập</h2>
+    {{!-- <button class="p-2 bg-pink-500 text-white" @click=>Click me</button> --}}
+    <div class="tabs">
+      <template x-for="(season, index) in movie.seasons" :key="season.name">
+        <div class="tab tab-lifted" :class="{'tab-active': chooseSeason == index}" x-text="season.name"
+          @click="chooseSeason = index"></div>
+
+      </template>
+    </div>
+
+    <div class="p-2 grid grid-cols-2 md:grid-cols-4 gap-2">
+      <template x-for="episode in movie.seasons[chooseSeason].episodes">
+        {{>card image="https://znews-photo.zadn.vn/w660/Uploaded/ngogtn/2020_11_11/demon.jpg" title="Thanh gươm diệt
+        quỷ"
+        englishTitle="Kimetsu No Yaiba"}}
+      </template>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const desc = document.querySelector("#description"); const fullText =
+    desc.textContent; const clamped = desc.textContent.slice(0, 500) + '...';
+  desc.textContent = clamped; desc.textContent += "..."; let show = false;
+  desc.addEventListener("click", () => {
+    show = !show; if (show) {
+      desc.textContent = fullText; return;
+    } desc.textContent = clamped;
+  });
+
+</script>
+
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+  <h2 class="text-xl mb-1">Phim lẻ mới</h2>
+  {{> carousel barId="phimMoi" slidesPerView="4"}}
+</div>
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+  <h2 class="text-xl mb-1">Phim bộ random</h2>
+  {{> carousel barId="phimBoRandom" slidesPerView=4}}
+</div>
+{{/if}}
+
+<script>
+  function editFilmClickHandler(e) {
+    console.log(e);
+
+    // turn all p to input
+    $("#filmEditForm").find("p").each(function () {
+      $(this).replaceWith(`<input type="text" name="${$(this).attr("name")}" value="${$(this).text()}">`);
+    });
+  }
+
+  function addToFavorite(slug) {
+    $.ajax({
+      url: "/favorite",
+      type: "POST",
+      data: {
+        slug: slug,
+        _csrf: `{{ _csrfToken }}`
+      },
+      success: function (data) {
+        console.log('addToFavorite', data);
+        if (data.success) {
+          alert("Đã thêm vào yêu thích");
+        } else {
+          alert("Đã có trong danh sách yêu thích");
+        }
+
+        //reload 
+        location.reload();
+      }
+    });
+  }
+
+  function removeFromFavorite(slug) {
+    $.ajax({
+      url: "/favorite",
+      type: "DELETE",
+      data: {
+        slug: slug,
+        _csrf: `{{ _csrfToken }}`
+      },
+      success: function (data) {
+        console.log('removeFromFavorite', data);
+        if (data.success) {
+          alert("Đã xoá khỏi yêu thích");
+        } else {
+          alert("Đã có trong danh sách yêu thích");
+        }
+
+        //reload
+        location.reload();
+      }
+    });
+  }
+</script>

@@ -1,0 +1,300 @@
+{{#> admin}}
+<h3 class="text-lg mb-2 flex items-center">
+  Movies
+  {{!-- button to uncollapse all --}}
+  {{!-- <button class="btn btn-sm btn-primary ml-2" @click="">
+    <i class="fas fa-angle-double-down"></i>
+  </button> --}}
+
+  {{!-- button to create movie --}}
+  {{#> modal buttonTitle="Thêm phim" icon="fa-plus"}}
+
+
+  <div class="mb-2 p-2" x-data="">
+    <label for="title" class="text-sm">
+      Get metadata from ephimmoi.net, phimgii.net:
+    </label>
+    <input type="text" name="title" id="title" class="w-full text-black border p-2 rounded-md"
+      onchange="fetchApi(this.value)">
+    <div id="metaApiLoading" class="hidden flex justify-between p-2">
+      {{!-- spinner --}}
+
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+
+  <form action="/movies" method="POST" id="addMovieForm"
+    class="p-2 shadow-md rounded-md my-2 overflow-y-scroll max-h-[75vh] grid md:grid-cols-2 gap-2">
+    <div class="mb-2">
+      <label for="title" class="text-sm">
+        Tên phim
+      </label>
+      <input type="text" name="title" id="title" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+    <div class="mb-2">
+      <label for="englishTitle" class="text-sm">
+        Tên tiếng Anh
+      </label>
+      <input type="text" name="englishTitle" id="englishTitle" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+    <div class="mb-2">
+      <label for="description" class="text-sm">
+        Mô tả (optional)
+      </label>
+      <textarea name="description" id="description" class="w-full text-black border p-2 rounded-md"></textarea>
+    </div>
+    <div class="mb-2">
+      <label for="poster" class="text-sm">
+        Poster
+      </label>
+      <div class="p-2 border bg-white rounded-md">
+        <div class="image-preview-single">
+          <img src="" alt="">
+          <input type="hidden" role="uploadcare-uploader" name="image" x-ref="imagePresentation" value="{{movie.image}}"
+            data-clearable data-images-only />
+        </div>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="trailer" class="text-sm">
+        Trailer (optional)
+      </label>
+      <input type="text" name="trailer" id="trailer" class="w-full text-black border p-2 rounded-md">
+    </div>
+    <div class="mb-2">
+      <label for="releaseYear" class="text-sm">
+        Năm phát hành
+      </label>
+      <input type="text" name="releaseYear" id="releaseYear" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+    {{!-- imDb --}}
+    <div class="mb-2">
+      <label for="imDb" class="text-sm">
+        imdbId (optional)
+      </label>
+      <input type="text" name="imdbId" id="imDb" class="w-full text-black border p-2 rounded-md">
+    </div>
+    {{!-- time --}}
+    <div class="mb-2">
+      <label for="time" class="text-sm">
+        Thời lượng (optional)
+      </label>
+      <input type="text" name="time" id="time" class="w-full text-black border p-2 rounded-md">
+    </div>
+    {{!-- Slug --}}
+    <div class="mb-2">
+      <label for="slug" class="text-sm">
+        Slug
+      </label>
+      <input type="text" name="slug" id="slug" class="w-full text-black border p-2 rounded-md" required>
+    </div>
+
+    {{!-- Ngày phát hành: premiere --}}
+    <div class="mb-2">
+      <label for="premiere" class="text-sm">
+        Ngày phát hành (optional)
+      </label>
+      <input type="date" name="premiere" id="premiere" class="w-full text-black border p-2 rounded-md">
+    </div>
+
+    <select class="select col-span-2 w-full border h-72" name="categories[]" multiple>
+      <option class="p-2" disabled="disabled" selected="selected">
+        Chọn chuyên mục (giữ Ctrl để chọn nhiều)
+      </option>
+      {{#each categories}}
+      <option class="p-2 hover:bg-gray-100 text-black" value="{{this._id}}">
+        {{this.title}}
+      </option>
+      {{/each}}
+    </select>
+
+    <input name="_csrf" type="hidden" value="{{@root._csrfToken}}">
+    <button class="btn btn-primary">
+      Tạo
+    </button>
+  </form>
+  {{/modal}}
+</h3>
+{{!--
+{{#if success2}}
+<div class="rounded bg-green-200 p-2 dark:bg-green-500 my-2 flex items-center gap-2">
+  <i class="fas fa-check-circle text-green-700"></i>
+  {{success2}}
+</div>
+{{/if}} --}}
+
+{{#if error}}
+<div class="rounded bg-red p-2 dark:bg-red-400 my-2 flex items-center gap-2">
+  {{!-- error icon --}}
+  <i class="fas fa-exclamation-triangle text-red-500"></i>
+  {{!-- error message --}}
+  {{error}}
+</div>
+{{/if}}
+
+<ul class="list-inside list-none flex flex-col gap-1">
+  {{#each categories}}
+  <li x-data="{ show: true }">
+    <div data-testid="category-item"
+      class="rounded flex items-center bg-pink-100 dark:bg-gray-700 hover:bg-pink-200 dark:hover:bg-pink-500 p-2"
+      @click="show = !show">
+      <span class="flex-grow">
+        {{this.title}}
+      </span>
+
+      {{!-- Chevron down --}}
+      <i class="fas fa-chevron-down ml-2" :class="show ? 'rotate-180' : ''"></i>
+    </div>
+
+
+    {{!-- List all movies in category --}}
+    <ul class="list-inside list-none flex flex-col gap-1" x-show="show">
+      {{#each movies}}
+      <a href="/admin/movies/{{this.slug}}/edit" data-tooltip="Chỉnh sửa phim {{this.title}}">
+        <li class="pl-6 flex items-center gap-2 p-2 hover:bg-pink-200 dark:hover:bg-pink-500">
+          <span class="mr-2">
+            {{this.title}}
+          </span>
+
+          {{!-- Edit movie --}}
+          {{!-- <a href="" class="text-base-content hover:text-opacity-80">
+            <i class="fas fa-edit"></i>
+          </a> --}}
+
+          {{!-- Delete movie --}}
+          <form action="/admin/movies/{{this.slug}}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+            <button type="submit" class="text-red-500 hover:text-red-700">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </form>
+        </li>
+      </a>
+      {{/each}}
+    </ul>
+
+  </li>
+  {{/each}}
+</ul>
+
+{{!-- <form class="" onsubmit="onCategorySubmit(event)">
+  <h1 class="text-xl">
+    Tạo chuyên mục
+  </h1>
+  <input class="input" type="text" placeholder="Tiêu đề" name="title" required />
+  <input class="input" type="text" placeholder="Description" name="description" />
+  <input class="input" type="text" placeholder="Slug" name="slug" required />
+  <button class="btn btn-primary">
+    Tạo
+  </button>
+</form> --}}
+{{/admin}}
+<script>
+  function onCategorySubmit(event) {
+    event.preventDefault();
+
+    const { description, slug, title } = event.target.elements;
+
+    if (!description.value || !slug.value || !title.value) {
+      return;
+    }
+
+    const data = {
+      description: description.value,
+      slug: slug.value,
+      title: title.value,
+    };
+
+    // JQuery AJAX
+    $.ajax({
+      url: '/categories',
+      method: 'POST',
+      data,
+      success: ({ data }) => {
+
+        $("#notify").html(`
+  <div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
+    Đã tạo chuyên mục
+    <a href="/categories/${data.slug}">
+      ${data.title}
+    </a>
+  </div>
+  `);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
+  }
+
+  function fetchApi(url) {
+    // set loading for 
+    $("#metaApiLoading").show();
+
+    $.ajax({
+      url: 'http://crawler.trungtin.codes/get-data',
+      type: 'GET',
+      data: {
+        url: url
+      },
+      success: function ({ data, success }) {
+        if (!success) {
+          console.error('Fetch data from crawler failed');
+          return;
+        }
+
+        console.log(data);
+        const $form = $('#addMovieForm');
+
+        $form.find('input[name="title"]').val(data.title);
+        $form.find('input[name="englishTitle"]').val(data.englishTitle);
+        $form.find('input[name="slug"]').val(data.slug);
+        $form.find('input[name="premiere"]').val(data.premiere);
+        $form.find('input[name="image"]').val(data.image);
+        $form.find('textarea[name="description"]').val(data.description);
+        $form.find('input[name="trailer"]').val(data.trailer);
+        $form.find('input[name="duration"]').val(data.duration);
+        $form.find('input[name="country"]').val(data.country);
+        $form.find('input[name="director"]').val(data.director);
+        $form.find('input[name="actor"]').val(data.actor);
+        $form.find('input[name="imdb"]').val(data.imdb);
+        $form.find('input[name="category"]').val(data.category);
+        $form.find('input[name="releaseYear"]').val(data.year);
+
+
+        //image-preview-single
+        $('.image-preview-single').children('img').attr('src', data.image);
+
+        $("#metaApiLoading").hide();
+
+
+      }
+    });
+  }
+
+</script>
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeInClass {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+  }
+</style>
+
+
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
+<script>
+  UPLOADCARE_PUBLIC_KEY = "533d4b8f6a11de77ba81";
+</script>

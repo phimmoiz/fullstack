@@ -1,13 +1,15 @@
 import { Router } from "express";
 import Category from "../models/category.model";
 import { requireAdmin } from "../middlewares/auth.middleware";
+import createError from "http-errors";
+import Movie from "../models/movie.model";
 
 const router = Router();
 
 router.post("*", requireAdmin);
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     const { title, description, slug } = req.body;
@@ -30,21 +32,65 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  try {
+    const categories = await Category.find().populate("movies");
+
+    res.render("categories/index", {
+      title: "Danh sách chuyên mục",
+      categories,
+    });
+  } catch (err) {
+    next(createError(403, err));
+  }
+});
+
 router.get("/:slug", async (req, res, next) => {
   try {
     const { slug } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 9;
 
     const cat = await Category.findOne({ slug });
+
+    const populated = await cat.populate({
+      path: "movies",
+      model: Movie,
+      options: {
+        sort: { createdAt: -1 },
+        limit,
+        skip: (page - 1) * limit,
+      },
+    });
+
+    const totalMovies = await cat.__v;
 
     // if not found
     if (!cat) {
       throw new Error("Category not found");
     }
 
-    res.json({ success: true, data: cat });
+    // get total pages
+    const totalPages = Math.ceil(totalMovies / 10);
+
+    const pagination = Array.from({ length: totalPages }, (_, i) => i + 1).map(
+      (page) => {
+        return {
+          url: `/categories/${cat.slug}?page=${page}`,
+          number: page,
+        };
+      }
+    );
+
+    res.render("categories/singleCategory", {
+      title: cat.title,
+      category: populated,
+      pagination,
+      currentIndex: page - 1,
+    });
   } catch (err) {
     // 404
-    next();
+    next(createError(404, err));
   }
 });
 export default router;

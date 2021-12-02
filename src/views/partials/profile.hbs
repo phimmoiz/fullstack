@@ -1,0 +1,50 @@
+<div>
+  {{#if user}}
+  <div class="my-4 text-center rounded bg-green-200 dark:bg-green-700 p-2">
+    <i class="fas fa-exclamation-circle"></i> Bạn đã đăng nhập với {{user.username}}
+  </div>
+  <div class="rounded-md h-screen shadow-md bg-base-200 my-2 relative">
+    <div class="h-1/4">
+      <img class="rounded-full border w-40 h-40 border-gray-400 absolute top-5 left-5 " src="{{user.avatar}}"
+        alt="{{user.username}}" />
+    </div>
+    <div class="grid grid-cols-5 gap-16">
+      <div class="col-span-1">
+        <h3 class="text-xl mb-2 px-2">
+          Trang Thông tin
+        </h3>
+        <ul class="divide-y divide-pink-500">
+          <li class="p-3 text-lg transform hover:translate-x-2 cursor-pointer">
+            <a href="../profile/info">
+              <div class="transform hover:translate-x-2  transition duration-300 p-2">
+                Thông tin cá nhân
+              </div>
+            </a>
+          </li>
+          <li class="p-4 text-lg transform hover:translate-x-2 cursor-pointer">
+            <a href="../profile/changepwd">
+              <div class="transform hover:translate-x-2  transition duration-300 p-2">
+                Đổi mật khẩu
+              </div>
+            </a>
+          </li>
+          <li class="p-4 text-lg transform hover:translate-x-2 cursor-pointer">
+            <a href="../profile/term_policy">
+              <div class="transform hover:translate-x-2  transition duration-300 p-2">
+                Chính sách và quy định
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-span-4">
+        {{> @partial-block }}
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
+{{t "profile.noUser"}}
+{{/if}}
+</div>

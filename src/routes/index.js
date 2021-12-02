@@ -3,7 +3,6 @@ import userRoute from "./user.route";
 import registerRoute from "./register.route";
 import logInRoute from "./login.route";
 import filmListRoute from "./filmList.route";
-import filmRoute from "./film.route";
 import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
 import adminRoute from "./admin.route";
@@ -11,6 +10,10 @@ import logOutRoute from "./logout.route";
 import categoriesRoute from "./categories.route";
 import movieRoute from "./movies.route";
 import profileRoute from "./profile.route";
+import homeRoute from "./home.route";
+import messagesRoute from "./messages.route";
+import favoriteRoute from "./favorite.route";
+import seasonRoute from "./season.route";
 
 const router = express.Router();
 
@@ -35,10 +38,7 @@ const defaultRoutes = [
     path: "/danh-sach",
     route: filmListRoute,
   },
-  {
-    path: "/phim",
-    route: filmRoute,
-  },
+
   {
     path: "/top-luot-xem",
     route: topViewRoute,
@@ -63,15 +63,27 @@ const defaultRoutes = [
     path: "/profile",
     route: profileRoute,
   },
+  {
+    path: "/messages",
+    route: messagesRoute,
+  },
+  {
+    path: "/favorite",
+    route: favoriteRoute,
+  },
+  {
+    path: "/season",
+    route: seasonRoute,
+  },
+  {
+    path: "/",
+    route: homeRoute,
+  },
 ];
 
 // set router for defaultRoutes
 defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
-});
-
-router.route("/").get((req, res) => {
-  res.render("index", { title: "Trang chủ" });
 });
 
 export default router;

@@ -1,0 +1,26 @@
+<div class="shadow-lg p-2">
+  <h2 class="text-2xl font-bold">Yêu thích</h2>
+  <div id="container" class="relative">
+    {{#each favoriteMovies}}
+    <div class="h-48 absolute">
+      {{> card englishTitle=englishTitle title=title image=image slug=slug}}
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+<script src="https://spope.github.io/MiniMasonry.js/minimasonry.min.js"></script>
+
+<style>
+  #container {
+    height: 600px;
+    margin-top: 1rem;
+  }
+</style>
+<script>
+  var exampleDefault = new MiniMasonry({
+    container: document.querySelector('#container'),
+    minify: false
+
+  });
+</script>

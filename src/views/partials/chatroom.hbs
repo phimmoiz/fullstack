@@ -1,0 +1,201 @@
+<div class="fixed col-span-2 h-auto bg-white rounded-t-xl" data-testid="chatroom-container" x-data="{
+  chat: localStorage.getItem('chat') ?  JSON.parse(localStorage.getItem('chat')) : true, 
+  pin: true, //localStorage.getItem('pin') ?  JSON.parse(localStorage.getItem('pin')) : false,
+  }" :class="{
+    'fixed bottom-0 right-4 z-50 w-11/12 lg:w-[50rem]': pin,
+    'max-h-10': !chat,
+  }">
+  <h2 class="flex text-xl items-center dark:bg-blue-400 dark:hover:bg-opacity-80 p-2 rounded-t-md"
+    @click="chat = !chat, localStorage.setItem('chat', JSON.stringify(chat)), fullscreen = !chat">
+    <span class="flex-grow">
+      {{!-- icon size small --}}
+      <i class="fas fa-comments fa-xs p-2"></i>
+      Tâm sự tuổi hồng
+    </span>
+    {{!-- pin --}}
+    {{!-- <span class="mr-2">
+      <i class="fas fa-thumbtack fa-xs p-2 transform hover:-translate-y-0.5 duration-200"
+        @click="pin = !pin, localStorage.setItem('pin', pin)"></i>
+    </span> --}}
+
+    {{!-- full screen --}}
+    {{!-- <span class="mr-2">
+      <i class="fas fa-expand-arrows-alt fa-xs p-2 transform hover:-translate-y-0.5 duration-200"
+        @click="fullscreen = !fullscreen, localStorage.setItem('fullscreen', JSON.stringify(chat))"></i>
+    </span> --}}
+
+    <i class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"
+      :class="{'rotate-180': !chat}"></i>
+
+  </h2>
+
+  <div class="rounded-b-md gap-2 overflow-y-scroll p-2 bg-white max-h-[calc(80vh)] overflow-x-hidden"
+    data-testid="chatroom-content" x-data="{content: ''}">
+
+    <textarea class="resize border rounded-md p-2 h-[fit-content] my-2 w-full max-w-[80%] text-black"
+      placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)" x-model="content" {{!-- on enter key pressed --}}
+      @keydown.enter="sendMessageHandler(content)"></textarea>
+
+    <div class="flex items-center gap-1 justify-between md:justify-start mb-1">
+
+      <button class="btn btn-primary px-4" @click="sendMessageHandler(content)">
+        <i class="fas fa-paper-plane"></i>
+        <span class="ml-1 hidden md:inline">Gửi</span>
+
+      </button>
+
+      {{#ifEquals user.role 'admin'}}
+      <button class="btn bg-red-400 px-4" @click="sendMessageHandler('/clear')">
+        <i class="fas fa-trash-alt"></i>
+        <span class="ml-1 hidden md:inline">Xóa</span>
+      </button>
+      {{/ifEquals}}
+
+      <div class="flex gap-1 items-center"
+        x-html="content.length <= 10 ? 
+          `<span class='p-2 rounded-md bg-red-400 inline-block'><i class='fas fa-exclamation-triangle'></i>Nội dung chat cần có ít nhất 10 ký tự:</span>` : 
+          `<span class='p-2 rounded-md bg-green-400 inline-block'><i class='fas fa-check-circle'></i>Nội dung chat hợp lệ</span>`">
+      </div>
+    </div>
+
+    <div id="chats" class="flex flex-col gap-2"></div>
+
+    {{!-- on scroll here, load more --}}
+    <div class="flex justify-center items-center" x-show="chat">
+      <div class="spinner" data-test="chatroom-spinner"></div>
+    </div>
+
+
+  </div>
+</div>
+
+<div id="messageBoilerplate" class="hidden">
+  {{>message}}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js"
+  integrity="sha512-nYuHvSAhY5lFZ4ixSViOwsEKFvlxHMU2NHts1ILuJgOS6ptUmAGt/0i5czIgMOahKZ6JN84YFDA+mCdky7dD8A=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{{!-- momentjs 2.29 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+  integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{{!-- SocketIO listen: New message --}}
+<script>
+  // for tagging number
+  let post_number = 0;
+  let post_scrollDown = 0;
+
+  // listen to new message from /socket/message
+  const socket = io();
+
+  function sendMessageHandler(content) {
+    console.log(content)
+    socket.emit("chat message", content);
+  }
+
+  socket.on("chat message receive", function (message) {
+    console.log('chat message triggered', message);
+
+    createMessage(message);
+  });
+  socket.on("delete all messages", function (message) {
+    // remove all children 
+    $("#chats").children().remove();
+  });
+
+  let el = document.querySelector('[data-testid="chatroom-content"]');
+  // scroll listener bottom check
+
+  function chatroomScrollHandler(e) {
+    const epsilon = 6;
+
+    if (this.scrollHeight - this.scrollTop - this.clientHeight <= epsilon) {
+      loadMore();
+    }
+  }
+
+  el.addEventListener('scroll', chatroomScrollHandler);
+
+  function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+      if (!timer) {
+        func.apply(this, args);
+      }
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = undefined;
+      }, timeout);
+    };
+  }
+
+  function createMessage(message) {
+    const messageNode = getMessageNode(message, post_number++);
+
+    $("#chats").prepend(messageNode);
+  }
+
+  function getMessageNode(message, post_number) {
+    const template = $("#messageBoilerplate").children().first().clone();
+
+    //add to #chat
+    template.find("[test-id='avatar']").attr('src', message.author.avatar);
+    template.find("[test-id='name']").text(message.author.username);
+    template.find("[test-id='content']").text(message.content);
+    //ago
+    template.find("[test-id='time']").text(moment(message.time).fromNow());
+
+    //post_number
+    template.find("[test-id='post_number']").text(`#${post_number}`);
+
+    return template;
+  }
+
+  const loadMore = debounce(() => {
+    fetchMessage();
+  });
+  // Load for the first time
+  loadMore();
+
+  // load more
+  function fetchMessage() {
+    console.log('load more triggered')
+    jQuery.ajax({
+      url: '/messages',
+      type: 'GET',
+      data: {
+        skip: -post_scrollDown
+      },
+      success: function ({ messages }) {
+        if (!messages?.length) {
+          // remove spinner
+          $("[data-test='chatroom-spinner']").remove();
+
+          // show no more message
+          $("#chats").append(`<div class="text-center text-gray-500 py-2">Không có thêm tin nhắn nào</div>`);
+
+          // remove scroll listener
+          el.removeEventListener('scroll', chatroomScrollHandler);
+          return;
+        }
+
+        let html = messages.reduce((html, message) => {
+          return html + getMessageNode(message, --post_scrollDown).prop('outerHTML');
+        }, '');
+
+        // append a divide line
+        if (messages.length > 0) {
+          //hr width 0.25rem
+          html += `<hr class="my-2 h-0.5 bg-gray-500">`;
+          //text
+
+        }
+
+        $("#chats").append(html);
+      }
+    });
+  }
+</script>

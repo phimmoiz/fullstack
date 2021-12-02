@@ -22,12 +22,18 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: "https://via.placeholder.com/150",
+    default: "/assets/images/question.png",
   },
   role: {
     type: String,
     default: "user",
   },
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Movie",
+    },
+  ],
 });
 
 // create user model

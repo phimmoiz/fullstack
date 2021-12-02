@@ -8,6 +8,15 @@ import cookieParser from "cookie-parser";
 import createError from "http-errors";
 import { checkAuth } from "./middlewares/auth.middleware";
 import { connect } from "./lib/mongodb";
+import csurf from "csurf";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import session from "express-session";
+
+//
+import cookie from "cookie";
+import jwt from "jsonwebtoken";
+import Message from "./models/message.model";
 
 require("dotenv").config();
 
@@ -28,6 +37,21 @@ hbs.registerPartials(
 hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
+hbs.registerHelper("inc", function (value, options) {
+  return parseInt(value) + 1;
+});
+hbs.registerHelper("json", function (context) {
+  return JSON.stringify(context);
+});
+
+// Session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "MYSUPERSECRET",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Add body parser
 app.use(express.json());
@@ -35,6 +59,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // cookie parser
 app.use(cookieParser());
+app.use(csurf({ cookie: true }));
+app.use((req, res, next) => {
+  res.locals._csrfToken = req.csrfToken();
+  next();
+});
 
 // Mongodb connect
 connect();
@@ -72,6 +101,48 @@ app.use(function (err, req, res, next) {
   res.render("error", { title: "Error" });
 });
 
-app.listen(PORT, () => {
+// SocketIO
+const server = createServer(app);
+const io = new Server(server, {});
+
+io.on("connection", (socket) => {
+  socket.on("chat message", async (content) => {
+    try {
+      const { token } = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
+
+      if (!token) {
+        return;
+      }
+
+      let user = await jwt.verify(token, process.env.JWT_SECRET);
+
+      if (!user) return; // TODO: Tell user that he is not authorized
+
+      //command check
+      if (content.startsWith("/clear") && user.role === "admin") {
+        await Message.deleteMany({});
+
+        content = `Admin cleared all messages (/clear)`;
+        io.emit("delete all messages", newMessage);
+      }
+
+      const newMessage = await (
+        await Message.create({
+          author: user.id,
+          content,
+        })
+      ).populate({
+        path: "author",
+        select: "username avatar role",
+      });
+
+      io.emit("chat message receive", newMessage);
+    } catch (err) {
+      console.log("[socket]", err);
+    }
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`[server] Server running at http://localhost:${PORT}`);
 });

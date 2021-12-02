@@ -1,31 +1,15 @@
-
 <!-- Slider main container -->
-<div class="swiper {{barId}} h-44 w-full">
+<div class="swiper {{barId}} h-96 w-full">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    <div class="swiper-slide">
-
-      {{>card}}
+    {{#each items}}
+    <div class="swiper-slide pb-4">
+      {{!-- pass data to card as object --}}
+      {{> card title=title image=image slug=slug englishTitle=englishTitle }}
     </div>
-    <div class="swiper-slide">
+    {{/each}}
 
-      {{>card}}
-    </div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
-    <div class="swiper-slide">Slide 2</div>
-    <div class="swiper-slide">Slide 3</div>
-    <div class="swiper-slide">
-
-      {{>card}}
-    </div>
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
@@ -35,44 +19,44 @@
   <div class="swiper-button-next"></div>
 
   <!-- If we need scrollbar -->
-  <div class="swiper-scrollbar"></div>
+  <div class="swiper-scrollbar dark:bg-pink-400"></div>
 </div>
 
 <script>
-  const swiper{{barId}} = new Swiper('.{{barId}}', {
-  // Optional parameters
-  direction: "{{direction}}" || "horizontal",
-  loop: true,
+  const swiper{{ barId }} = new Swiper('.{{barId}}', {
+    // Optional parameters
+    direction: "{{direction}}" || "horizontal",
+    loop: true,
 
-  autoplay: {
-    delay: 5000,
-  },
+    autoplay: {
+      delay: 5000,
+    },
 
-  // Default parameters
-  slidesPerView: 2,
-  spaceBetween: 10,
+    // Default parameters
+    slidesPerView: 2,
+    spaceBetween: 10,
 
-  // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 640px
-    640: {
-      slidesPerView: {{slidesPerView}},
+    // Responsive breakpoints
+    breakpoints: {
+      // when window width is >= 640px
+      640: {
+        slidesPerView: {{ slidesPerView }},
     }
   },
 
-  // If we need pagination
-  pagination: {
+    // If we need pagination
+    pagination: {
     el: 'swiper-pagination',
   },
 
-  // Navigation arrows
-  navigation: {
+    // Navigation arrows
+    navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
 
-  // And if we need scrollbar
-  scrollbar: {
+    // And if we need scrollbar
+    scrollbar: {
     el: '.swiper-scrollbar',
   },
 });

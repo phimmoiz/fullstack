@@ -1,45 +1,16 @@
-<div class="grid grid-cols-1 md:grid-cols-4 md:gap-2 ">
+<div class="grid grid-cols-1 lg:grid-cols-4 md:gap-2 ">
   <div class="col-span-3 mt-2 md:mt-0">
 
     <h2 class="text-2xl uppercase mx-2">Phim mới</h2>
     <div class="p-2 col-span-2">
-      {{> carousel barId="phimMoi" slidesPerView=3 }}
+      {{> carousel barId="phimMoi" slidesPerView=3 items=data.phimMoi }}
     </div>
 
-    <h2 class="text-2xl uppercase mx-2">Phim hành động</h2>
-    <div class="p-2 my-2 col-span-2">
-      {{> carousel barId="phimHanhDong" slidesPerView=3 }}
+    <h2 class="text-2xl uppercase mx-2 mt-2">Phim hành động</h2>
+    <div class="p-2 col-span-2">
+      {{> carousel barId="phimHanhDong" slidesPerView=3 items=data.phimHanhDong }}
     </div>
 
-    <div class="p-2 my-2 col-span-2" x-data="{chat: true}">
-      <h2 class="flex text-xl items-center dark:bg-purple-700 p-2 rounded-t-md">
-        <span class="flex-grow">
-          {{!-- icon size small --}}
-          <i class="fas fa-comments fa-xs"></i>
-          Tâm sự tuổi hồng
-        </span>
-        <i @click="chat = !chat"
-          class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"
-          :class="{'rotate-180': chat}"></i>
-
-      </h2>
-      <div class="rounded-b-md p-2 border dark:border-purple-700">
-        <input type="text" class="input my-2 w-full text-black"
-          placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)">
-        <button class="button btn-purple">Gửi</button>
-        <div class="flex flex-col gap-2" x-show="chat" x-transition:enter="transition ease-out duration-500"
-          x-transition:enter-start="opacity-0 transform scale-90" x-transition:leave="transition ease-in duration-300"
-          x-transition:leave-start="opacity-100 transform scale-100"
-          x-transition:leave-end="opacity-0 transform scale-90">
-          {{>message}}
-          {{>message}}
-          {{>message}}
-          {{>message}}
-          {{>message}}
-          {{>message}}
-        </div>
-      </div>
-    </div>
 
     <div class="bg-base-200 grid gap-2 my-2">
       <img src="https://via.placeholder.com/800x150" class="object-cover w-full" />
@@ -48,42 +19,42 @@
 
   <div class="md:row-span-2 place-self-start flex flex-col gap-2 w-full px-2">
     <div x-data="{bxhOpen: true}">
-      <h2 class="flex text-xl items-center bg-pink-500 text-white dark:bg-purple-700 p-2 rounded-t-md">
+      <h2 class="flex text-xl items-center p-2 rounded-t-md hover:bg-fuchsia-300 dark:hover:bg-fuchsia-700 transition"
+        @click="bxhOpen = !bxhOpen">
         <span class="flex-grow">
-          {{!-- icon size small --}}
           <i class="fas fa-chess-king fa-xs"></i>
           Bảng xếp hạng
         </span>
-        <i @click="bxhOpen = !bxhOpen" :class="{'rotate-180': bxhOpen}"
+        <i :class="{'rotate-180': bxhOpen}"
           class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
 
       </h2>
 
-      <div class="rounded-b-md p-2 border border-pink-400 dark:border-purple-700">
-        <div class="tabs mb-1">
-          <div class="tab tab-lifted">ngày</div>
-          <div class="tab tab-lifted tab-active">tuần</div>
-          <div class="tab tab-lifted">tháng</div>
-          <div class="tab tab-lifted">mùa</div>
-        </div>
+      <div class="rounded-b-md p-2">
+        {{!-- <div class="grid grid-cols-4 divide-x mb-1">
+          <div class="bg-pink-300 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-600 w-full py-2 text-center ">
+            Ngày</div>
+          <div class="bg-pink-300 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-600 w-full py-2 text-center ">
+            Tuần</div>
+          <div class="bg-pink-300 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-600 w-full py-2 text-center ">
+            Tháng</div>
+          <div class="bg-pink-300 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-600 w-full py-2 text-center ">
+            Mùa</div>
+        </div> --}}
         <div class="flex flex-col gap-1 text-base-content" x-show="bxhOpen"
           x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 transform scale-90"
           x-transition:leave="transition ease-in duration-300"
           x-transition:leave-start="opacity-100 transform scale-100"
           x-transition:leave-end="opacity-0 transform scale-90">
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
-          {{>card}}
+
+          <div id="ranking" class="flex flex-col gap-2"></div>
+
         </div>
       </div>
     </div>
 
     <div x-data="{xemTiepOpen: true}">
-      <h2 class="flex text-xl items-center bg-pink-500 text-white dark:bg-purple-700 p-2 rounded-t-md">
+      <h2 class="flex text-xl items-center p-2 rounded-t-md">
         <span class="flex-grow">
           {{!-- icon size small --}}
           <i class="fas fa-play fa-xs"></i>
@@ -93,9 +64,9 @@
           class="fas fa-chevron-down fa-xs transform hover:-translate-y-0.5 hover:opacity-60 transition"></i>
 
       </h2>
-      <div class="rounded-b-md p-2 border border-pink-400 dark:border-purple-700" x-show="xemTiepOpen"
-        x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 transform scale-90"
-        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform scale-100"
+      <div class="rounded-b-md p-2" x-show="xemTiepOpen" x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 transform scale-90" x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 transform scale-100"
         x-transition:leave-end="opacity-0 transform scale-90">
         {{>card}}
         {{>card}}
@@ -109,14 +80,53 @@
 
 <div class="my-2 mx-2">
   <h2 class="text-2xl mx-2 uppercase">Phim kinh dị</h2>
-    <div class="p-2">
-      {{> carousel barId="phimKinhDi" slidesPerView=4 }}
-    </div>
+  <div class="p-2">
+    {{> carousel barId="phimKinhDi" slidesPerView=4 items=data.phimKinhDi }}
+  </div>
 </div>
 
 <div class="my-2 mx-2">
   <h2 class="text-2xl mx-2 uppercase">Phim hoạt hình</h2>
   <div class="p-2">
-    {{> carousel barId="phimHoatHinh" slidesPerView=4 }}
+    {{> carousel barId="phimHoatHinh" slidesPerView=4 items=data.phimHoatHinh }}
   </div>
 </div>
+
+<script>
+  const $rank = $("#ranking");
+  const $card = $(".group.rounded.box-border.shadow-md.relative.overflow-hidden").first().parent();
+
+  // fetch api rank using ajax
+  jQuery.ajax({
+    url: "/movies/ranking/",
+    dataType: "json",
+    success: function (res) {
+      const { data } = res;
+
+      data.forEach((item, index) => {
+        const { title, image, englishTitle, slug } = item;
+
+        const cardClone = $card.clone();
+
+        try {
+          cardClone.attr("href", `/movies/${slug}`);
+          cardClone.children().first().css("height", "7rem");
+          cardClone.find("[data-card='title']").text(title);
+          cardClone.find("[data-card='image']").attr("src", image).attr("alt", title).css("object-fit", "cover").css("object-position", "center");
+          cardClone.find("[data-card='subtitle']").text(englishTitle);
+
+          $rank.append(cardClone);
+        }
+        catch (e) {
+          console.log(e);
+        }
+
+        // append to $rank
+        $rank.append(cardClone);
+      });
+
+    }
+  });
+
+
+</script>

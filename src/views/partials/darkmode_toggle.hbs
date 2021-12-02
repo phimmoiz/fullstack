@@ -1,7 +1,5 @@
-<div class="fixed bottom-8 right-8 z-50" id="modeToggle">
-  <i
-    class="fas fa-moon fa-3x text-base-content rounded p-3 hover:opacity-60"
-  ></i>
+<div class="fixed bottom-8 right-8 z-[120]" id="modeToggle">
+  <i class="fas fa-moon fa-3x text-base-content rounded p-3 hover:opacity-60"></i>
 </div>
 <script>
   const darkModeToggle = document.getElementById('modeToggle');
@@ -24,7 +22,7 @@
       localStorage.setItem('darkMode', 'false');
     }
   });
-  
+
   // check if dark mode is set in local storage, or set if darkMode is not set and prefers dark mode
   if (
     localStorage.getItem('darkMode') === 'true' ||

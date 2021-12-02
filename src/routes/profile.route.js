@@ -31,7 +31,11 @@ router.post("/changepwd", async (req, res, next) => {
       throw new Error("Mật khẩu mới không khớp");
     }
 
-    //TODO: check password length
+    // check new password regex
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!regex.test(newPassword)) {
+      throw new Error("Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt");
+    }
 
     user.password = newPassword;
     await user.save();

@@ -37,34 +37,38 @@ export const moviePanelGetIndex = async (req, res) => {
 
   const error = req.session?.error;
 
-  // get all category then populate movies, season, episode
-  const categories = await Category.find({})
+  // get all movies, sort, and populate all
+  const movies = await Movie.find({})
     .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit)
     .populate({
-      path: "movies",
-      model: Movie,
-      populate: [
-        {
-          path: "seasons",
-          model: Season,
-          populate: {
-            path: "episodes",
-            model: Episode,
-          },
-        },
-      ],
+      path: "categories",
+      model: Category,
     });
 
   // get movie count
   const movieCount = await Movie.countDocuments();
 
+  // get total pages
+  const totalPages = Math.ceil(movieCount / 10);
+
+  const pagination = Array.from({ length: totalPages }, (_, i) => i + 1).map(
+    (page) => {
+      return {
+        url: `/admin/movies?page=${page}`,
+        number: page,
+      };
+    }
+  );
+
   res.render("admin/movies", {
     title: "Admin",
-    categories,
+    movies,
     movieCount,
+    pagination,
     error,
+    currentIndex: page - 1,
   });
 };
 

@@ -53,7 +53,7 @@
     flex-wrap: wrap;
     margin-bottom: 1rem;
     grid-gap: 0.25rem;
-    @apply border-b border-black;
+    @apply border-b border-black cursor-pointer;
   }
 
   .tabs .tab-lifted {

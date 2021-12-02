@@ -40,6 +40,9 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
 hbs.registerHelper("inc", function (value, options) {
   return parseInt(value) + 1;
 });
+hbs.registerHelper("json", function (context) {
+  return JSON.stringify(context);
+});
 
 // Session middleware
 app.use(

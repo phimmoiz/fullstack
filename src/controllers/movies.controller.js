@@ -167,6 +167,15 @@ export const getSingleMovie = async (req, res, next) => {
         path: "categories",
         model: Category,
       })
+      .populate({
+        path: "seasons",
+        model: Season,
+        populate: {
+          path: "episodes",
+          model: Movie,
+        },
+      })
+
       .lean();
 
     if (!movie) {

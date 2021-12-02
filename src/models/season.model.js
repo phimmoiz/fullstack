@@ -22,8 +22,9 @@ const seasonSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Movie",
   },
-  //
 });
+
+seasonSchema.index({ name: 1, movie: 1 }, { unique: true });
 
 seasonSchema.virtual("slug").get(function () {
   return this.name.replace(/\s+/g, "-").toLowerCase();

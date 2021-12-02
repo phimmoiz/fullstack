@@ -1462,6 +1462,10 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(192, 38, 211, var(--tw-bg-opacity));
 }
+.bg-pink-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(236, 72, 153, var(--tw-bg-opacity));
+}
 .bg-lime-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(163, 230, 53, var(--tw-bg-opacity));

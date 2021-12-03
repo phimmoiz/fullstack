@@ -68,15 +68,22 @@
       </div>
     </div>
 
-    {{!-- Button add to favorite --}}
-    {{#unless isFavorite}}
     <div class="flex justify-start my-2 gap-2">
+      {{!-- Button add to favorite --}}
+      {{#unless isFavorite}}
       <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
-        onclick="addToFavorite(' {{movie.slug}}')">
+        onclick="addToFavorite('{{movie.slug}}')">
         <i class="fas fa-heart"></i>
         Thêm vào yêu thích
       </button>
-
+      {{else}}
+      {{!-- Remove from favorite --}}
+      <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+        onclick="removeFromFavorite('{{movie.slug}}')">
+        <i class="fas fa-heart"></i>
+        Xóa khỏi yêu thích
+      </button>
+      {{/unless}}
       {{!-- button to admin --}}
       {{#ifEquals user.role "admin"}}
       <a class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
@@ -86,16 +93,6 @@
       </a>
       {{/ifEquals}}
     </div>
-    {{else}}
-    {{!-- Remove from favorite --}}
-    <div class="flex justify-start my-2">
-      <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
-        onclick="removeFromFavorite('{{movie.slug}}')">
-        <i class="fas fa-heart"></i>
-        Xóa khỏi yêu thích
-      </button>
-    </div>
-    {{/unless}}
 
 
 
@@ -120,7 +117,7 @@
     {{#ifEquals user.role "admin"}}
     {{#> modal buttonTitle="Thêm tập" icon="fa fa-plus"}}
     <form action="/episode" method="POST" id="addMovieForm"
-      class="p-2  rounded-md my-2 overflow-y-scroll max-h-[75vh] grid md:grid-cols-2 gap-2">
+      class="rounded-md my-2 overflow-y-scroll max-h-[75vh] grid md:grid-cols-2 gap-2">
       <div class="mb-2">
         <div class="mb-2">
           <label for="season" class="text-sm">

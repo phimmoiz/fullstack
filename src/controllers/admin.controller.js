@@ -47,6 +47,8 @@ export const moviePanelGetIndex = async (req, res) => {
       model: Category,
     });
 
+  const categories = await Category.find({});
+
   // get movie count
   const movieCount = await Movie.countDocuments();
 
@@ -66,6 +68,7 @@ export const moviePanelGetIndex = async (req, res) => {
     title: "Admin",
     movies,
     movieCount,
+    categories,
     pagination,
     error,
     currentIndex: page - 1,

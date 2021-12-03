@@ -1,8 +1,8 @@
-import Movie from "../models/movie.model";
-import User from "../models/user.model";
-import Category from "../models/category.model";
-import Season from "../models/season.model";
-import Episode from "../models/episode.model";
+import Movie from "./movie.model";
+import User from "../auth/user.model";
+import Category from "./category.model";
+import Season from "./season.model";
+import Episode from "./episode.model";
 import createError from "http-errors";
 
 // Mongoose interaction
@@ -192,7 +192,7 @@ export const getSingleMovie = async (req, res, next) => {
     // Increase view count
     increaseViewCount(movie._id);
 
-    res.render("movies/single-movie", {
+    res.render("movies/views/movies/single-movie", {
       title: movie.title,
       movie,
       isFavorite,
@@ -260,7 +260,7 @@ export const getEpisode = async (req, res, next) => {
       throw new Error("Episode not found");
     }
 
-    res.render("movies/episode", {
+    res.render("movies/views/movies/episode", {
       movie,
       season: seasonData,
       episode: episodeData,
@@ -358,18 +358,6 @@ export const updateMovie = async (req, res) => {
   }
 };
 
-export const deleteMovie = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const deletedMovie = await Movie.findByIdAndDelete(id);
-
-    res.json({ success: true, data: deletedMovie });
-  } catch (err) {
-    res.json({ success: false, message: err.message });
-  }
-};
-
 export const getMovieByCategory = async (req, res) => {
   try {
     const { slug } = req.params;
@@ -461,8 +449,21 @@ export const editMovie = async (req, res) => {
     });
     res.redirect("/movies/" + slug);
   } catch (err) {
-    //console.log(err);
-    //res.redirect("/");
+    req.session.error = err.message;
+    res.redirect("/movies/");
+  }
+};
+
+export const deleteMovie = async (req, res) => {
+  try {
+    if (req.body._method !== "DELETE") {
+      return;
+    }
+    const { slug } = req.params;
+    const movie = await Movie.findOne({ slug });
+    const deletedMovie = await Movie.findByIdAndDelete(movie._id);
+    res.redirect("/admin/movies");
+  } catch (err) {
     req.session.error = err.message;
     res.redirect("/admin/movies");
   }

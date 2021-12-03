@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { requireAuth } from "../middlewares/auth.middleware";
-import User from "../models/user.model";
-import Movie from "../models/movie.model";
+import User from "../components/auth/user.model";
+import Movie from "../components/movies/movie.model";
 import createError from "http-errors";
 
 const router = Router();
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
   const favoriteMovies = user.favorites;
 
-  res.render("favorite", { title: "Favorite", favoriteMovies });
+  res.render("auth/views/favorite", { title: "Favorite", favoriteMovies });
 });
 
 router.post("/", requireAuth, async (req, res, next) => {

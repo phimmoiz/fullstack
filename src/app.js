@@ -16,7 +16,7 @@ import session from "express-session";
 //
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
-import Message from "./models/message.model";
+import Message from "./components/messages/message.model";
 
 require("dotenv").config();
 
@@ -28,7 +28,7 @@ const app = express();
 app.use(express.static("public"));
 
 // View engine
-app.set("views", path.join(__dirname, "/views"));
+app.set("views", [path.join(__dirname, "/views"), path.join(__dirname, "/components")]);
 app.set("view engine", "hbs");
 hbs.registerPartials(
   path.join(__dirname, "/views/partials"),

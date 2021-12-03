@@ -192,10 +192,13 @@ export const getSingleMovie = async (req, res, next) => {
     // Increase view count
     increaseViewCount(movie._id);
 
+    const success = req.session?.success;
+
     res.render("movies/views/movies/single-movie", {
       title: movie.title,
       movie,
       isFavorite,
+      success,
     });
   } catch (err) {
     next(createError(404, err.message));

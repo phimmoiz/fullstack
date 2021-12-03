@@ -1,4 +1,6 @@
 import Episode from "./episode.model";
+import Movie from "./movie.model";
+import Season from "./season.model";
 import createError from "http-errors";
 
 export const getEpisode = async (req, res, next) => {
@@ -32,7 +34,23 @@ export const postEpisode = async (req, res, next) => {
       season,
     });
 
-    return res.json({ success: true, episode });
+    const populated = await episode.populate({
+      path: "season",
+      model: Season,
+      populate: {
+        path: "movie",
+        model: Movie,
+        select: "slug",
+      },
+    });
+
+    console.log(populated);
+
+    const movieSlug = populated.season.movie.slug;
+
+    req.session.success = `Episode ${episode.title} created successfully`;
+
+    res.redirect(`/movies/${movieSlug}/`);
   } catch (err) {
     next(createError(404, err.message));
   }

@@ -1,3 +1,9 @@
+{{#if success}}
+<div class="p-2 rounded bg-green-200 dark:bg-lime-300">
+  <p>{{success}}</p>
+</div>
+{{/if}}
+
 {{#if movie}}
 <div x-data='{
     movie: {{json movie}},
@@ -173,36 +179,40 @@
     {{/ifEquals}}
     <div class="p-2 grid grid-cols-2 md:grid-cols-4 gap-2" id="episodeSection">
       <template x-for="(episode, index) in movie.seasons[chooseSeason].episodes">
-        <a :href="'/movies/'+movie.slug+'/'+movie.seasons[chooseSeason].slug+'/episode-'+episode.slug">
-          <div class="group rounded box-border shadow-md relative overflow-hidden appear h-full">
-            <figure class="h-full w-full">
-              <img :src="movie.image" data-card="image"
-                class="object-cover object-top transform transition group-hover:scale-105 h-full w-full">
-            </figure>
-            <div class="text-white p-1.5 card-body z-20 absolute bottom-4 md:pb-0 left-0 right-0 bg-opacity-40 h-10">
-              <h3 class="line-clamp-1" data-card="title" x-text="movie.title">
-              </h3>
-              <p class="line-clamp-1 text-xs font-light text-opacity-60 text-white" data-card="subtitle"
-                x-text="episode.title + ' ⎯ ' + movie.englishTitle">
+        <div class="h-40">
+          <a :href="'/movies/'+movie.slug+'/'+movie.seasons[chooseSeason].slug+'/episode-'+episode.slug">
+            <div class="group rounded box-border shadow-md relative overflow-hidden appear h-full">
+              <figure class="h-full w-full">
+                <img :src="episode.image || movie.image" data-card="image"
+                  class="object-cover object-top transform transition group-hover:scale-105 h-full w-full">
+              </figure>
+              <div class="text-white p-1.5 card-body z-20 absolute bottom-4 md:pb-0 left-0 right-0 bg-opacity-40 h-10">
+                <h3 class="line-clamp-1" data-card="title" x-text="movie.title">
+                </h3>
+                <p class="line-clamp-1 text-xs font-light text-opacity-60 text-white" data-card="subtitle"
+                  x-text="episode.title + ' ⎯ ' + movie.englishTitle">
 
-              </p>
+                </p>
+              </div>
+              <div
+                class="absolute px-2 border-2 top-2 left-2 bg-white p-1 rounded-xl dark:text-gray-800 flex items-center gap-1">
+                <i class="fas fa-film"></i>
+                <span x-text="episode.title"></span>
+
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-60 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="w-1/3 opacity-0 transition-opacity group-hover:opacity-90 duration-300 z-20"
+                  viewBox="0 0 20 20" fill="#fff">
+                  <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </div>
             </div>
-            <div class="absolute top-2 left-2 bg-white p-1 rounded-xl dark:text-gray-800 flex items-center gap-2">
-              <i class="fas fa-film"></i>
-              HD
-            </div>
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-60 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-1/3 opacity-0 transition-opacity group-hover:opacity-90 duration-300 z-20" viewBox="0 0 20 20"
-                fill="#fff">
-                <path fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </template>
     </div>
   </div>

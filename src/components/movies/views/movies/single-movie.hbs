@@ -242,7 +242,7 @@
 
   function addToFavorite(slug) {
     $.ajax({
-      url: "/favorite",
+      url: "/favorites",
       type: "POST",
       data: {
         slug: slug,
@@ -264,7 +264,7 @@
 
   function removeFromFavorite(slug) {
     $.ajax({
-      url: "/favorite",
+      url: "/favorites",
       type: "DELETE",
       data: {
         slug: slug,

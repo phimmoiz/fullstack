@@ -69,7 +69,7 @@ const defaultRoutes = [
     route: messagesRoute,
   },
   {
-    path: "/favorite",
+    path: "/favorites",
     route: favoriteRoute,
   },
   {

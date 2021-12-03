@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { create } from "hbs";
-import { createUser } from "../controllers/user.controller";
+import { createUser } from "../components/auth/user.controller";
 const router = Router();
 
 router.get("/", (req, res) => {

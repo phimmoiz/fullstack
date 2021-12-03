@@ -1,12 +1,12 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import User from "../models/user.model";
+import User from "../components/auth/user.model";
 import createError from "http-errors";
 
 const router = Router();
 
 router.get("/", (req, res) => {
-  res.render("login", { title: "Đăng nhập" });
+  res.render("auth/views/login", { title: "Đăng nhập" });
 });
 
 router.post("/", async (req, res) => {
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
     console.log(err);
     // res.status(403).json({ success: false, message: err.message });
 
-    res.render("login", {
+    res.render("auth/views/login", {
       title: "Đăng nhập",
       error: err.message,
     });

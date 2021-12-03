@@ -5,7 +5,7 @@ import {
   postEpisode,
   putEpisode,
   deleteEpisode,
-} from "../controllers/episode.controller";
+} from "../components/movies/episode.controller";
 
 const router = express.Router();
 

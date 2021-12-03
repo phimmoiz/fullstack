@@ -1,4 +1,4 @@
-import Episode from "./episode.model";
+import Episode from "./episodeModel";
 import createError from "http-errors";
 
 export const getEpisode = async (req, res, next) => {

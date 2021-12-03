@@ -16,7 +16,7 @@ import session from "express-session";
 //
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
-import Message from "./components/messages/message.model";
+import Message from "./components/messages/messageModel";
 
 require("dotenv").config();
 

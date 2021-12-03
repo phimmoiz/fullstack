@@ -1,4 +1,4 @@
-import { getNewMovies, getMovieWithOneEpisode } from "./movies.controller";
+import { getNewMovies, getMovieWithOneEpisode } from "./moviesController";
 import fs from "fs";
 import path from "path";
 

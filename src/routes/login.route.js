@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import User from "../components/auth/user.model";
+import User from "../components/auth/userModel";
 import createError from "http-errors";
 
 const router = Router();

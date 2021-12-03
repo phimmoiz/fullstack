@@ -9,7 +9,7 @@ import {
   moviePanelPostMovie,
   getCategoriesPanel,
   moviePanelEditSeason,
-} from "../components/auth/admin.controller";
+} from "../components/auth/adminController";
 
 const router = Router();
 

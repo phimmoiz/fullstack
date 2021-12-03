@@ -1,8 +1,8 @@
 import { Router } from "express";
-import Category from "../components/movies/category.model";
+import Category from "../components/movies/categoryModel";
 import { requireAdmin } from "../middlewares/auth.middleware";
 import createError from "http-errors";
-import Movie from "../components/movies/movie.model";
+import Movie from "../components/movies/movieModel";
 
 const router = Router();
 

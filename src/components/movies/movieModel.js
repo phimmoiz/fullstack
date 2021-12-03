@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Category from "./category.model";
+import Category from "./categoryModel";
 
 const movieSchema = new mongoose.Schema({
   title: {

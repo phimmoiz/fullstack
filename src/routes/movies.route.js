@@ -1,6 +1,6 @@
 import { Router } from "express";
-import Movie from "../components/movies/movie.model";
-import Category from "../components/movies/category.model";
+import Movie from "../components/movies/movieModel";
+import Category from "../components/movies/categoryModel";
 import { requireAdmin } from "../middlewares/auth.middleware";
 import createError from "http-errors";
 import {
@@ -12,7 +12,7 @@ import {
   getEpisode,
   editMovie,
   deleteMovie,
-} from "../components/movies/movies.controller";
+} from "../components/movies/moviesController";
 
 const router = Router();
 

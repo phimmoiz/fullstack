@@ -1,8 +1,8 @@
-import Category from "../movies/category.model";
-import Movie from "../movies/movie.model";
-import User from "../auth/user.model";
-import Season from "../movies/season.model";
-import Episode from "../movies/episode.model";
+import Category from "../movies/categoryModel";
+import Movie from "../movies/movieModel";
+import User from "../auth/userModel";
+import Season from "../movies/seasonModel";
+import Episode from "../movies/episodeModel";
 import createError from "http-errors";
 
 export const getAdmin = async (req, res, next) => {

@@ -1,8 +1,8 @@
-import Movie from "./movie.model";
-import User from "../auth/user.model";
-import Category from "./category.model";
-import Season from "./season.model";
-import Episode from "./episode.model";
+import Movie from "./movieModel";
+import User from "../auth/userModel";
+import Category from "./categoryModel";
+import Season from "./seasonModel";
+import Episode from "./episodeModel";
 import createError from "http-errors";
 
 // Mongoose interaction

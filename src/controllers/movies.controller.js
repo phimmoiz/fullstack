@@ -308,7 +308,7 @@ export const postMovie = async (req, res) => {
     // console.log(newMovie);
     // res.json({ success: true, data: newCat });
 
-    req.session.success2 = `${title} - ${englishTitle} has been added`;
+    req.session.success = `${title} - ${englishTitle} has been added`;
 
     res.redirect("/admin/movies");
   } catch (err) {

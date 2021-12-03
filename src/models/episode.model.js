@@ -5,7 +5,6 @@ import { isUrl } from "../utils/";
 const episodeSchema = new mongoose.Schema(
   {
     title: {
-      // Tập 4
       type: String,
       required: true,
     },

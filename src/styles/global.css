@@ -69,7 +69,7 @@
   }
 
   .tabs .tab-active {
-    @apply bg-fuchsia-300;
+    @apply bg-fuchsia-300 text-black;
   }
 
   .spinner {

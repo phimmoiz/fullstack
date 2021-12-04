@@ -13,10 +13,13 @@ import session from "express-session";
 import { default as messageSocket } from "./components/messages/messages.socket";
 import { default as viewEngineConfig } from "./config/viewEngine";
 
+// Load env
 require("dotenv").config();
 
+// Heroku use its custom port
 const PORT = process.env.PORT || 3000;
 
+// Create app
 const app = express();
 
 // Static files
@@ -89,6 +92,7 @@ const io = new Server(server, {});
 // Live time messages
 messageSocket(io);
 
+// Start server
 server.listen(PORT, () => {
   console.log(`[server] Server running at http://localhost:${PORT}`);
 });

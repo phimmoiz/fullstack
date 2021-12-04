@@ -8,6 +8,15 @@
 <div x-data='{
     movie: {{json movie}},
     chooseSeason: 0,
+
+    get getLastEpisodeTitle() {
+      // if there is no season, or season no episode 
+      if (this.movie.seasons.length === 0 || this.movie.seasons[this.chooseSeason].episodes.length === 0) {
+        return "Đang cập nhật";
+      }
+
+      return this.movie.seasons[this.chooseSeason].episodes.slice(-1)[0].title;
+    }
   }'>
 
 
@@ -32,14 +41,27 @@
           {{/ifEquals}}>
           <p class="p-2 text-base-content text-lg">{{movie.title}} - {{movie.englishTitle}}</p>
           <div class="p-2 text-base-content">Mới cập nhật:
-            {{!-- <a class="halim-episode" href="/xem-phim/giai-cuu-guy-free-guy-tap-1-server-1/"><span
-                class="bg-accent p-2 shadow-sm text-white font-bold rounded hover:bg-success transition duration-300">{{movie.newestEpisode}}</span></a>
-            --}}
+            <a class="halim-episode" href="/movies/{{movie.slug}}"><span
+                class="bg-pink-200 dark:bg-pink-300 p-2 text-black shadow-sm font-bold rounded hover:bg-success transition duration-300"
+                x-text="getLastEpisodeTitle">
+
+              </span></a>
+
           </div>
           <div class="p-2 text-base-content">
             Tình trạng:
             <span class="font-bold">
-              {{movie.status}}
+              {{#switch movie.status}}
+              {{#case "in-progress"}}
+              Trong tiến độ
+              {{/case}}
+              {{#case "completed"}}
+              Hoàn thành
+              {{/case}}
+              {{#case "dropped"}}
+              Dropped
+              {{/case}}
+              {{/switch}}
             </span>
           </div>
           <div class="p-2 text-base-content">
@@ -61,12 +83,21 @@
           <div class="p-2">
             <i class="fas fa-star">
             </i>
-            4.35<i>/</i>5
+            {{#with movie.rating}}
+            {{movie.rating}}<i> / </i>5
+            {{else}}
+            Chưa có đánh giá
+            {{/with}}
           </div>
           <div class="p-2">
             <i class="fas fa-comment">
             </i>
-            108 đánh giá
+            {{!-- count --}}
+            {{#with movie.comments}}
+            {{movie.comments.length}} bình luận
+            {{else}}
+            Chưa có bình luận
+            {{/with}}
           </div>
         </div>
 

@@ -14,6 +14,13 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    // enum type: complete, in-progress, dropped
+    type: String,
+    required: true,
+    enum: ["completed", "in-progress", "dropped"],
+    default: "in-progress",
+  },
   time: {
     type: String,
   },
@@ -47,6 +54,7 @@ const movieSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
+    default: null,
   },
   imdbId: {
     type: String,

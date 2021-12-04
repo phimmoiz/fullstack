@@ -115,7 +115,7 @@
   {{/modal}}
 </h3>
 {{!--
-{{#if success2}}
+{{#if success}}
 <div class="rounded bg-green-200 p-2 dark:bg-green-500 my-2 flex items-center gap-2">
   <i class="fas fa-check-circle text-green-700"></i>
   {{success2}}
@@ -123,7 +123,7 @@
 {{/if}} --}}
 
 {{#if error}}
-<div class="rounded bg-red p-2 dark:bg-red-400 my-2 flex items-center gap-2">
+<div class="rounded bg-red-200 p-2 dark:bg-red-400 my-2 flex items-center gap-2">
   {{!-- error icon --}}
   <i class="fas fa-exclamation-triangle text-red-500"></i>
   {{!-- error message --}}
@@ -145,7 +145,7 @@
       <input type="hidden" name="_method" value="DELETE">
       <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
       <button type="submit"
-        class="text-red-500 hover:text-red-700 bg-white shadow-md rounded transform transition hover:scale-110 hover:bg-gray-200 p-2">
+        class="text-red-500 hover:text-red-700 bg-white shadow-md rounded transform transition hover:scale-110 p-1 flex gap-1 items-center">
         <i class="fas fa-trash-alt"></i> Delete
       </button>
     </form>
@@ -157,11 +157,21 @@
 {{!-- Pagination --}}
 {{#if pagination}}
 <ul class="pagination divide-x flex justify-center mt-4">
+  {{!-- next page --}}
+  {{#ifNotEquals currentPage pagination.length}}
+  <a class="page-link" href="/admin/movies?page={{inc @root/currentPage}}" data-tooltip=" Trang tiếp theo">
+    <li
+      class="page-item bg-rose-400 max-w-[40px] dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
+      <i class="fas fa-chevron-right"></i>
+    </li>
+  </a>
+  {{/ifNotEquals}}
+
   {{#each pagination}}
   <a class="page-link" {{#ifEquals @root/currentIndex @index}} {{else}} href="{{url}}"
     data-tooltip="Đến trang {{inc @index}}" {{/ifEquals}}>
     <li
-      class="page-item bg-rose-400 dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
+      class="page-item bg-rose-400 max-w-[40px] min-w-[40px] dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}cursor-not-allowed disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
       {{number}}
     </li>
   </a>

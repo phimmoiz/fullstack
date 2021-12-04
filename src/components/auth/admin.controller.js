@@ -72,6 +72,7 @@ export const moviePanelGetIndex = async (req, res) => {
     pagination,
     error,
     currentIndex: page - 1,
+    currentPage: page,
   });
 };
 

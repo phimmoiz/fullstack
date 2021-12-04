@@ -383,8 +383,6 @@ export const editMovie = async (req, res) => {
       return;
     }
     const { slug } = req.params;
-    const movie = await Movie.findOne({ slug });
-    //res.json({ success: true, data: movie });
     // Get Data from body
     const {
       description,
@@ -399,61 +397,28 @@ export const editMovie = async (req, res) => {
       englishTitle,
     } = req.body;
 
-    let query = {};
-    if (description) {
-      query.description = description;
-    }
-    if (!title) {
-      throw new Error("Not have title movie");
-    } else {
-      query.title = title;
-    }
-    if (!image) {
-      throw new Error("Not have image url");
-    } else {
-      query.image = image;
-    }
-    if (!time) {
-      throw new Error("Not have time of movie");
-    } else {
-      query.time = time;
-    }
-    if (!trailer) {
-      throw new Error("Not have trailer url");
-    } else {
-      query.trailer = trailer;
-    }
+    let query = {
+      description,
+      title,
+      image,
+      time,
+      trailer,
+      premiere,
+      releaseYear,
+      rating,
+      imdbId,
+      englishTitle,
+    };
 
-    if (!premiere) {
-      throw new Error("Not have premiere date");
-    } else {
-      query.premiere = premiere;
-    }
-
-    if (!releaseYear) {
-      throw new Error("Not have release year");
-    } else {
-      query.releaseYear = releaseYear;
-    }
-    if (rating) {
-      query.rating = rating;
-    }
-    if (imdbId) {
-      query.imdbId = imdbId;
-    }
-    if (!englishTitle) {
-      throw new Error("Not have english title");
-    } else {
-      query.englishTitle = englishTitle;
-    }
     // edit movie in db
-    const updatedMovie = await Movie.findOneAndUpdate({ slug }, query, {
+    await Movie.findOneAndUpdate({ slug }, query, {
       new: true,
     });
+
     res.redirect("/movies/" + slug);
   } catch (err) {
     req.session.error = err.message;
-    res.redirect("/movies/");
+    res.redirect("/admin/movies/");
   }
 };
 
@@ -464,7 +429,9 @@ export const deleteMovie = async (req, res) => {
     }
     const { slug } = req.params;
     const movie = await Movie.findOne({ slug });
-    const deletedMovie = await Movie.findByIdAndDelete(movie._id);
+
+    await Movie.findByIdAndDelete(movie._id);
+
     res.redirect("/admin/movies");
   } catch (err) {
     req.session.error = err.message;

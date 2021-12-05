@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { createUser } from "../components/auth/user.controller";
+import {
+  getRegister,
+  postRegister,
+} from "../components/auth/register.controller";
+
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.render("auth/views/register", { title: "Đăng ký" });
-});
-
-router.post("/", createUser);
+router.get("/", getRegister);
+router.post("/", postRegister);
 
 export default router;

@@ -14,7 +14,7 @@ export const getAdmin = async (req, res, next) => {
       Movie.countDocuments(),
     ]);
 
-    res.render("auth/views/admin/index", {
+    res.render("admin/views/index", {
       title: "Admin",
       count: { users, categories, movies },
     });
@@ -27,7 +27,7 @@ export const getAdminPanel = async (req, res) => {
   // get all users
   const users = await User.find({});
 
-  res.render("auth/views/admin/users", { title: "Admin", users });
+  res.render("admin/views/users", { title: "Admin", users });
 };
 
 // Movie panel
@@ -65,7 +65,7 @@ export const moviePanelGetIndex = async (req, res) => {
     }
   );
 
-  res.render("auth/views/admin/movies", {
+  res.render("admin/views/movies", {
     title: "Admin",
     movies,
     movieCount,
@@ -91,7 +91,7 @@ export const moviePanelGetMovie = async (req, res) => {
 
     if (!movie) throw new Error("Movie not found");
 
-    res.render("auth/views/admin/movies", {
+    res.render("admin/views/movies", {
       title: "Admin",
       movie,
     });
@@ -117,7 +117,7 @@ export const moviePanelEditSeason = async (req, res) => {
     if (!season) throw new Error("Season not found");
 
     // res.json({ success: true, season });
-    res.render("auth/views/admin/season", {
+    res.render("admin/views/season", {
       title: "Admin",
       season,
     });
@@ -144,7 +144,7 @@ export const moviePanelEditMovie = async (req, res) => {
 
     if (!movie) throw new Error("Movie not found");
 
-    res.render("auth/views/admin/movie-edit", {
+    res.render("admin/views/movie-edit", {
       title: "Admin",
       movie,
       categories,
@@ -172,7 +172,7 @@ export const moviePanelPostMovie = async (req, res) => {
       trailer,
     });
 
-    res.render("auth/views/admin/movies", {
+    res.render("admin/views/movies", {
       title: "Admin",
       movie,
       success: "Movie updated successfully",
@@ -186,12 +186,12 @@ export const getCategoriesPanel = async (req, res) => {
   // get all categories
   const categories = await Category.find({});
 
-  res.render("auth/views/admin/categories", { title: "Admin", categories });
+  res.render("admin/views/categories", { title: "Admin", categories });
 };
 
 export const getUserPanel = async (req, res) => {
   // get all users
   const users = await User.find({});
 
-  res.render("auth/views/admin/users", { title: "Admin", users });
+  res.render("admin/views/users", { title: "Admin", users });
 };

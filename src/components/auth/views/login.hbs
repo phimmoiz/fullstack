@@ -3,12 +3,7 @@
     Đăng nhập
   </h1>
   {{! show if there is errors }}
-  {{#if error}}
-  <div class="bg-red-200 dark:bg-red-400 dark:text-white p-2 rounded-md">
-    {{error}}
-  </div>
-  {{/if}}
-  <form action="/login" method="post" class="flex flex-col gap-2">
+  <form action="/login" method="post" class="flex flex-col gap-2 max-w-3xl mx-auto">
     <div class="form-control">
       <label class="label">
         <span class="label-text">
@@ -32,14 +27,15 @@
     <button type="submit" class="btn btn-primary mt-2 hover:bg-opacity-75">
       Đăng nhập
     </button>
-    <div class="mt-2 flex gap-2">
+    <div class="mt-2 flex gap-2 justify-center">
       {{! Login with Facebook }}
-      <button onclick="loginWithFacebook(event)" class="btn btn-sm bg-facebook text-white hover:bg-opacity-75">
+      <button onclick="loginWithFacebook(event)"
+        class="btn btn-sm bg-facebook text-white hover:bg-opacity-75 flex items-center gap-2">
         <i class="fab fa-facebook-square inline-block"></i>
         Đăng nhập bằng Facebook
       </button>
       {{! Login with Google }}
-      <button href="/auth/google" class="btn btn-sm bg-google text-white hover:bg-opacity-75">
+      <button href="/auth/google" class="btn btn-sm bg-google text-white hover:bg-opacity-75 flex items-center gap-2">
         <i class="fab fa-google inline-block "></i>
         Đăng nhập bằng Google
       </button>

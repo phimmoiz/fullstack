@@ -38,9 +38,6 @@ export const getNewMovies = async ({
     };
   }
 
-  console.log(query, limit);
-  // console.log(await Movie.find(query).limit(parseInt(limit)));
-
   // populate if needed
   const movies = await Movie.find(query)
     .sort({

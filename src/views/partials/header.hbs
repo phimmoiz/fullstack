@@ -104,7 +104,13 @@
     </a>
   </div>
 </div>
+
 <div class="max-w-6xl mx-auto mt-20">
+  {{#if error}}
+  {{> alert text=error error=true}}
+  {{else if success}}
+  {{> alert text=success success=true}}
+  {{else}}
   {{#unless user}}
   <div class="bg-pink-200 dark:bg-pink-400 rounded p-2 mx-2 text-base-content">
     <div class="flex">
@@ -126,7 +132,10 @@
     </div>
   </div>
   {{/unless}}
+  {{/if}}
 </div>
+
+
 <script>
   var prevScrollpos = window.pageYOffset;
 

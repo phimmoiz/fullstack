@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { comparePassword } from "../../utils/";
 
 // create user schema
 const userSchema = new mongoose.Schema({
@@ -35,6 +36,11 @@ const userSchema = new mongoose.Schema({
     },
   ],
 });
+
+//add check password function
+userSchema.methods.checkPassword = async function (password) {
+  return await comparePassword(password, this.password);
+};
 
 // create user model
 const User = mongoose.model("User", userSchema);

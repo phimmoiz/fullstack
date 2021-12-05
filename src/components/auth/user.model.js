@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { comparePassword } from "../../utils/";
 
 // create user schema
-const userSchema = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
@@ -38,8 +38,9 @@ const userSchema = new mongoose.Schema({
 });
 
 //add check password function
-userSchema.methods.checkPassword = async function (password) {
-  return await comparePassword(password, this.password);
+
+userSchema.methods.checkPassword = function (password) {
+  return comparePassword(password, this.password);
 };
 
 // create user model

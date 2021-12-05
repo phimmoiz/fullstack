@@ -1,4 +1,5 @@
 import { hashPassword } from "../../utils";
+import User from "./user.model";
 
 export const getRegister = (req, res) => {
   res.render("auth/views/register", { title: "Đăng ký" });
@@ -6,11 +7,6 @@ export const getRegister = (req, res) => {
 
 export const postRegister = async (req, res) => {
   try {
-    console.log("User just posted something.");
-
-    // show the posted data
-    console.log(req.body);
-
     const { username, password, repassword, email, fullname } = req.body;
     // destructuring
     // const username = req.body.username;
@@ -45,13 +41,12 @@ export const postRegister = async (req, res) => {
     // mongoose add user to database
     const user = await User.create({
       username,
-      password: hashPassword(password),
+      password: await hashPassword(password),
       email,
       fullname,
     });
 
-    console.log("success: ", user);
-
+    req.session.success = "Đăng ký thành công";
     return res.redirect("/login");
   } catch (err) {
     console.log(err);

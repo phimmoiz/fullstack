@@ -5,17 +5,19 @@ export const postLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // get user password
+    //find user with email or username
     const user = await User.findOne({
-      email,
+      $or: [{ email }, { username: email }],
     });
+
+    if (!user) {
+      throw new Error("Tài khoản không tồn tại");
+    }
 
     const isPasswordValid = await user.checkPassword(password);
 
-    console.log(user, isPasswordValid);
-
-    if (!user || !isPasswordValid) {
-      throw new Error("Tên đăng nhập / email hoặc mật khẩu không đúng");
+    if (!isPasswordValid) {
+      throw new Error("Mật khẩu không đúng");
     }
 
     // create token
@@ -27,7 +29,11 @@ export const postLogin = async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      {
+        //1 month
+        expiresIn: "1m",
+      }
     );
 
     // set cookie
@@ -45,6 +51,8 @@ export const postLogin = async (req, res) => {
   }
 };
 
-export const getLogin = (_, res) => {
-  res.render("auth/views/login", { title: "Đăng nhập" });
+export const getLogin = (req, res) => {
+  const success = req.session?.success;
+
+  res.render("auth/views/login", { title: "Đăng nhập", success });
 };

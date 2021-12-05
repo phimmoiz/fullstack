@@ -1485,6 +1485,10 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(252, 165, 165, var(--tw-bg-opacity));
 }
+.bg-green-200 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(187, 247, 208, var(--tw-bg-opacity));
+}
 .bg-pink-200 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(251, 207, 232, var(--tw-bg-opacity));
@@ -1524,10 +1528,6 @@ video {
 .bg-purple-300 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(216, 180, 254, var(--tw-bg-opacity));
-}
-.bg-green-200 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(187, 247, 208, var(--tw-bg-opacity));
 }
 .bg-gray-900 {
 	--tw-bg-opacity: 1;
@@ -2178,6 +2178,11 @@ html[data-theme="dark"] .card-badge {
 .dark .dark\:bg-red-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-green-300 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(134, 239, 172, var(--tw-bg-opacity));
 }
 
 .dark .dark\:bg-blue-400 {

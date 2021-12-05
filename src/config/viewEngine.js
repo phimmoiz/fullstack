@@ -11,7 +11,7 @@ const config = (app) => {
   app.set("view engine", "hbs");
   hbs.registerPartials(
     path.join(__dirname, "../views/partials"),
-    function (err) {}
+    function (err) { }
   );
   hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
     return arg1 == arg2 ? options.fn(this) : options.inverse(this);
@@ -38,6 +38,10 @@ const config = (app) => {
 
   hbs.registerHelper("default", function (value, options) {
     return true; ///We can add condition if needs
+  });
+
+  hbs.registerHelper('ifBelong', function (arg1, arg2, options) {
+    return (arg1.includes(arg2)) ? options.fn(this) : options.inverse(this);
   });
 };
 

@@ -76,6 +76,8 @@ export const getSingleMovie = async (req, res, next) => {
   try {
     const { slug } = req.params;
 
+    const success = req.session?.success;
+
     const movie = await Movie.findOne({ slug })
       .populate({
         path: "categories",
@@ -102,15 +104,20 @@ export const getSingleMovie = async (req, res, next) => {
       );
     }
 
+    // get comments
+    const comments = await Comment.find({ movie: movie._id }).populate({
+      path: "user",
+      model: User,
+    });
+
     // Increase view count
     increaseViewCount(movie._id);
-
-    const success = req.session?.success;
 
     res.render("movies/views/movies/single-movie", {
       title: movie.title,
       movie,
       isFavorite,
+      comments,
       success,
     });
   } catch (err) {

@@ -36,6 +36,7 @@ export const moviePanelGetIndex = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
 
   const error = req.session?.error;
+  const success = req.session?.success;
 
   // get all movies, sort, and populate all
   const movies = await Movie.find({})
@@ -71,6 +72,7 @@ export const moviePanelGetIndex = async (req, res) => {
     categories,
     pagination,
     error,
+    success,
     currentIndex: page - 1,
     currentPage: page,
   });

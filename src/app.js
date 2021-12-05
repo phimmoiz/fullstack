@@ -22,6 +22,7 @@ const PORT = process.env.PORT || 3000;
 // Create app
 const app = express();
 
+
 // Static files
 app.use(express.static("public"));
 

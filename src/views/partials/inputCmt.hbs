@@ -1,0 +1,23 @@
+{{#if user}}
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+    <div class="p-2">
+        <div class="flex flex-col">
+            {{!-- from input comment for movie --}}
+            <form action="/comments/{{movie.slug}}" method="POST">
+                <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+                <div class="flex justify-between gap-2">
+                    <div class="flex-1 w-full">
+                        <textarea name="content"
+                            class="resize w-full boder border m-1 p-2 border-pink-400 rounded shadow-md text-black"
+                            placeholder="Nhập bình luận của bạn..."></textarea>
+                    </div>
+                    <div class="flex-none">
+                        <button type="submit" class="btn btn-primary">Gửi</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{{/if}}

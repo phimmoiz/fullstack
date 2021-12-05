@@ -1,5 +1,5 @@
 <div class="flex flex-col">
-  <div class="flex flex-row">
+  <div class="flex flex-row" data-testid="comment">
     <div class="flex-none">
       <img src="{{user.avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
     </div>
@@ -10,7 +10,7 @@
             class="text-base font-bold text-pink-400 hover:text-pink-600">{{user.username}}</a>
           <i class="fas fa-heart text-pink-400"> {{likes.length}}</i>
         </div>
-        <p class="text-black">{{content}}</p>
+        <p class="text-black" data-testid="commentContent">{{content}}</p>
       </div>
       <div class="flex flex-row px-4 justify-between my-2">
         <div class="flex">
@@ -31,7 +31,7 @@
             {{/ifBelong}}
           </div>
           <div class="flex-none">
-            <a onclick="onReply(this)" data-id="{{id}}"
+            <a onclick="onReplyButtonHandler(this)" data-id="{{id}}"
               class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Reply</a>
           </div>
           {{#ifEquals user._id @root/user.id}}
@@ -65,7 +65,25 @@
       }
     });
   }
-  function onReply(el) {
+
+  const $globalReplyEl = $("[data-testid='comment'").first().clone();
+  //$globalReplyEl.children().last().remove();
+
+  //replace comment content with reply form
+  $globalReplyEl.find("[data-testid='commentContent']").html(`
+    <form class="flex flex-col" onsubmit="return false" x-data="{content: ''}">
+      <textarea class="w-full h-12 p-2 border rounded-md" name="content" x-model="content" placeholder="Write a reply..." @keydown.enter="createComment(content)"></textarea>
+      <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+    </form>
+  `);
+
+  function onReplyButtonHandler(el) {
+    const $grandParent = $(el).parent().parent().parent().parent();
+
+    $grandParent.append($globalReplyEl);
+  }
+
+  function createComment(el) {
     const id = el.dataset.id;
     const url = `/comments/${id}/reply`;
     const method = 'POST';

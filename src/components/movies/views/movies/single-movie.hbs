@@ -21,7 +21,7 @@
 
 
   <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-    <h2 class=" text-xl font-bold mb-1">{{movie.title}}</h2>
+    <h2 class=" text-xl font-bold mb-1 text-center">{{movie.title}}</h2>
     <div class="grid grid-cols-1 md:grid-cols-5">
       <div class="col-span-1 overflow-hidden">
         <img src="{{movie.image}}"
@@ -42,7 +42,7 @@
           <p class="p-2 text-base-content text-lg">{{movie.title}} - {{movie.englishTitle}}</p>
           <div class="p-2 text-base-content">Mới cập nhật:
             <a class="halim-episode" href="/movies/{{movie.slug}}"><span
-                class="bg-pink-200 dark:bg-pink-300 p-2 text-black shadow-sm font-bold rounded hover:bg-success transition duration-300"
+                class="bg-pink-200 dark:bg-pink-300 p-2 hover:bg-opacity-80 text-black shadow-sm font-bold rounded transition duration-300"
                 x-text="getLastEpisodeTitle">
 
               </span></a>
@@ -72,7 +72,7 @@
             {{#each movie.categories}}
 
             <a href="/categories/{{slug}}/" rel="tag"
-              class="inline-block p-1 bg-rose-400 text-white rounded hover:bg-success transition duration-300 font-bold"
+              class="inline-block p-1 bg-rose-400 text-white rounded hover:bg-success transition duration-300 font-bold hover:bg-opacity-80"
               title="{{description}}">{{title}}</a>
 
             {{/each}}

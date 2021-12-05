@@ -157,8 +157,8 @@
     <h3 class="text-lg text-opacity-60 font-bold mt-4 mb-2">Thêm season</h3>
     <ul class="divide-y">
       {{#each movie.seasons}}
-      <li class="flex justify-between">
-        <a class="p-2 bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 hover:bg-gray-300 flex-grow"
+      <li class="flex justify-between gap-1">
+        <a class="p-2 bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-500 hover:bg-gray-200 flex-grow"
           href="./season/{{slug}}">
           {{name}}
           {{!-- delete season --}}
@@ -171,12 +171,12 @@
       </li>
       {{/each}}
 
-      <div class="mb-4">
-        <label for="title" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
-          Season mới
-        </label>
-        <form action="/season" method="POST">
+      <div class="">
+        <form action="/season" method="POST" class="flex gap-1">
           <input type="hidden" name="movie" value={{@root/movie._id}}>
+          <label for="title" class="block text-base-content text-opacity-60 text-sm font-bold mb-2">
+            Season mới
+          </label>
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-black text-opacity-60 leading-tight focus:outline-none focus:shadow-outline"
             id="title" type="text" name="name" value="" />
@@ -225,5 +225,12 @@
       });
     }
   }
+  $("textarea").each(function () {
+    this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+  }).on("input", function () {
+    this.style.height = "auto";
+    this.style.height = (this.scrollHeight) + "px";
+  });
+
 
 </script>

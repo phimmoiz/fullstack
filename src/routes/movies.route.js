@@ -1,8 +1,5 @@
 import { Router } from "express";
-import Movie from "../components/movies/movie.model";
-import Category from "../components/movies/category.model";
 import { requireAdmin } from "../middlewares/auth.middleware";
-import createError from "http-errors";
 import {
   postMovie,
   getSingleMovie,

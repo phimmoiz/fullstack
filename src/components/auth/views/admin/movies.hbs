@@ -114,13 +114,15 @@
   </form>
   {{/modal}}
 </h3>
-{{!--
+
 {{#if success}}
+{{#> modal noButton=true autoShow=true}}
 <div class="rounded bg-green-200 p-2 dark:bg-green-500 my-2 flex items-center gap-2">
   <i class="fas fa-check-circle text-green-700"></i>
-  {{success2}}
+  {{success}}
 </div>
-{{/if}} --}}
+{{/modal}}
+{{/if}}
 
 {{#if error}}
 <div class="rounded bg-red-200 p-2 dark:bg-red-400 my-2 flex items-center gap-2">

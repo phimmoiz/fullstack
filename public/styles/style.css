@@ -1468,6 +1468,10 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
+.bg-pink-200 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(251, 207, 232, var(--tw-bg-opacity));
+}
 .bg-green-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
@@ -1495,10 +1499,6 @@ video {
 .bg-pink-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(244, 114, 182, var(--tw-bg-opacity));
-}
-.bg-pink-200 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(251, 207, 232, var(--tw-bg-opacity));
 }
 .bg-black {
 	--tw-bg-opacity: 1;
@@ -1540,6 +1540,10 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
 }
+.bg-gray-100 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(244, 244, 245, var(--tw-bg-opacity));
+}
 .bg-red-500 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
@@ -1555,10 +1559,6 @@ video {
 .bg-green-300 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(134, 239, 172, var(--tw-bg-opacity));
-}
-.bg-gray-100 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(244, 244, 245, var(--tw-bg-opacity));
 }
 .bg-fuchsia-600 {
 	--tw-bg-opacity: 1;
@@ -2005,11 +2005,6 @@ html[data-theme="dark"] .card-badge {
 .hover\:bg-blue-700:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-300:hover {
-	--tw-bg-opacity: 1;
-	background-color: rgba(212, 212, 216, var(--tw-bg-opacity));
 }
 
 .hover\:bg-red-700:hover {

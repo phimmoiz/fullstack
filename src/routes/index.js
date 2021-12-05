@@ -2,7 +2,7 @@ import express from "express";
 import userRoute from "./user.route";
 import registerRoute from "./register.route";
 import logInRoute from "./login.route";
-import filmListRoute from "./filmList.route";
+import advancedSearchRoute from "./advancedSearch.route";
 import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
 import adminRoute from "./admin.route";
@@ -36,8 +36,8 @@ const defaultRoutes = [
     route: logOutRoute,
   },
   {
-    path: "/danh-sach",
-    route: filmListRoute,
+    path: "/tim-kiem-nang-cao",
+    route: advancedSearchRoute,
   },
 
   {

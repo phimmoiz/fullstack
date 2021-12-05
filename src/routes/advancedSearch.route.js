@@ -9,7 +9,10 @@ router.get("/", async (req, res) => {
 
   console.log(categories);
 
-  res.render("movies/views/danh-sach", { title: "Danh sách phim", categories });
+  res.render("movies/views/tim-kiem-nang-cao", {
+    title: "Tìm kiếm nâng cao",
+    categories,
+  });
 });
 
 export default router;

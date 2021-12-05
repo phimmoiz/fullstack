@@ -55,7 +55,7 @@ export const postRegister = async (req, res) => {
     return res.redirect("/login");
   } catch (err) {
     console.log(err);
-    return res.render("register", {
+    return res.render("auth/views/register", {
       title: "Đăng ký",
       error: err,
     });

@@ -14,6 +14,7 @@ import homeRoute from "./home.route";
 import messagesRoute from "./messages.route";
 import favoriteRoute from "./favorite.route";
 import seasonRoute from "./season.route";
+import commentRoute from "./comment.route";
 
 const router = express.Router();
 
@@ -58,6 +59,10 @@ const defaultRoutes = [
   {
     path: "/movies",
     route: movieRoute,
+  },
+  {
+    path: "/comments",
+    route: commentRoute,
   },
   {
     path: "/profile",

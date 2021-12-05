@@ -1,0 +1,105 @@
+<div class="flex flex-col">
+    <div class="flex flex-row">
+        <div class="flex-none">
+            <img src="{{user.avatar}}" alt="avatar" class="w-8 h-8 rounded-full">
+        </div>
+        <div class="flex-1">
+            <div class="flex flex-col bg-gray-100 shadow-lg rounded-xl px-4 py-2 gap-2">
+                <div class="flex flex-row justify-between items-center">
+                    <a href="/users/{{user.username}}"
+                        class="text-base font-bold text-pink-400 hover:text-pink-600">{{user.username}}</a>
+                    <i class="fas fa-heart text-pink-400"> {{likes.length}}</i>
+                </div>
+                <p class="text-black">{{content}}</p>
+            </div>
+            <div class="flex flex-row px-4 justify-between my-2">
+                <div class="flex">
+                    <span class="text-xs text-gray-600 dark:text-gray-50">{{createdAt}}</span>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <div class="flex-none">
+                        {{#ifBelong likes @root/user.id }}
+                        <a onclick="onLiked(this)" data-id="{{id}}"
+                            class="text-xs text-pink-600 dark:text-gray-50 hover:cursor-pointer">
+                            UnLike
+                        </a>
+                        {{else}}
+                        <a onclick="onLiked(this)" data-id="{{id}}"
+                            class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">
+                            Like
+                        </a>
+                        {{/ifBelong}}
+                    </div>
+                    <div class="flex-none">
+                        <a onclick="onReply(this)" data-id="{{id}}"
+                            class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Reply</a>
+                    </div>
+                    {{#ifEquals user._id @root/user.id}}
+                    <div class="flex-none">
+                        <a onclick="onDelete(this)" data-id="{{id}}"
+                            class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                    </div>
+                    {{/ifEquals}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onLiked(el) {
+        const id = el.dataset.id;
+        const url = `/comments/${id}/like`;
+        const method = 'POST';
+        const data = {
+            _csrf: '{{@root/_csrfToken}}',
+        };
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: function (res) {
+                if (res.success) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    function onReply(el) {
+        const id = el.dataset.id;
+        const url = `/comments/${id}/reply`;
+        const method = 'POST';
+        const data = {
+            _csrf: '{{@root/_csrfToken}}',
+        };
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: function (res) {
+                if (res.success) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    function onDelete(el) {
+        const id = el.dataset.id;
+        const url = `/comments/${id}`;
+        const method = 'DELETE';
+        const data = {
+            _csrf: '{{@root/_csrfToken}}',
+        };
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: function (res) {
+                if (res.success) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+
+</script>

@@ -11,6 +11,7 @@ import {
   getSeason,
   getEpisode,
   editMovie,
+  userComment,
 } from "../controllers/movies.controller";
 
 const router = Router();

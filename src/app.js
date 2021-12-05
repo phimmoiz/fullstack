@@ -24,6 +24,7 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+
 // Static files
 app.use(express.static("public"));
 
@@ -32,7 +33,7 @@ app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "hbs");
 hbs.registerPartials(
   path.join(__dirname, "/views/partials"),
-  function (err) {}
+  function (err) { }
 );
 hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
@@ -42,6 +43,10 @@ hbs.registerHelper("inc", function (value, options) {
 });
 hbs.registerHelper("json", function (context) {
   return JSON.stringify(context);
+});
+
+hbs.registerHelper('ifBelong', function (arg1, arg2, options) {
+  return (arg1.includes(arg2)) ? options.fn(this) : options.inverse(this);
 });
 
 // Session middleware

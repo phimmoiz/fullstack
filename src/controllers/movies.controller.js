@@ -3,7 +3,7 @@ import User from "../models/user.model";
 import Category from "../models/category.model";
 import Season from "../models/season.model";
 import createError from "http-errors";
-
+import Comment from "../models/comment.model";
 // Mongoose interaction
 export const getNewMovies = async ({
   page = 1,
@@ -121,9 +121,8 @@ export const getMovies = async (req, res, next) => {
       data: movies,
       page: page,
       length: movies.length,
-      nextPage: `${req.protocol}://${req.get("host")}/api/movies?page=${
-        page + 1
-      }&limit=${limit}&matchName=${matchName}`,
+      nextPage: `${req.protocol}://${req.get("host")}/api/movies?page=${page + 1
+        }&limit=${limit}&matchName=${matchName}`,
     });
   } catch (error) {
     next(createError(error));
@@ -149,9 +148,8 @@ export const getTopMovies = async (req, res, next) => {
       success: true,
       data: movies,
       length: movies.length,
-      nextPage: `${req.protocol}://${req.get("host")}/movies?page=${
-        page + 1
-      }&limit=${limit}`,
+      nextPage: `${req.protocol}://${req.get("host")}/movies?page=${page + 1
+        }&limit=${limit}`,
     });
   } catch (error) {
     next(createError(error));
@@ -161,6 +159,8 @@ export const getTopMovies = async (req, res, next) => {
 export const getSingleMovie = async (req, res, next) => {
   try {
     const { slug } = req.params;
+
+    const success = req.session?.success;
 
     const movie = await Movie.findOne({ slug })
       .populate({
@@ -190,6 +190,13 @@ export const getSingleMovie = async (req, res, next) => {
       );
     }
 
+    // get comments
+    const comments = await Comment.find({ movie: movie._id }).populate({
+      path: "user",
+      model: User,
+    });
+
+
     // Increase view count
     increaseViewCount(movie._id);
 
@@ -197,6 +204,8 @@ export const getSingleMovie = async (req, res, next) => {
       title: movie.title,
       movie,
       isFavorite,
+      comments,
+      success
     });
   } catch (err) {
     next(createError(404, err.message));

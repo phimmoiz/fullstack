@@ -35,6 +35,7 @@ export const moviePanelGetIndex = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
 
   const error = req.session?.error;
+  const success = req.session?.success;
 
   // get all category then populate movies, season, episode
   const categories = await Category.find({})
@@ -64,6 +65,7 @@ export const moviePanelGetIndex = async (req, res) => {
     categories,
     movieCount,
     error,
+    success
   });
 };
 

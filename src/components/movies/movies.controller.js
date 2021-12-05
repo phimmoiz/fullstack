@@ -3,6 +3,8 @@ import User from "../auth/user.model";
 import Category from "./category.model";
 import Season from "./season.model";
 import Episode from "./episode.model";
+import Comment from "./comment.model";
+
 import createError from "http-errors";
 import {
   getNewMovies,

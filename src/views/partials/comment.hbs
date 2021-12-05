@@ -1,74 +1,74 @@
 <div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
-    <h2 class="text-xl font-bold mb-8">Bình luận</h2>
+  <h2 class="text-xl font-bold">Bình luận</h2>
 
-    {{#each comments}}
-    {{#ifEquals parent null}}
-    {{>showCmt}}
-    {{#each comments}}
-    {{#ifBelong @root/reply this}}
-    {{>replyCmnt}}
-    {{/ifBelong}}
-    {{/each}}
-    {{/ifEquals}}
-    {{/each}}
+  {{#each comments}}
+  {{#ifEquals parent null}}
+  {{>showCmt}}
+  {{#each comments}}
+  {{#ifBelong @root/reply this}}
+  {{>replyCmnt}}
+  {{/ifBelong}}
+  {{/each}}
+  {{/ifEquals}}
+  {{/each}}
 </div>
 <div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
-    {{>inputCmt}}
+  {{>inputCmt}}
 </div>
 <script>
-    function onLiked(el) {
-        const id = el.dataset.id;
-        const url = `/comments/${id}/like`;
-        const method = 'POST';
-        const data = {
-            _csrf: '{{@root/_csrfToken}}',
-        };
-        $.ajax({
-            url: url,
-            method: method,
-            data: data,
-            success: function (res) {
-                if (res.success) {
-                    window.location.reload();
-                }
-            }
-        });
-    }
-    function onReply(el) {
-        const id = el.dataset.id;
-        const url = `/comments/${id}/reply`;
-        const method = 'POST';
-        const data = {
-            _csrf: '{{@root/_csrfToken}}',
-        };
-        $.ajax({
-            url: url,
-            method: method,
-            data: data,
-            success: function (res) {
-                if (res.success) {
-                    window.location.reload();
-                }
-            }
-        });
-    }
-    function onDelete(el) {
-        const id = el.dataset.id;
-        const url = `/comments/${id}`;
-        const method = 'DELETE';
-        const data = {
-            _csrf: '{{@root/_csrfToken}}',
-        };
-        $.ajax({
-            url: url,
-            method: method,
-            data: data,
-            success: function (res) {
-                if (res.success) {
-                    window.location.reload();
-                }
-            }
-        });
-    }
+  function onLiked(el) {
+    const id = el.dataset.id;
+    const url = `/comments/${id}/like`;
+    const method = 'POST';
+    const data = {
+      _csrf: '{{@root/_csrfToken}}',
+    };
+    $.ajax({
+      url: url,
+      method: method,
+      data: data,
+      success: function (res) {
+        if (res.success) {
+          window.location.reload();
+        }
+      }
+    });
+  }
+  function onReply(el) {
+    const id = el.dataset.id;
+    const url = `/comments/${id}/reply`;
+    const method = 'POST';
+    const data = {
+      _csrf: '{{@root/_csrfToken}}',
+    };
+    $.ajax({
+      url: url,
+      method: method,
+      data: data,
+      success: function (res) {
+        if (res.success) {
+          window.location.reload();
+        }
+      }
+    });
+  }
+  function onDelete(el) {
+    const id = el.dataset.id;
+    const url = `/comments/${id}`;
+    const method = 'DELETE';
+    const data = {
+      _csrf: '{{@root/_csrfToken}}',
+    };
+    $.ajax({
+      url: url,
+      method: method,
+      data: data,
+      success: function (res) {
+        if (res.success) {
+          window.location.reload();
+        }
+      }
+    });
+  }
 
 </script>

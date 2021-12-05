@@ -1,0 +1,98 @@
+<div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+  <h2 class="text-xl font-bold mb-2">{{episode.title}}</h2>
+
+  {{!-- tailwind breadcrumb --}}
+  {{!-- <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center">
+      <a href="{{season}}" class="text-base text-gray-700 hover:text-gray-900">
+        {{episode.show.title}}
+      </a>
+      <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+          clip-rule="evenodd" />
+      </svg>
+    </div>
+    <div class="text-gray-700">
+      {{episode.airdate}}
+    </div>
+  </div> --}}
+
+  <div class="plyr__video-embed" id="player">
+    <iframe
+      src="https://www.youtube.com/embed/bTqVqk7FSmY?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+      allowfullscreen allowtransparency allow="autoplay"></iframe>
+  </div>
+
+  <div class="flex flex-col md:flex-row items-center gap-2 mt-2 mx-2">
+    <div class="text-md text-base-content">Chọn server</div>
+    <div class="btn-group">
+      <button class="btn btn-outline btn-sm btn-active">Server 1</button>
+      <button class="btn btn-outline btn-sm">Server 2</button>
+      <button class="btn btn-outline btn-sm">Server 3</button>
+      <button class="btn btn-outline btn-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 stroke-current">
+          {{! error svg path }}
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Báo lỗi
+      </button>
+    </div>
+  </div>
+  <div>
+
+  </div>
+
+</div>
+
+{{!-- <ul class="menu p-4 shadow-lg rounded-box top-32 left-4 bg-base-200 md:fixed">
+  <li class="menu-title">
+    <span>
+      Tuỳ chọn
+    </span>
+  </li>
+  <li>
+    <a>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-5 h-5 mr-2 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+        </path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+        </path>
+      </svg>
+      Tắt đèn
+
+    </a>
+  </li>
+  <li>
+    <a>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-5 h-5 mr-2 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4">
+        </path>
+      </svg>
+      Báo lỗi
+
+    </a>
+  </li>
+  <li>
+    <a>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="inline-block w-5 h-5 mr-2 stroke-current">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+      </svg>
+      Tải về
+
+    </a>
+  </li>
+</ul> --}}
+
+<script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.9/plyr.css" />
+
+<script>
+  const player = new Plyr('#player');
+</script>

@@ -1,5 +1,5 @@
-import Comment from "../models/comment.model";
-import Movie from "../models/movie.model";
+import Comment from './comment.model';
+import Movie from "./movie.model";
 
 export const postComment = async (req, res) => {
     try {
@@ -14,7 +14,7 @@ export const postComment = async (req, res) => {
         });
 
         req.session.success = "Bình luận thành công!";
-        res.redirect(`/movies/${slug}#${newComment.id}`);
+        res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
     } catch (err) {
         res.json({ success: false, message: err.message });
     }

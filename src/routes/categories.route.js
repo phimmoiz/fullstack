@@ -1,8 +1,8 @@
 import { Router } from "express";
-import Category from "../models/category.model";
+import Category from "../components/movies/category.model";
 import { requireAdmin } from "../middlewares/auth.middleware";
 import createError from "http-errors";
-import Movie from "../models/movie.model";
+import Movie from "../components/movies/movie.model";
 
 const router = Router();
 
@@ -36,7 +36,7 @@ router.get("/", async (req, res, next) => {
   try {
     const categories = await Category.find().populate("movies");
 
-    res.render("categories/index", {
+    res.render("movies/views/categories/index", {
       title: "Danh sách chuyên mục",
       categories,
     });
@@ -82,7 +82,7 @@ router.get("/:slug", async (req, res, next) => {
       }
     );
 
-    res.render("categories/singleCategory", {
+    res.render("movies/views/categories/singleCategory", {
       title: cat.title,
       category: populated,
       pagination,

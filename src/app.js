@@ -1,7 +1,5 @@
 import express from "express";
 import routes from "./routes";
-import path, { dirname } from "path";
-import hbs from "hbs";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
@@ -12,16 +10,16 @@ import csurf from "csurf";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import session from "express-session";
+import { default as messageSocket } from "./components/messages/messages.socket";
+import { default as viewEngineConfig } from "./config/viewEngine";
 
-//
-import cookie from "cookie";
-import jwt from "jsonwebtoken";
-import Message from "./models/message.model";
-
+// Load env
 require("dotenv").config();
 
+// Heroku use its custom port
 const PORT = process.env.PORT || 3000;
 
+// Create app
 const app = express();
 
 
@@ -29,25 +27,7 @@ const app = express();
 app.use(express.static("public"));
 
 // View engine
-app.set("views", path.join(__dirname, "/views"));
-app.set("view engine", "hbs");
-hbs.registerPartials(
-  path.join(__dirname, "/views/partials"),
-  function (err) { }
-);
-hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
-  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-});
-hbs.registerHelper("inc", function (value, options) {
-  return parseInt(value) + 1;
-});
-hbs.registerHelper("json", function (context) {
-  return JSON.stringify(context);
-});
-
-hbs.registerHelper('ifBelong', function (arg1, arg2, options) {
-  return (arg1.includes(arg2)) ? options.fn(this) : options.inverse(this);
-});
+viewEngineConfig(app);
 
 // Session middleware
 app.use(
@@ -110,44 +90,10 @@ app.use(function (err, req, res, next) {
 const server = createServer(app);
 const io = new Server(server, {});
 
-io.on("connection", (socket) => {
-  socket.on("chat message", async (content) => {
-    try {
-      const { token } = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
+// Live time messages
+messageSocket(io);
 
-      if (!token) {
-        return;
-      }
-
-      let user = await jwt.verify(token, process.env.JWT_SECRET);
-
-      if (!user) return; // TODO: Tell user that he is not authorized
-
-      //command check
-      if (content.startsWith("/clear") && user.role === "admin") {
-        await Message.deleteMany({});
-
-        content = `Admin cleared all messages (/clear)`;
-        io.emit("delete all messages", newMessage);
-      }
-
-      const newMessage = await (
-        await Message.create({
-          author: user.id,
-          content,
-        })
-      ).populate({
-        path: "author",
-        select: "username avatar role",
-      });
-
-      io.emit("chat message receive", newMessage);
-    } catch (err) {
-      console.log("[socket]", err);
-    }
-  });
-});
-
+// Start server
 server.listen(PORT, () => {
   console.log(`[server] Server running at http://localhost:${PORT}`);
 });

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Category from "../models/category.model";
+import Category from "../components/movies/category.model";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
 
   console.log(categories);
 
-  res.render("danh-sach", { title: "Danh sách phim", categories });
+  res.render("movies/views/danh-sach", { title: "Danh sách phim", categories });
 });
 
 export default router;

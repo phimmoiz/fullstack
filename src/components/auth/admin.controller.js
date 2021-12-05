@@ -1,10 +1,11 @@
-import Category from "../models/category.model";
-import Movie from "../models/movie.model";
-import User from "../models/user.model";
-import Season from "../models/season.model";
-import Episode from "../models/episode.model";
+import Category from "../movies/category.model";
+import Movie from "../movies/movie.model";
+import User from "../auth/user.model";
+import Season from "../movies/season.model";
+import Episode from "../movies/episode.model";
+import createError from "http-errors";
 
-export const getAdmin = async (req, res) => {
+export const getAdmin = async (req, res, next) => {
   try {
     // get user count, category count, movie count
     const [users, categories, movies] = await Promise.all([
@@ -13,12 +14,12 @@ export const getAdmin = async (req, res) => {
       Movie.countDocuments(),
     ]);
 
-    res.render("admin/index", {
+    res.render("auth/views/admin/index", {
       title: "Admin",
       count: { users, categories, movies },
     });
   } catch (error) {
-    console.log(error);
+    next(createError(500));
   }
 };
 
@@ -26,7 +27,7 @@ export const getAdminPanel = async (req, res) => {
   // get all users
   const users = await User.find({});
 
-  res.render("admin/users", { title: "Admin", users });
+  res.render("auth/views/admin/users", { title: "Admin", users });
 };
 
 // Movie panel
@@ -37,35 +38,43 @@ export const moviePanelGetIndex = async (req, res) => {
   const error = req.session?.error;
   const success = req.session?.success;
 
-  // get all category then populate movies, season, episode
-  const categories = await Category.find({})
+  // get all movies, sort, and populate all
+  const movies = await Movie.find({})
     .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit)
     .populate({
-      path: "movies",
-      model: Movie,
-      populate: [
-        {
-          path: "seasons",
-          model: Season,
-          populate: {
-            path: "episodes",
-            model: Episode,
-          },
-        },
-      ],
+      path: "categories",
+      model: Category,
     });
+
+  const categories = await Category.find({});
 
   // get movie count
   const movieCount = await Movie.countDocuments();
 
-  res.render("admin/movies", {
+  // get total pages
+  const totalPages = Math.ceil(movieCount / 10);
+
+  const pagination = Array.from({ length: totalPages }, (_, i) => i + 1).map(
+    (page) => {
+      return {
+        url: `movies?page=${page}`,
+        number: page,
+      };
+    }
+  );
+
+  res.render("auth/views/admin/movies", {
     title: "Admin",
-    categories,
+    movies,
     movieCount,
+    categories,
+    pagination,
     error,
-    success
+    success,
+    currentIndex: page - 1,
+    currentPage: page,
   });
 };
 
@@ -82,7 +91,7 @@ export const moviePanelGetMovie = async (req, res) => {
 
     if (!movie) throw new Error("Movie not found");
 
-    res.render("admin/movie", {
+    res.render("auth/views/admin/movies", {
       title: "Admin",
       movie,
     });
@@ -108,7 +117,7 @@ export const moviePanelEditSeason = async (req, res) => {
     if (!season) throw new Error("Season not found");
 
     // res.json({ success: true, season });
-    res.render("admin/season", {
+    res.render("auth/views/admin/season", {
       title: "Admin",
       season,
     });
@@ -135,7 +144,7 @@ export const moviePanelEditMovie = async (req, res) => {
 
     if (!movie) throw new Error("Movie not found");
 
-    res.render("admin/movie-edit", {
+    res.render("auth/views/admin/movie-edit", {
       title: "Admin",
       movie,
       categories,
@@ -163,7 +172,7 @@ export const moviePanelPostMovie = async (req, res) => {
       trailer,
     });
 
-    res.render("admin/movie", {
+    res.render("auth/views/admin/movies", {
       title: "Admin",
       movie,
       success: "Movie updated successfully",
@@ -177,12 +186,12 @@ export const getCategoriesPanel = async (req, res) => {
   // get all categories
   const categories = await Category.find({});
 
-  res.render("admin/categories", { title: "Admin", categories });
+  res.render("auth/views/admin/categories", { title: "Admin", categories });
 };
 
 export const getUserPanel = async (req, res) => {
   // get all users
   const users = await User.find({});
 
-  res.render("admin/users", { title: "Admin", users });
+  res.render("auth/views/admin/users", { title: "Admin", users });
 };

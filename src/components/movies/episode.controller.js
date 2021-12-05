@@ -1,4 +1,6 @@
-import Episode from "../models/episode.model";
+import Episode from "./episode.model";
+import Movie from "./movie.model";
+import Season from "./season.model";
 import createError from "http-errors";
 
 export const getEpisode = async (req, res, next) => {
@@ -19,15 +21,36 @@ export const getEpisode = async (req, res, next) => {
 
 export const postEpisode = async (req, res, next) => {
   try {
-    const episodeId = req.params.id;
+    const { title, description, image, serverFshare, serverVimeo, season } =
+      req.body;
 
-    const episode = await Episode.findById(episodeId);
+    //create
+    const episode = await Episode.create({
+      title,
+      description,
+      image,
+      serverFshare,
+      serverVimeo,
+      season,
+    });
 
-    if (!episode) {
-      throw new Error("Episode not found");
-    }
+    const populated = await episode.populate({
+      path: "season",
+      model: Season,
+      populate: {
+        path: "movie",
+        model: Movie,
+        select: "slug",
+      },
+    });
 
-    return res.json({ success: true, episode });
+    console.log(populated);
+
+    const movieSlug = populated.season.movie.slug;
+
+    req.session.success = `Episode ${episode.title} created successfully`;
+
+    res.redirect(`/movies/${movieSlug}/`);
   } catch (err) {
     next(createError(404, err.message));
   }

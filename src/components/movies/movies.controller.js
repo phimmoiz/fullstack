@@ -1,9 +1,10 @@
-import Movie from "../models/movie.model";
-import User from "../models/user.model";
-import Category from "../models/category.model";
-import Season from "../models/season.model";
+import Movie from "./movie.model";
+import User from "../auth/user.model";
+import Category from "./category.model";
+import Season from "./season.model";
+import Episode from "./episode.model";
 import createError from "http-errors";
-import Comment from "../models/comment.model";
+import Comment from "./comment.model";
 // Mongoose interaction
 export const getNewMovies = async ({
   page = 1,
@@ -52,8 +53,8 @@ export const getNewMovies = async ({
     })
     .limit(parseInt(limit))
     .skip((page - 1) * limit)
+    .lean(lean)
     .exec();
-  // .lean(lean);
 
   // if (populate) {
   //   movies.populate({ path: "categories", model: Category });
@@ -172,11 +173,9 @@ export const getSingleMovie = async (req, res, next) => {
         model: Season,
         populate: {
           path: "episodes",
-          model: Movie,
+          model: Episode,
         },
-      })
-
-      .lean();
+      });
 
     if (!movie) {
       throw new Error("Movie not found");
@@ -200,12 +199,12 @@ export const getSingleMovie = async (req, res, next) => {
     // Increase view count
     increaseViewCount(movie._id);
 
-    res.render("movies/single-movie", {
+    res.render("movies/views/movies/single-movie", {
       title: movie.title,
       movie,
       isFavorite,
       comments,
-      success
+      success,
     });
   } catch (err) {
     next(createError(404, err.message));
@@ -241,7 +240,7 @@ export const getSeason = async (req, res) => {
   }
 };
 
-export const getEpisode = async (req, res) => {
+export const getEpisode = async (req, res, next) => {
   try {
     const { slug, season, episode } = req.params;
 
@@ -258,19 +257,23 @@ export const getEpisode = async (req, res) => {
       throw new Error("Movie not found");
     }
 
-    const seasonData = movie.seasons.find((s) => s.number === season);
+    const seasonData = movie.seasons.find((s) => s.slug === season);
 
     if (!seasonData) {
       throw new Error("Season not found");
     }
 
-    const episodeData = seasonData.episodes.find((e) => e.number === episode);
+    const episodeData = seasonData.episodes.find((e) => e.slug === episode);
 
     if (!episodeData) {
       throw new Error("Episode not found");
     }
 
-    res.render("episode", { movie, seasonData, episodeData });
+    res.render("movies/views/movies/episode", {
+      movie,
+      season: seasonData,
+      episode: episodeData,
+    });
   } catch (err) {
     next(createError(404, err.message));
   }
@@ -314,11 +317,10 @@ export const postMovie = async (req, res) => {
     // console.log(newMovie);
     // res.json({ success: true, data: newCat });
 
-    req.session.success2 = `${title} - ${englishTitle} has been added`;
+    req.session.success = `${title} - ${englishTitle} has been added`;
 
     res.redirect("/admin/movies");
   } catch (err) {
-    console.log(err);
     res.json({ success: false, message: err.message });
   }
 };
@@ -365,18 +367,6 @@ export const updateMovie = async (req, res) => {
   }
 };
 
-export const deleteMovie = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const deletedMovie = await Movie.findByIdAndDelete(id);
-
-    res.json({ success: true, data: deletedMovie });
-  } catch (err) {
-    res.json({ success: false, message: err.message });
-  }
-};
-
 export const getMovieByCategory = async (req, res) => {
   try {
     const { slug } = req.params;
@@ -399,8 +389,6 @@ export const editMovie = async (req, res) => {
       return;
     }
     const { slug } = req.params;
-    const movie = await Movie.findOne({ slug });
-    //res.json({ success: true, data: movie });
     // Get Data from body
     const {
       description,
@@ -414,62 +402,44 @@ export const editMovie = async (req, res) => {
       imdbId,
       englishTitle,
     } = req.body;
-    console.log(req.body);
-    let query = {};
-    if (description) {
-      query.description = description;
-    }
-    if (!title) {
-      throw new Error("Not have title movie");
-    } else {
-      query.title = title;
-    }
-    if (!image) {
-      throw new Error("Not have image url");
-    } else {
-      query.image = image;
-    }
-    if (!time) {
-      throw new Error("Not have time of movie");
-    } else {
-      query.time = time;
-    }
-    if (!trailer) {
-      throw new Error("Not have trailer url");
-    } else {
-      query.trailer = trailer;
-    }
 
-    if (!premiere) {
-      throw new Error("Not have premiere date");
-    } else {
-      query.premiere = premiere;
-    }
+    let query = {
+      description,
+      title,
+      image,
+      time,
+      trailer,
+      premiere,
+      releaseYear,
+      rating,
+      imdbId,
+      englishTitle,
+    };
 
-    if (!releaseYear) {
-      throw new Error("Not have release year");
-    } else {
-      query.releaseYear = releaseYear;
-    }
-    if (rating) {
-      query.rating = rating;
-    }
-    if (imdbId) {
-      query.imdbId = imdbId;
-    }
-    if (!englishTitle) {
-      throw new Error("Not have english title");
-    } else {
-      query.englishTitle = englishTitle;
-    }
     // edit movie in db
-    const updatedMovie = await Movie.findOneAndUpdate({ slug }, query, {
+    await Movie.findOneAndUpdate({ slug }, query, {
       new: true,
     });
+
     res.redirect("/movies/" + slug);
   } catch (err) {
-    //console.log(err);
-    //res.redirect("/");
+    req.session.error = err.message;
+    res.redirect("/admin/movies/");
+  }
+};
+
+export const deleteMovie = async (req, res) => {
+  try {
+    if (req.body._method !== "DELETE") {
+      return;
+    }
+    const { slug } = req.params;
+    const movie = await Movie.findOne({ slug });
+
+    await Movie.findByIdAndDelete(movie._id);
+
+    res.redirect("/admin/movies");
+  } catch (err) {
     req.session.error = err.message;
     res.redirect("/admin/movies");
   }

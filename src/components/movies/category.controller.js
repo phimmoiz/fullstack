@@ -1,4 +1,4 @@
-import Category from "../models/category.model";
+import Category from "./category.model";
 
 export function addCategory(req, res) {
   const category = new Category(req.body);

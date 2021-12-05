@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { postComment, getFilmComments, deleteComment, putComment, increaseLikeCount, replyComment } from "../controllers/comment.controller";
+import { postComment, getFilmComments, deleteComment, putComment, increaseLikeCount, replyComment } from "../components/movies/comment.controller";
 import { requireAuth } from "../middlewares/auth.middleware";
 const router = Router();
 

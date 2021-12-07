@@ -8,5 +8,4 @@ const router = Router();
 
 router.get("/", getRegister);
 router.post("/", postRegister);
-
 export default router;

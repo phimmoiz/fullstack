@@ -48,10 +48,8 @@
       method: 'POST',
       data,
       success: ({ data }) => {
-
-        $("#notify").html(`
-  <div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
-    Đã tạo chuyên mục
+        $("#notify").html(`<div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
+      Đã tạo chuyên mục
     <a href="/categories/${data.slug}">
       ${data.title}
     </a>

@@ -39,12 +39,13 @@ export async function checkAuth(req, res, next) {
 export function requireAdmin(req, res, next) {
   try {
     // console.log(res.locals);
-    if (res.locals?.user.role !== "admin") {
+    if (res.locals?.user?.role !== "admin") {
       throw new Error("User not authorized");
     }
 
     next();
   } catch (err) {
-    next(createError(403, err.message));
+    req.session.error = err.message;
+    res.redirect("/");
   }
 }

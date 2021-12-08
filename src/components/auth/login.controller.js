@@ -13,7 +13,10 @@ export const postLogin = async (req, res) => {
     if (!user) {
       throw new Error("Tài khoản không tồn tại");
     }
-
+    // if user is banned
+    if (user.banned) {
+      throw new Error("Tài khoản đã bị khóa");
+    }
     const isPasswordValid = await user.checkPassword(password);
 
     if (!isPasswordValid) {
@@ -32,7 +35,7 @@ export const postLogin = async (req, res) => {
       process.env.JWT_SECRET,
       {
         //1 month
-        expiresIn: "1m",
+        expiresIn: "24h",
       }
     );
 

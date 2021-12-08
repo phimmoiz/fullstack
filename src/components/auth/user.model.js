@@ -25,6 +25,10 @@ let userSchema = new mongoose.Schema({
     type: String,
     default: "/assets/images/question.png",
   },
+  banned: {
+    type: Boolean,
+    default: false,
+  },
   role: {
     type: String,
     default: "user",

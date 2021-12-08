@@ -11,6 +11,8 @@ import {
   getCategoriesPanel,
   moviePanelEditSeason,
   createAdmin,
+  banUser,
+  makeAdmin,
 } from "../components/admin/admin.controller";
 
 const router = Router();
@@ -37,4 +39,8 @@ router.post("/movies/:slug", moviePanelPostMovie);
 router.get("/categories", getCategoriesPanel);
 
 router.post("/createAdmin", createAdmin);
+
+router.post("/admins/make", makeAdmin);
+
+router.post("/admins/ban", banUser);
 export default router;

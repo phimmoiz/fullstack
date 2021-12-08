@@ -65,5 +65,26 @@
     </div>
   </div>
 
+  {{!-- Admin --}}
+  <div class="rounded-md bg-pink-300 dark:bg-pink-500 transition-opacity hover:opacity-80 h-20 flex">
+    <div class="flex justify-center items-center px-4">
+      {{!-- Admin icon --}}
+      {{!-- <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"> --}}
+        <i class="fas fa-user-cog text-white h-6 w-6 fill="none" viewBox="0 0 24 24" "></i>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12h6m-3-3h.01M9 19h6m-3-3h.01M9 14h6m-3-3h.01M12 14v-4m0 5h.01M15 3h.01M8 3H6a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 0h1M3 21h18M3 10h18M3 7l9-4 9 4M9 3v1a1 1 0 00.01M21 21a1 1 0 001-1V10M4.27 6.27l2.82 2.82M12 12a4 4 0 00-3.999-3.999l-2.82 2.82M3 3v3a1 1 0 001 1h3m2.555-2.687l2.82 2.82M21 12a4 4 0 00-3.999-3.999l-2.82 2.82M21 12a4 4 0 00-3.999-3.999l-2.82 2.82" />
+      </svg>
+    </div>
+
+    <div class="flex flex-col">
+
+      <div class="p-2">
+        <h1 class="text-2xl font-bold">Admin</h1>
+        <p class="text-sm">
+          <span class="font-bold">{{count.admins}}</span> admins
+        </p>
+      </div>
+    </div>
+
 </div>
 {{/admin}}

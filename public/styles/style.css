@@ -2041,6 +2041,11 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(244, 244, 245, var(--tw-bg-opacity));
 }
 
+.hover\:bg-pink-200:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(251, 207, 232, var(--tw-bg-opacity));
+}
+
 .hover\:bg-blue-700:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
@@ -2049,11 +2054,6 @@ html[data-theme="dark"] .card-badge {
 .hover\:bg-red-700:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(185, 28, 28, var(--tw-bg-opacity));
-}
-
-.hover\:bg-pink-200:hover {
-	--tw-bg-opacity: 1;
-	background-color: rgba(251, 207, 232, var(--tw-bg-opacity));
 }
 
 .hover\:bg-gray-700:hover {
@@ -2285,14 +2285,14 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
 }
 
-.dark .dark\:hover\:bg-gray-500:hover {
-	--tw-bg-opacity: 1;
-	background-color: rgba(113, 113, 122, var(--tw-bg-opacity));
-}
-
 .dark .dark\:hover\:bg-pink-500:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(236, 72, 153, var(--tw-bg-opacity));
+}
+
+.dark .dark\:hover\:bg-gray-500:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(113, 113, 122, var(--tw-bg-opacity));
 }
 
 .dark .dark\:hover\:bg-rose-600:hover {

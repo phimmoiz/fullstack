@@ -8,15 +8,16 @@ import { hashPassword } from "../../utils";
 export const getAdmin = async (req, res, next) => {
   try {
     // get user count, category count, movie count
-    const [users, categories, movies] = await Promise.all([
-      User.countDocuments(),
+    const [users, categories, movies, admins] = await Promise.all([
+      User.countDocuments({ role: "user" }),
       Category.countDocuments(),
       Movie.countDocuments(),
+      User.countDocuments({ role: "admin" }),
     ]);
 
     res.render("admin/views/index", {
       title: "Admin",
-      count: { users, categories, movies },
+      count: { users, categories, movies, admins },
     });
   } catch (error) {
     next(createError(500));
@@ -26,16 +27,18 @@ export const getAdmin = async (req, res, next) => {
 export const getAdminPanel = async (req, res) => {
   // get admin
   const admins = await User.find({ role: "admin" });
-
-  res.render("admin/views/admins", { title: "Admin", admins });
+  const success =  req.session.success;
+  const error = req.session.error;
+  res.render("admin/views/admins", { title: "Admin", admins, success, error });
 };
 
 export const getUserPanel = async (req, res) => {
   // get all users is admin
 
   const users = await User.find({role: "user"});
-
-  res.render("admin/views/users", { title: "Admin", users });
+  const success =  req.session.success;
+  const error = req.session.error;
+  res.render("admin/views/users", { title: "Admin", users, success, error });
 };
 // Movie panel
 export const moviePanelGetIndex = async (req, res) => {
@@ -196,7 +199,7 @@ export const getCategoriesPanel = async (req, res) => {
   res.render("admin/views/categories", { title: "Admin", categories });
 };
 
-export const createAdmin = async (req, res, next) => {
+export const createAdmin = async (req, res) => {
   try {
     const { username, password, email, fullname, repassword } = req.body;
 
@@ -227,10 +230,46 @@ export const createAdmin = async (req, res, next) => {
       role: "admin",
       
     });
-    req.session.success = "Đăng ký thành công";
-    return res.redirect("/admin");
+    req.session.success = "Tạo thành công";
+    res.redirect("/admin/admins");
   } catch (err) {
-    next(createError(err));
+    req.session.error = err.message;
+    res.redirect("/admin/");
   };
 };
 
+export const makeAdmin = async (req, res) => {
+  try {
+    const { username } = req.body;
+    
+    const user = await User.findOne({ username });
+    await User.findByIdAndUpdate(user._id, {
+      role: "admin",
+    });
+    req.session.success = "Uỷ quyền admin thành công";
+    res.redirect("/admin/admins");
+  } catch (err) {
+    req.session.error = err.message;
+    res.redirect("/admin/");
+  }
+};
+
+export const banUser = async (req, res) => {
+  try {
+    const { username, isBan } = req.body;
+
+    const user = await User.findOne({ username }); 
+    await User.findByIdAndUpdate(user._id, {
+      banned: isBan,
+    });
+    if(!user.banned) {
+      req.session.success = "Ban "+ username + " thành công";
+    } else {
+      req.session.success = "Unban "+ username + " thành công";
+    }
+    res.redirect("/admin/users");
+  } catch (err) {
+    req.session.error = err.message;
+    res.redirect("/admin/");
+  }
+}

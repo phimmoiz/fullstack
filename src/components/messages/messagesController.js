@@ -1,5 +1,5 @@
-import User from "../auth/user.model";
-import Message from "./message.model";
+import User from "../auth/userModel";
+import Message from "./messageModel";
 
 export const getMessages = async (req, res, next) => {
   const { skip = 0 } = req.query;

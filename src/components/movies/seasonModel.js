@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Episode from "./episode.model";
-import Movie from "./movie.model";
+import Episode from "./episodeModel";
+import Movie from "./movieModel";
 
 const seasonSchema = new mongoose.Schema(
   {

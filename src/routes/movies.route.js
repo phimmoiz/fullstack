@@ -1,4 +1,6 @@
 import { Router } from "express";
+import Movie from "../components/movies/movieModel";
+import Category from "../components/movies/categoryModel";
 import { requireAdmin } from "../middlewares/auth.middleware";
 import {
   postMovie,
@@ -9,7 +11,7 @@ import {
   getEpisode,
   editMovie,
   deleteMovie,
-} from "../components/movies/movies.controller";
+} from "../components/movies/moviesController";
 
 const router = Router();
 

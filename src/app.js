@@ -13,7 +13,11 @@ import session from "express-session";
 import { default as messageSocket } from "./components/messages/messages.socket";
 import { default as viewEngineConfig } from "./config/viewEngine";
 
-// Load env
+//
+import cookie from "cookie";
+import jwt from "jsonwebtoken";
+import Message from "./components/messages/messageModel";
+
 require("dotenv").config();
 
 // Heroku use its custom port

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Season from "./season.model";
+import Season from "./seasonModel";
 import { isUrl } from "../../utils";
 
 const episodeSchema = new mongoose.Schema(

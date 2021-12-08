@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { requireAuth } from "../middlewares/auth.middleware";
-import User from "../components/auth/user.model";
-import Movie from "../components/movies/movie.model";
+import User from "../components/auth/userModel";
+import Movie from "../components/movies/movieModel";
 import createError from "http-errors";
 
 const router = Router();

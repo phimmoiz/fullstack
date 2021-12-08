@@ -1,8 +1,8 @@
 import express from "express";
 import { requireAdmin } from "../middlewares/auth.middleware";
-import Season from "../components/movies/season.model";
-import Episode from "../components/movies/episode.model";
-import Movie from "../components/movies/movie.model";
+import Season from "../components/movies/seasonModel";
+import Episode from "../components/movies/episodeModel";
+import Movie from "../components/movies/movieModel";
 
 const router = express.Router();
 

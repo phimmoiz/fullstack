@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Category from "../components/movies/category.model";
+import Category from "../components/movies/categoryModel";
 
 const router = Router();
 

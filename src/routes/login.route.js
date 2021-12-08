@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../components/auth/userModel";
 import createError from "http-errors";
 
-import { postLogin, getLogin } from "../components/auth/login.controller";
+import { postLogin, getLogin } from "../components/auth/loginController";
 
 const router = Router();
 

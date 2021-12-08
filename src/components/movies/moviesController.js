@@ -3,53 +3,14 @@ import User from "../auth/userModel";
 import Category from "./categoryModel";
 import Season from "./seasonModel";
 import Episode from "./episodeModel";
-import createError from "http-errors";
-
-// Mongoose interaction
-export const getNewMovies = async ({
-  page = 1,
-  limit = 10,
-  categorySlugs = [],
-  sortByDate = true,
-  sortByViews = false,
-  lean = false,
-  populate = false,
-  matchName = "",
-}) => {
-  // set querystring for category
-  let query = {};
-
-  // get categories Id base on category slugs
-  if (categorySlugs.length > 0) {
-    const categories = await Category.find({ slug: { $in: categorySlugs } });
-    const categoryIds = categories.map((category) => category._id);
-
-    query = {
-      categories: { $in: categoryIds },
-    };
-  }
-
-  // set querystring for name
-  if (matchName) {
-    query = {
-      ...query,
-      // title and englishTitle
-      $or: [
-        { title: { $regex: matchName, $options: "i" } },
-        { englishTitle: { $regex: matchName, $options: "i" } },
-      ],
-    };
-  }
-
-  console.log(query, limit);
-  // console.log(await Movie.find(query).limit(parseInt(limit)));
+import Comment from "./commentModel";
 
 import createError from "http-errors";
 import {
   getNewMovies,
   getMovieWithOneEpisode,
   increaseViewCount,
-} from "./movies.service";
+} from "./moviesService";
 
 // Routing
 export const getMovies = async (req, res, next) => {

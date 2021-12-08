@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getRegister,
   postRegister,
-} from "../components/auth/register.controller";
+} from "../components/auth/registerController";
 
 const router = Router();
 

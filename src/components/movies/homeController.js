@@ -1,6 +1,4 @@
-import { getNewMovies, getMovieWithOneEpisode } from "./moviesController";
-import fs from "fs";
-import path from "path";
+import { getNewMovies, getMovieWithOneEpisode } from "./moviesService";
 
 export const getHomePage = async (req, res) => {
   const page = req.query.page || 1;

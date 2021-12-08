@@ -1,5 +1,5 @@
 import { hashPassword } from "../../utils";
-import User from "./user.model";
+import User from "./userModel";
 
 export const getRegister = (req, res) => {
   res.render("auth/views/register", { title: "Đăng ký" });

@@ -1,4 +1,4 @@
-import User from "./user.model";
+import User from "./userModel";
 import { default as jwt } from "jsonwebtoken";
 
 export const postLogin = async (req, res) => {

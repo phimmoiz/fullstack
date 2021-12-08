@@ -1,5 +1,5 @@
-import Comment from './comment.model';
-import Movie from "./movie.model";
+import Comment from './commentModel';
+import Movie from "./movieModel";
 
 export const postComment = async (req, res) => {
     try {

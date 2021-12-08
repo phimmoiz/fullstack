@@ -1,7 +1,7 @@
-import Movie from "./movie.model";
-import Season from "./season.model";
-import Episode from "./episode.model";
-import Category from "./category.model";
+import Movie from "./movieModel";
+import Season from "./seasonModel";
+import Episode from "./episodeModel";
+import Category from "./categoryModel";
 
 // Mongoose interaction
 export const getNewMovies = async ({

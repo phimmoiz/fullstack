@@ -10,7 +10,7 @@ import csurf from "csurf";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import session from "express-session";
-import { default as messageSocket } from "./components/messages/messages.socket";
+import { default as messageSocket } from "./components/messages/messagesSocket";
 import { default as viewEngineConfig } from "./config/viewEngine";
 
 //

@@ -10,7 +10,10 @@ import {
   moviePanelPostMovie,
   getCategoriesPanel,
   moviePanelEditSeason,
-} from "../components/auth/adminController";
+  createAdmin,
+  makeAdmin,
+  banUser,
+} from "../components/admin/adminController";
 
 const router = Router();
 

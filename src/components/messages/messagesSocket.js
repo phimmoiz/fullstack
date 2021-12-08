@@ -1,6 +1,6 @@
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
-import Message from "./message.model";
+import Message from "./messageModel";
 
 const messageSocket = (io) => {
   io.on("connection", (socket) => {

@@ -233,7 +233,7 @@ export const postMovie = async (req, res) => {
     // console.log(newMovie);
     // res.json({ success: true, data: newCat });
 
-    req.session.success = `${title} - ${englishTitle} has been added`;
+    req.flash("success", `${title} - ${englishTitle} has been added`);
 
     res.redirect("/admin/movies");
   } catch (err) {
@@ -339,7 +339,7 @@ export const editMovie = async (req, res) => {
 
     res.redirect("/movies/" + slug);
   } catch (err) {
-    req.session.error = err.message;
+    req.flash("error", err.message);
     res.redirect("/admin/movies/");
   }
 };
@@ -356,7 +356,7 @@ export const deleteMovie = async (req, res) => {
 
     res.redirect("/admin/movies");
   } catch (err) {
-    req.session.error = err.message;
+    req.flash("error", err.message);
     res.redirect("/admin/movies");
   }
 };

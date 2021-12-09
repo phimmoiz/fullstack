@@ -46,7 +46,7 @@ export const postRegister = async (req, res) => {
       fullname,
     });
 
-    req.session.success = "Đăng ký thành công";
+    req.flash("success", "Đăng ký thành công");
     return res.redirect("/login");
   } catch (err) {
     console.log(err);

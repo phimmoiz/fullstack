@@ -132,6 +132,20 @@
     transition: top 0.3s;
   }
 
+  .fadeOut {
+    animation: fadeOut 1s 2s forwards;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;

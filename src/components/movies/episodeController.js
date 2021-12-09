@@ -46,7 +46,7 @@ export const postEpisode = async (req, res, next) => {
 
     const movieSlug = populated.season.movie.slug;
 
-    req.session.success = `Episode ${episode.title} created successfully`;
+    req.flash("success", `Episode ${episode.title} created successfully`);
 
     res.redirect(`/movies/${movieSlug}/`);
   } catch (err) {

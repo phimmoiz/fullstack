@@ -784,6 +784,28 @@ video {
     top: 0;
     transition: top 0.3s;
   }
+.fadeOut {
+    -webkit-animation: fadeOut 1s 2s forwards;
+            animation: fadeOut 1s 2s forwards;
+  }
+@-webkit-keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+@keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
 @-webkit-keyframes fadeIn {
     from {
       opacity: 0;
@@ -896,6 +918,9 @@ video {
 	left: 0px;
 	right: 0px;
 }
+.right-2 {
+	right: 0.5rem;
+}
 .bottom-4 {
 	bottom: 1rem;
 }
@@ -962,11 +987,11 @@ video {
 .left-4 {
 	left: 1rem;
 }
-.z-20 {
-	z-index: 20;
-}
 .z-50 {
 	z-index: 50;
+}
+.z-20 {
+	z-index: 20;
 }
 .z-\[120\] {
 	z-index: 120;
@@ -1821,10 +1846,6 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(219, 39, 119, var(--tw-text-opacity));
 }
-.text-green-700 {
-	--tw-text-opacity: 1;
-	color: rgba(21, 128, 61, var(--tw-text-opacity));
-}
 .text-gray-400 {
 	--tw-text-opacity: 1;
 	color: rgba(161, 161, 170, var(--tw-text-opacity));
@@ -2218,11 +2239,6 @@ html[data-theme="dark"] .card-badge {
 .dark .dark\:bg-pink-500 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(236, 72, 153, var(--tw-bg-opacity));
-}
-
-.dark .dark\:bg-green-500 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(34, 197, 94, var(--tw-bg-opacity));
 }
 
 .dark .dark\:bg-gray-500 {

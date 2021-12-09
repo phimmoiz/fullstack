@@ -10,6 +10,7 @@ import csurf from "csurf";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import session from "express-session";
+import { default as flash } from "connect-flash";
 import { default as messageSocket } from "./components/messages/messagesSocket";
 import { default as viewEngineConfig } from "./config/viewEngine";
 
@@ -26,7 +27,6 @@ const PORT = process.env.PORT || 3000;
 // Create app
 const app = express();
 
-
 // Static files
 app.use(express.static("public"));
 
@@ -41,6 +41,8 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(flash());
 
 // Add body parser
 app.use(express.json());

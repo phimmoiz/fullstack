@@ -45,7 +45,7 @@ export function requireAdmin(req, res, next) {
 
     next();
   } catch (err) {
-    req.session.error = err.message;
+    req.flash("error", err.message);
     res.redirect("/");
   }
 }

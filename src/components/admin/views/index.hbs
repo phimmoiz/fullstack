@@ -1,5 +1,7 @@
 {{#> admin}}
+
 <div class="p-2 shadow-lg grid md:grid-cols-2 gap-1">
+<a href="/admin/users">
   <div class="rounded-md bg-pink-300 dark:bg-pink-500 transition-opacity hover:opacity-80 h-20 flex">
     <div class="flex justify-center items-center px-4">
       {{!-- User icon --}}
@@ -20,8 +22,9 @@
     </div>
 
   </div>
-
+</a>
   {{!-- Category --}}
+  <a href="/admin/categories">
   <div class="rounded-md bg-pink-300 dark:bg-pink-500 transition-opacity hover:opacity-80 h-20 flex">
     <div class="flex justify-center items-center px-4">
       {{!-- Category icon --}}
@@ -42,8 +45,9 @@
       </div>
     </div>
   </div>
-
+</a>
   {{!-- Movies --}}
+<a href="/admin/movies">
   <div class="rounded-md bg-pink-300 dark:bg-pink-500 transition-opacity hover:opacity-80 h-20 flex">
     <div class="flex justify-center items-center px-4">
       {{!-- Movies icon --}}
@@ -64,8 +68,9 @@
       </div>
     </div>
   </div>
-
+</a>
   {{!-- Admin --}}
+<a href="/admin/admins">
   <div class="rounded-md bg-pink-300 dark:bg-pink-500 transition-opacity hover:opacity-80 h-20 flex">
     <div class="flex justify-center items-center px-4">
       {{!-- Admin icon --}}
@@ -85,6 +90,6 @@
         </p>
       </div>
     </div>
-
-</div>
+  </div>
+</a>
 {{/admin}}

@@ -1,8 +1,7 @@
 import { Router } from "express";
-import Movie from "../models/movie.model";
-import Category from "../models/category.model";
+import Movie from "../components/movies/movieModel";
+import Category from "../components/movies/categoryModel";
 import { requireAdmin } from "../middlewares/auth.middleware";
-import createError from "http-errors";
 import {
   postMovie,
   getSingleMovie,
@@ -11,7 +10,8 @@ import {
   getSeason,
   getEpisode,
   editMovie,
-} from "../controllers/movies.controller";
+  deleteMovie,
+} from "../components/movies/moviesController";
 
 const router = Router();
 
@@ -23,4 +23,5 @@ router.get("/:slug/season/", getSeason);
 router.get("/:slug/:season/episode-:episode/", getEpisode);
 router.get("/:slug", getSingleMovie);
 router.post("/:slug/edit", requireAdmin, editMovie);
+router.post("/:slug/delete", requireAdmin, deleteMovie);
 export default router;

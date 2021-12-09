@@ -6,6 +6,7 @@
   "scripts": {
     "start": "babel-node ./src/app.js",
     "dev": "nodemon -e js,css,hbs --exec \"npm run tailwind:build && npx babel-node src/app.js\"",
+    "dev:no-css": "nodemon -e js,hbs --exec \"npx babel-node src/app.js\"",
     "tailwind:build": "cross-env postcss src/styles/global.css -o public/styles/style.css"
   },
   "keywords": [],
@@ -13,6 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.2.2",
+    "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",

@@ -1,0 +1,58 @@
+{{#> admin}}
+<div class="p-2">
+  {{! List all category from categories }}
+  <h3 class="text-lg mb-2">
+    Users
+  </h3>
+
+  <ul class="list-inside list-none flex flex-col gap-1">
+    {{#each users}}
+    <li class="h-20 pl-6 flex items-center justify-between p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1 hover:bg-pink-200 dark:hover:bg-pink-500">
+        <span class = "flex-grow">{{this.username}} </span>
+        <form action="/admin/admins/ban" method="POST">
+          <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+          <input type="hidden" name="username" value="{{this.username}}">
+          <button class="text-white shadow-md rounded transform transition hover:scale-110 p-1 flex gap-1 items-center m-1 bg-blue-400">
+          {{#unless this.banned}}
+            <input type="hidden" name="isBan" value="true">
+            <i class="fas fa-user-times text-white"></i>
+            Ban
+          </button>
+          {{else}}
+            <input type="hidden" name="isBan" value="false">
+              <i class="fas fa-user-times text-white"></i>
+              Unban
+          </button>
+            {{/unless}}
+        </form>
+
+          <form action="/admin/admins/make" method="POST">
+          <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+          <input type="hidden" name="username" value="{{this.username}}">
+          <button class="text-red-500 shadow-md rounded transform transition hover:scale-110 p-1 flex gap-1 items-center m-1 bg-white">
+            <i class="fas fa-user-lock text-red-500"></i>
+            Make Admin
+          </button>
+        </form>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/admin}}
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeInClass {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+  }
+</style>

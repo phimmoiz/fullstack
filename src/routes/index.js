@@ -2,7 +2,7 @@ import express from "express";
 import userRoute from "./user.route";
 import registerRoute from "./register.route";
 import logInRoute from "./login.route";
-import filmListRoute from "./filmList.route";
+import advancedSearchRoute from "./advancedSearch.route";
 import topViewRoute from "./topView.route";
 import shopRoute from "./shop.route";
 import adminRoute from "./admin.route";
@@ -14,6 +14,7 @@ import homeRoute from "./home.route";
 import messagesRoute from "./messages.route";
 import favoriteRoute from "./favorite.route";
 import seasonRoute from "./season.route";
+import commentRoute from "./comment.route";
 import episodeRoute from "./episode.route";
 
 const router = express.Router();
@@ -36,8 +37,8 @@ const defaultRoutes = [
     route: logOutRoute,
   },
   {
-    path: "/danh-sach",
-    route: filmListRoute,
+    path: "/tim-kiem-nang-cao",
+    route: advancedSearchRoute,
   },
 
   {
@@ -61,6 +62,10 @@ const defaultRoutes = [
     route: movieRoute,
   },
   {
+    path: "/comments",
+    route: commentRoute,
+  },
+  {
     path: "/profile",
     route: profileRoute,
   },
@@ -69,7 +74,7 @@ const defaultRoutes = [
     route: messagesRoute,
   },
   {
-    path: "/favorite",
+    path: "/favorites",
     route: favoriteRoute,
   },
   {

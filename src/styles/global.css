@@ -69,7 +69,7 @@
   }
 
   .tabs .tab-active {
-    @apply bg-fuchsia-300;
+    @apply bg-fuchsia-300 text-black;
   }
 
   .spinner {
@@ -130,6 +130,20 @@
   #navbar {
     top: 0;
     transition: top 0.3s;
+  }
+
+  .fadeOut {
+    animation: fadeOut 1s 2s forwards;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
   }
 
   @keyframes fadeIn {

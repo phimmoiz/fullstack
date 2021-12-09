@@ -30,7 +30,7 @@
     x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-500"
     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" {{!-- hide when click away on mobile --}}
     @click.away="nav = window.innerWidth >= 1024">
-    <a href="/danh-sach"
+    <a href="/tim-kiem-nang-cao"
       class="px-4 py-2 lg:rounded-full bg-white hover:bg-gray-100 lg:border lg:border-gray-400 dark:border-0 hover:scale-105 transition transform">
       <i class="fas fa-search fa-1x"></i>
       Tìm kiếm nâng cao
@@ -91,7 +91,7 @@
     </span>
 
     {{!-- Favorite --}}
-    <a href="/favorite"
+    <a href="/favorites"
       class="px-4 py-2 rounded-full bg-pink-400 dark:bg-fuchsia-500 text-white hover:bg-opacity-70 whitespace-nowrap flex items-center gap-1">
       <i class="fas fa-heart fa-1x"></i>
       <span class="hidden md:inline-block"> Yêu thích </span>
@@ -104,9 +104,15 @@
     </a>
   </div>
 </div>
+
 <div class="max-w-6xl mx-auto mt-20">
+  {{#if error}}
+  {{> alert text=error error=true}}
+  {{else if success}}
+  {{> alert text=success success=true}}
+  {{else}}
   {{#unless user}}
-  <div class="bg-pink-200 dark:bg-pink-400 rounded p-2 mx-2 text-base-content">
+  <div class="bg-pink-200 dark:bg-pink-400 rounded p-2 mx-2 text-base-content bounceUp">
     <div class="flex">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -126,7 +132,10 @@
     </div>
   </div>
   {{/unless}}
+  {{/if}}
 </div>
+
+
 <script>
   var prevScrollpos = window.pageYOffset;
 

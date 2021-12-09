@@ -1,0 +1,25 @@
+{{#> admin}}
+<div class="p-1">
+    <h3 class="text-lg mb-2 flex items-center">
+      Admins
+      {{#> modal buttonTitle="Thêm quản trị viên" icon="fa-plus"}}
+        <form class="flex flex-col gap-4" action = "/admin/createAdmin" method="POST">
+          <input type="text" placeholder="Tên đăng nhập" class="input input-bordered p-1" name="username" required/>
+          <input type="text" placeholder="Họ và tên" class="input input-bordered p-1" name="fullname" required/>
+          <input type="email" placeholder="Email" class="input input-bordered p-1" name="email" required/>
+          <input type="password" placeholder="Mật khẩu" class="input input-bordered p-1" name="password" required />
+          <input type="password" placeholder="Nhập lại mật khẩu" class="input input-bordered p-1" name="repassword" required/>
+          <input type="hidden" value="{{@root/_csrfToken}}" name="_csrf">
+          <button class="btn btn-purple">Tạo</button>
+        </form>
+          {{/modal}}
+      </h3>
+    <ul class="list-inside list-none flex flex-col gap-1">
+    {{#each admins}}
+    <li class= "pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+        {{this.username}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/admin}}

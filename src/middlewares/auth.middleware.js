@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
-import User from "../models/user.model";
+import User from "../components/auth/userModel";
 
 // declare auth middleware
 export async function requireAuth(req, res, next) {
@@ -48,12 +48,13 @@ export async function checkAuth(req, res, next) {
 export function requireAdmin(req, res, next) {
   try {
     // console.log(res.locals);
-    if (res.locals?.user.role !== "admin") {
+    if (res.locals?.user?.role !== "admin") {
       throw new Error("User not authorized");
     }
 
     next();
   } catch (err) {
-    next(createError(403, err.message));
+    req.flash("error", err.message);
+    res.redirect("/");
   }
 }

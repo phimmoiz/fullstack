@@ -34,7 +34,20 @@ const userSchema = new mongoose.Schema({
       ref: "Movie",
     },
   ],
+  lastLogin: {
+    type: Date,
+    default: Date.now,
+  },
 });
+
+userSchema.methods.setLastLogin = function () {
+  this.lastLogin = Date.now();
+  return this.save();
+};
+
+userSchema.methods.isOnline = function () {
+  return this.lastLogin.getTime() + 1000 * 60 * 5 > Date.now();
+};
 
 // create user model
 const User = mongoose.model("User", userSchema);

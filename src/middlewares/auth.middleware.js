@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
+import User from "../models/user.model";
 
 // declare auth middleware
 export async function requireAuth(req, res, next) {
@@ -26,9 +27,17 @@ export async function checkAuth(req, res, next) {
     jwt.verify(req.cookies.token, process.env.JWT_SECRET, function (err, user) {
       if (err) {
         res.clearCookie("token");
-        return res.redirect("/login");
+        res.redirect("/login");
+        return;
       }
+
       res.locals.user = user;
+
+      // set last login time
+      User.findOne({ _id: user.id }).then((user) => {
+        user.setLastLogin();
+      });
+
       next();
     });
   } else {

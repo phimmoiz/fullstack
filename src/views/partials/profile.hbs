@@ -8,6 +8,18 @@
       <img class="rounded-full border w-40 h-40 border-gray-400 absolute top-5 left-5 " src="{{user.avatar}}"
         alt="{{user.username}}" />
     </div>
+    {{log user}}
+    {{#if user.isLogin}}
+    <div>
+      <i class="fas fa-circle text-green-500 absolute top-5 right-5"></i>
+      Đang online
+    </div>
+    {{else}}
+    <div>
+      <i class="fas fa-circle text-red-500 absolute top-5 right-5"></i>
+      Offline
+    </div>
+    {{/if}}
     <div class="grid grid-cols-5 gap-16">
       <div class="col-span-1">
         <h3 class="text-xl mb-2 px-2">

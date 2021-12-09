@@ -2,6 +2,7 @@ import { Router } from "express";
 import { requireAuth } from "../middlewares/auth.middleware.js";
 import User from "../models/user.model.js";
 import createError from "http-errors";
+import { hashPassword } from "../utils/";
 
 const router = Router();
 
@@ -33,7 +34,7 @@ router.post("/changepwd", async (req, res, next) => {
 
     //TODO: check password length
 
-    user.password = newPassword;
+    user.password = hashPassword(newPassword);
     await user.save();
 
     res.render("profile/info", {

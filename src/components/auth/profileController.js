@@ -7,7 +7,7 @@ export const getProfile = async (req, res) => {
 
   const user = await User.findById(userId);
 
-  res.render("auth/views/profile/index", {
+  res.render("auth/views/profile/info", {
     title: `${user.username} | Trang cá nhân`,
     user,
   });

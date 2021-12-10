@@ -13,6 +13,8 @@ export const getNewMovies = async ({
   lean = false,
   matchName = "",
 }) => {
+  page = parseInt(page);
+
   // set querystring for category
   let query = {};
 
@@ -38,6 +40,8 @@ export const getNewMovies = async ({
     };
   }
 
+  const skip = parseInt(limit * (page - 1));
+
   // populate if needed
   const movies = await Movie.find(query)
     .sort({
@@ -45,25 +49,27 @@ export const getNewMovies = async ({
       _id: sortByDate ? -1 : 1,
       viewCount: sortByViews ? -1 : 1,
     })
-    .limit(parseInt(limit))
-    .skip((page - 1) * limit)
-    .lean(lean)
-    .exec();
+    .skip(skip)
+    .limit(limit)
+    .lean(lean);
 
   return movies;
 };
 
-export const getMovieWithOneEpisode = async (page = 1, limit = 10) => {
+export const getMovieWithOneEpisode = async ({ page = 1, limit = 10 }) => {
+  page = parseInt(page);
+  limit = parseInt(limit);
+
   // select movies with one season, season with one episode
   const movies = await Movie.find({ seasons: { $size: 1 } })
     .skip((page - 1) * limit)
-    .sort({ createdAt: -1 })
+    .sort({ _id: -1 })
     .populate({
       path: "seasons",
       model: Season,
       populate: {
         path: "episodes",
-        model: Movie,
+        model: Episode,
       },
     });
 

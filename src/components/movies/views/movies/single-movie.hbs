@@ -265,11 +265,11 @@
 
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
   <h2 class="text-xl mb-1">Phim lẻ mới</h2>
-  {{> carousel barId="phimMoi" slidesPerView="4"}}
+  {{> carousel barId="phimMoi" slidesPerView="4" items=newSingleMovies}}
 </div>
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
   <h2 class="text-xl mb-1">Phim bộ random</h2>
-  {{> carousel barId="phimBoRandom" slidesPerView=4}}
+  {{> carousel barId="phimBoRandom" slidesPerView=4 items=randomMovies}}
 </div>
 {{/if}}
 
@@ -282,7 +282,6 @@
       $(this).replaceWith(`<input type="text" name="${$(this).attr("name")}" value="${$(this).text()}">`);
     });
   }
-
   function addToFavorite(slug) {
     $.ajax({
       url: "/favorites",
@@ -304,7 +303,6 @@
       }
     });
   }
-
   function removeFromFavorite(slug) {
     $.ajax({
       url: "/favorites",

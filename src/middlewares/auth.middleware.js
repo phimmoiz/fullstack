@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import User from "../components/auth/userModel";
+import { getUserByToken } from "../components/auth/authService";
 
 // declare auth middleware
 export async function requireAuth(req, res, next) {
@@ -8,9 +9,11 @@ export async function requireAuth(req, res, next) {
   try {
     const token = req.cookies.token;
 
+    console.log("token", token);
+
     if (!token) throw new Error("User not logged in");
 
-    const user = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = await getUserByToken(token);
 
     // pass user to hbs
     res.locals.user = user;
@@ -23,24 +26,26 @@ export async function requireAuth(req, res, next) {
 
 // middleware if user is login, add user to locals
 export async function checkAuth(req, res, next) {
-  if (req.cookies.token) {
-    jwt.verify(req.cookies.token, process.env.JWT_SECRET, function (err, user) {
-      if (err) {
-        res.clearCookie("token");
-        res.redirect("/login");
-        return;
-      }
+  try {
+    if (!req.cookies.token) throw new Error("User not logged in");
 
-      res.locals.user = user;
+    const user = await getUserByToken(req.cookies.token);
 
-      // set last login time
-      User.findOne({ _id: user.id }).then((user) => {
-        user.setLastLogin();
-      });
+    if (!user) {
+      res.clearCookie("token");
+      res.redirect("/login");
+      return;
+    }
 
-      next();
+    res.locals.user = user;
+
+    // set last login time
+    User.findOne({ _id: user.id }).then((user) => {
+      user.setLastLogin();
     });
-  } else {
+  } catch (err) {
+    console.log(err);
+  } finally {
     next();
   }
 }

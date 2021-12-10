@@ -1,5 +1,7 @@
 import Episode from "./episodeModel";
-import createError from "http-errors";
+import Season from "./seasonModel";
+import Movie from "./movieModel";
+import { default as createError } from "http-errors";
 
 export const getEpisode = async (req, res, next) => {
   try {

@@ -106,23 +106,38 @@ export const getSingleMovie = async (req, res, next) => {
       );
     }
 
+    // Increase view count
+    increaseViewCount(movie._id);
+
     // get comments
-    const comments = await Comment.find({ movie: movie._id }).populate({
+    const comments = Comment.find({ movie: movie._id }).populate({
       path: "user",
       model: User,
     });
 
-    // Increase view count
-    increaseViewCount(movie._id);
+    // new movies
+    const newSingleMovies = getMovieWithOneEpisode({ page: 1, limit: 10 });
+    const randomMovies = getNewMovies({ page: 1, limit: 10 });
+
+    const [commentsResolved, randomMoviesResolved, newSingleMoviesResolved] =
+      await Promise.all([comments, randomMovies, newSingleMovies]);
+
+    // const [commentsResolved, newSingleMoviesResolved] = await Promise.all([
+    //   comments,
+    //   newSingleMovies,
+    // ]);
 
     res.render("movies/views/movies/single-movie", {
       title: movie.title,
       movie,
+      newSingleMovies: newSingleMoviesResolved,
+      randomMovies: randomMoviesResolved,
       isFavorite,
-      comments,
+      comments: commentsResolved,
       success,
     });
   } catch (err) {
+    console.log(err);
     next(createError(404, err.message));
   }
 };

@@ -1,5 +1,5 @@
 import cookie from "cookie";
-import jwt from "jsonwebtoken";
+import { getUserByToken } from "../auth/authService";
 import Message from "./messageModel";
 
 const messageSocket = (io) => {
@@ -9,12 +9,14 @@ const messageSocket = (io) => {
         const { token } = cookie.parse(socket.handshake.headers.cookie); // get cookies from the client
 
         if (!token) {
-          return;
+          throw new Error("No token");
         }
 
-        let user = await jwt.verify(token, process.env.JWT_SECRET);
+        let user = await isTokenValid(token); // check if the token is valid
 
-        if (!user) return; // TODO: Tell user that he is not authorized
+        if (!user) {
+          throw new Error("No user");
+        }
 
         //command check
         if (content.startsWith("/clear") && user.role === "admin") {

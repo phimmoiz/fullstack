@@ -16,7 +16,7 @@ export const getHomePage = async (req, res) => {
   });
 
   // fetch phim le
-  const phimLe = getMovieWithOneEpisode(page, limit);
+  const phimLe = getMovieWithOneEpisode({ page, limit });
 
   // fetch phim hoat hinh
   const phimHoatHinh = getNewMovies({

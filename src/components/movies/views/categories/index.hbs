@@ -3,9 +3,9 @@
 
   {{#each categories}}
   <a href="/categories/{{slug}}" class="grid-item my-1">
-    <div class="p-2 shadow-md rounded-md bg-base-200 bg-gray-100 dark:bg-gray-700">
+    <div class="p-2 shadow-md rounded-md bg-base-200 bg-gray-100 dark:bg-gray-700 hover:scale-105 gap-1 hover:bg-pink-200 dark:hover:bg-pink-500 w-full transform transition">
       <h2 class="text-xl">{{title}}</h2>
-      <span class="text-sm mb-1 text-gray-400">{{description}}</span>
+      <span class="text-sm mb-1 ">{{description}}</span>
 
       {{!-- {{#if movies.length}}
       <div class="grid grid-cols-2 gap-2">

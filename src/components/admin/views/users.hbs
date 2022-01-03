@@ -8,7 +8,9 @@
   <ul class="list-inside list-none flex flex-col gap-1">
     {{#each users}}
     <li class="h-20 pl-6 flex items-center justify-between p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1 hover:bg-pink-200 dark:hover:bg-pink-500">
-        <span class = "flex-grow">{{this.username}} </span>
+        <a href="/admin/users/{{this.username}}" class="p-2 w-full" data-tooltip="Xem thông tin {{this.username}}">
+          <span class = "flex-grow">{{this.username}} </span>
+        </a>
         <form action="/admin/admins/ban" method="POST">
           <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
           <input type="hidden" name="username" value="{{this.username}}">

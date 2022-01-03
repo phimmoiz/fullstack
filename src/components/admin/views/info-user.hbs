@@ -1,0 +1,20 @@
+
+<div class="flex flex-col">
+  <div class="flex flex-col items-center justify-center p-2">
+    <img src="{{user.avatar}}" class="rounded-full border w-40 h-40 border-gray-400 right-10" alt="{{user.username}}">
+  <h3 class="text-xl mb-2 px-2 font-semibold m-5">
+    Thông tin cá nhân
+  </h3>
+  <h3 class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+    Họ và tên: {{user.fullname}}
+  </h3>
+  <h3 class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+    Tên đăng nhập: {{user.username}}
+  </h3>
+  <h3 class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+    Email: {{user.email}}
+  </h3>
+  <h3 class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+    Vai trò: {{user.role}}
+  </h3>
+</div>

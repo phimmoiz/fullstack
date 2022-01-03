@@ -272,3 +272,22 @@ export const banUser = async (req, res) => {
     res.redirect("/admin/");
   }
 };
+
+export const infoUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+    console.log(username);
+    const user = await User.findOne({ username });
+
+    if (!user) throw new Error("User not found");
+    console.log(user);
+
+    res.render("admin/views/info-user", {
+      title: `${user.username} | Trang cá nhân`,
+      user,
+    });
+  } catch (err) {
+    req.flash("error", err.message);
+    res.redirect("/admin/users");
+  }
+};

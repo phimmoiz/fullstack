@@ -13,6 +13,7 @@ import {
   createAdmin,
   makeAdmin,
   banUser,
+  infoUser,
 } from "../components/admin/adminController";
 
 const router = Router();
@@ -43,4 +44,6 @@ router.post("/createAdmin", createAdmin);
 router.post("/admins/make", makeAdmin);
 
 router.post("/admins/ban", banUser);
+
+router.get("/users/:username", infoUser);
 export default router;

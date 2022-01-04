@@ -57,7 +57,6 @@ export const increaseLikeCount = async (req, res) => {
       await comment.likes.push(res.locals.user.id);
     }
     await comment.save();
-    console.log(comment);
 
     res.json({ success: true, data: comment });
   } catch (err) {

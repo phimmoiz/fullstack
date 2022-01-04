@@ -31,7 +31,7 @@ export const getComments = async (req, res) => {
   }
 };
 
-export const deleteComment = async (req, res) => {};
+export const deleteComment = async (req, res) => { };
 
 export const getFilmComments = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ export const getFilmComments = async (req, res) => {
   }
 };
 
-export const putComment = async (req, res) => {};
+export const putComment = async (req, res) => { };
 
 export const increaseLikeCount = async (req, res) => {
   try {
@@ -60,27 +60,6 @@ export const increaseLikeCount = async (req, res) => {
     console.log(comment);
 
     res.json({ success: true, data: comment });
-  } catch (err) {
-    res.json({ success: false, message: err.message });
-  }
-};
-
-export const replyComment = async (req, res) => {
-  try {
-    //const { content } = req.body;
-    const content = "new content reply";
-    const { id } = req.params;
-    const comment = await Comment.findById(id);
-    const reply = await Comment.create({
-      user: id,
-      movie: comment.movie,
-      content,
-      parent: comment,
-    });
-    await comment.reply.push(reply);
-    await comment.save();
-
-    res.json({ success: true, data: reply });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }

@@ -118,7 +118,8 @@
       data: data,
       success: function (res) {
         if (res.success) {
-          window.location.reload();
+          const rootComment = document.querySelector(`[data-id="${id}"]`).parentElement.parentElement.parentElement.parentElement.parentElement;
+          rootComment.remove();
         }
       }
     });

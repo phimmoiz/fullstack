@@ -34,12 +34,42 @@ export const getAdminPanel = async (req, res) => {
 };
 
 export const getUserPanel = async (req, res) => {
-  // get all users is admin
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(5);
 
-  const users = await User.find({ role: "user" });
+  const start = (page - 1) * limit;
+
+  // get user and paginate
+  const users = await User.find({ role: "user" }).skip(start).limit(limit);
+
   const success = req.flash("success");
   const error = req.flash("error");
-  res.render("admin/views/users", { title: "Admin", users, success, error });
+
+  //res.render("admin/views/users", { title: "Admin", users, success, error });
+
+  // count users
+  const userCount = await User.countDocuments({ role: "user" });
+
+  // get total pages
+  const totalPages = Math.ceil(userCount / 5);
+
+  const pagination = Array.from({ length: totalPages }, (_, i) => i + 1).map(
+    (page) => {
+      return {
+        url: `users?page=${page}`,
+        number: page,
+      };
+    }
+  );
+
+  res.render("admin/views/users", {
+    title: "Admin",
+    users,
+    userCount,
+    pagination,
+    currentIndex: page - 1,
+    currentPage: page,
+  });
 };
 
 // Movie panel
@@ -276,11 +306,10 @@ export const banUser = async (req, res) => {
 export const infoUser = async (req, res) => {
   try {
     const { username } = req.params;
-    console.log(username);
+
     const user = await User.findOne({ username });
 
     if (!user) throw new Error("User not found");
-    console.log(user);
 
     res.render("admin/views/info-user", {
       title: `${user.username} | Trang cá nhân`,

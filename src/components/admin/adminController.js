@@ -26,11 +26,37 @@ export const getAdmin = async (req, res, next) => {
 };
 
 export const getAdminPanel = async (req, res) => {
-  // get admin
-  const admins = await User.find({ role: "admin" });
-  const success = req.flash("success");
-  const error = req.flash("error");
-  res.render("admin/views/admins", { title: "Admin", admins, success, error });
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(5);
+
+  const start = (page - 1) * limit;
+
+  // get admin and paginate
+  const admins = await User.find({ role: "admin" }).skip(start).limit(limit);
+
+  // count admins
+  const adminCount = await User.countDocuments({ role: "admin" });
+
+  // get total pages
+  const totalPages = Math.ceil(adminCount / 5);
+
+  const pagination = Array.from({ length: totalPages }, (_, i) => i + 1).map(
+    (page) => {
+      return {
+        url: `admins?page=${page}`,
+        number: page,
+      };
+    }
+  );
+
+  res.render("admin/views/admins", {
+    title: "Admin",
+    admins,
+    adminCount,
+    pagination,
+    currentIndex: page - 1,
+    currentPage: page,
+  });
 };
 
 export const getUserPanel = async (req, res) => {
@@ -41,11 +67,6 @@ export const getUserPanel = async (req, res) => {
 
   // get user and paginate
   const users = await User.find({ role: "user" }).skip(start).limit(limit);
-
-  const success = req.flash("success");
-  const error = req.flash("error");
-
-  //res.render("admin/views/users", { title: "Admin", users, success, error });
 
   // count users
   const userCount = await User.countDocuments({ role: "user" });

@@ -31,7 +31,15 @@ export const getComments = async (req, res) => {
   }
 };
 
-export const deleteComment = async (req, res) => { };
+export const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Comment.findByIdAndDelete(id);
+    res.json({ success: true, message: "Xóa bình luận thành công!" });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
 
 export const getFilmComments = async (req, res) => {
   try {

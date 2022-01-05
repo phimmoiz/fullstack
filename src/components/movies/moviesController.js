@@ -37,9 +37,8 @@ export const getMovies = async (req, res, next) => {
       data: movies,
       page: page,
       length: movies.length,
-      nextPage: `${req.protocol}://${req.get("host")}/api/movies?page=${
-        page + 1
-      }&limit=${limit}&matchName=${matchName}`,
+      nextPage: `${req.protocol}://${req.get("host")}/api/movies?page=${page + 1
+        }&limit=${limit}&matchName=${matchName}`,
     });
   } catch (error) {
     next(createError(error));
@@ -65,9 +64,8 @@ export const getTopMovies = async (req, res, next) => {
       success: true,
       data: movies,
       length: movies.length,
-      nextPage: `${req.protocol}://${req.get("host")}/movies?page=${
-        page + 1
-      }&limit=${limit}`,
+      nextPage: `${req.protocol}://${req.get("host")}/movies?page=${page + 1
+        }&limit=${limit}`,
     });
   } catch (error) {
     next(createError(error));
@@ -110,11 +108,29 @@ export const getSingleMovie = async (req, res, next) => {
     increaseViewCount(movie._id);
 
     // get comments
-    const comments = Comment.find({ movie: movie._id }).populate({
+    // const comments = Comment.find({ movie: movie._id }).populate({
+    //   path: "user",
+    //   model: User,
+    // });
+
+    // pagination for comments
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(5);
+    const start = (page - 1) * limit;
+    const comments = Comment.find({ movie: movie._id }).skip(start).limit(limit).populate({
       path: "user",
       model: User,
     });
-
+    const commentCount = await Comment.countDocuments({ movie: movie._id });
+    // total pages
+    const totalPages = Math.ceil(commentCount / limit);
+    const pagination = Array.from({ length: totalPages }, (_, i) => i + 1).map(
+      (page) => {
+        return {
+          url: `/movies/${movie.slug}?page=${page}`,
+          number: page,
+        }
+      });
     // new movies
     const newSingleMovies = getMovieWithOneEpisode({ page: 1, limit: 10 });
     const randomMovies = getNewMovies({ page: 1, limit: 10 });
@@ -135,6 +151,9 @@ export const getSingleMovie = async (req, res, next) => {
       isFavorite,
       comments: commentsResolved,
       success,
+      pagination,
+      currentIndex: page - 1,
+      currentPage: page,
     });
   } catch (err) {
     console.log(err);

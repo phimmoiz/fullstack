@@ -1,50 +1,85 @@
 <div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
   <h2 class="text-xl font-bold">Bình luận</h2>
 
-  {{#each comments}}
-  <div class="flex flex-col">
-    <div class="flex flex-row" data-testid="comment">
-      <div class="flex-none">
-        <img src="{{user.avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
-      </div>
-      <div class="flex-1">
-        <div class="flex flex-col bg-gray-100 shadow-lg rounded-md px-4 pt-2 pb-3">
-          <div class="flex flex-row justify-between items-center">
-            <a href="/admin/users/{{user.username}}"
-              class="text-base font-bold text-pink-400 hover:text-pink-600">{{user.username}}</a>
-            <i class="fas fa-heart text-pink-400" data-like="{{id}}"> {{likes.length}}</i>
+  <ul class="list-inside list-none flex flex-col gap-1">
+    {{#each comments}}
+    <li>
+      <div class="flex flex-col">
+        <div class="flex flex-row" data-testid="comment">
+          <div class="flex-none">
+            <img src="{{user.avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
           </div>
-          <p class=" text-black" data-testid="commentContent">{{content}}</p>
-        </div>
-        <div class="flex flex-row px-4 justify-between my-2">
-          <div class="flex">
-            <span class="text-xs text-gray-600 dark:text-gray-50">{{createdAt}}</span>
-          </div>
-          <div class="flex justify-end gap-4">
-            <div class="flex-none">
-              {{#ifBelong likes @root/user.id }}
-              <a onclick="onLiked(this)" data-id="{{id}}"
-                class="text-xs text-pink-600 dark:text-gray-50 hover:cursor-pointer">UnLike</a>
-              {{else}}
-              <a onclick="onLiked(this)" data-id="{{id}}"
-                class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Like</a>
-              {{/ifBelong}}
+          <div class="flex-1">
+            <div class="flex flex-col bg-gray-100 shadow-lg rounded-md px-4 pt-2 pb-3">
+              <div class="flex flex-row justify-between items-center">
+                <a href="/admin/users/{{user.username}}"
+                  class="text-base font-bold text-pink-400 hover:text-pink-600">{{user.username}}</a>
+                <i class="fas fa-heart text-pink-400" data-like="{{id}}"> {{likes.length}}</i>
+              </div>
+              <p class=" text-black" data-testid="commentContent">{{content}}</p>
             </div>
+            <div class="flex flex-row px-4 justify-between my-2">
+              <div class="flex">
+                <span class="text-xs text-gray-600 dark:text-gray-50">{{createdAt}}</span>
+              </div>
+              <div class="flex justify-end gap-4">
+                <div class="flex-none">
+                  {{#ifBelong likes @root/user.id }}
+                  <a onclick="onLiked(this)" data-id="{{id}}"
+                    class="text-xs text-pink-600 dark:text-gray-50 hover:cursor-pointer">UnLike</a>
+                  {{else}}
+                  <a onclick="onLiked(this)" data-id="{{id}}"
+                    class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Like</a>
+                  {{/ifBelong}}
+                </div>
 
-            {{#ifEquals user._id @root/user.id}}
-            <div class="flex-none">
-              <a onclick="onDelete(this)" data-id="{{id}}"
-                class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                {{#ifEquals user._id @root/user.id}}
+                <div class="flex-none">
+                  <a onclick="onDelete(this)" data-id="{{id}}"
+                    class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                </div>
+                {{/ifEquals}}
+              </div>
             </div>
-            {{/ifEquals}}
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  {{/each}}
-</div>
-<div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
+    </li>
+    {{/each}}
+  </ul>
+  {{!-- pagination --}}
+  <ul class="pagination divide-x flex justify-center mt-4">
+    {{!-- next page --}}
+    {{#ifNotEquals currentPage pagination.length}}
+    <a class="page-link" href="/movies/{{movie.slug}}?page={{inc @root/currentPage}}" data-tooltip=" Trang tiếp theo">
+      <li
+        class="page-item bg-rose-400 max-w-[40px] dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
+        <i class="fas fa-chevron-right"></i>
+      </li>
+    </a>
+    {{/ifNotEquals}}
+
+    {{#each pagination}}
+    <a class="page-link" {{#ifEquals @root/currentIndex @index}} {{else}} href="{{url}}"
+      data-tooltip="Đến trang {{inc @index}}" {{/ifEquals}}>
+      <li
+        class="page-item bg-rose-400 max-w-[40px] min-w-[40px] dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}cursor-not-allowed disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
+        {{number}}
+      </li>
+    </a>
+    {{/each}}
+
+    {{!-- prev page --}}
+    {{#ifNotEquals currentPage 1}}
+    <a class="page-link" href="/movies/{{movie.slug}}?page={{dec @root/currentPage}}" data-tooltip=" Trang trước">
+      <li
+        class="page-item bg-rose-400 max-w-[40px] dark:bg-gray-500 p-2 text-white px-4 hover:bg-gray-700 dark:hover:bg-rose-600 {{#ifEquals @root/currentIndex @index}}disabled bg-rose-600 dark:bg-gray-800{{/ifEquals}}">
+        <i class="fas fa-chevron-left"></i>
+      </li>
+    </a>
+    {{/ifNotEquals}}
+  </ul>
+
   {{#if user}}
   <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
     <div class="p-2">

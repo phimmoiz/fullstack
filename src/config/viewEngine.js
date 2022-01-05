@@ -22,6 +22,9 @@ const config = (app) => {
   hbs.registerHelper("inc", function (value, options) {
     return parseInt(value) + 1;
   });
+  hbs.registerHelper("dec", function (value, options) {
+    return parseInt(value) - 1;
+  });
   hbs.registerHelper("json", function (context) {
     return JSON.stringify(context);
   });

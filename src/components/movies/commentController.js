@@ -59,6 +59,7 @@ export const increaseLikeCount = async (req, res) => {
   try {
     const { id } = req.params;
     const comment = await Comment.findById(id);
+
     if (comment.likes.includes(res.locals.user.id)) {
       await comment.likes.pull(res.locals.user.id);
     } else {

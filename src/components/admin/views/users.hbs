@@ -27,16 +27,14 @@
           </button>
             {{/unless}}
         </form>
-
-          <form action="/admin/admins/make" method="POST">
-          <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+        <form onsubmit="onMakeAdminSubmit(event)">
           <input type="hidden" name="username" value="{{this.username}}">
           <button class="text-red-500 shadow-md rounded transform transition hover:scale-110 p-1  gap-1 items-center m-1 bg-white hidden md:block">
             <i class="fas fa-user-lock text-red-500"></i>
             Make Admin
           </button>
         </form>
-    </li>
+  </li>
     {{/each}}
   </ul>
 </div>
@@ -83,3 +81,35 @@
     animation-duration: 1s;
   }
 </style>
+<script>
+  function onMakeAdminSubmit(event) {
+    event.preventDefault();
+
+    const { username } = event.target.elements;
+
+    if (!username.value) {
+      return;
+    }
+
+    const data = {
+      username: username.value,
+      _csrf: '{{@root/_csrfToken}}',
+    };  
+    $.ajax({
+      url: '/admin/admins/make',
+      method: 'POST',
+      data: data,
+      success: function(data) {
+        if (data.success) {
+          // show success message make admin success
+          alert('Make admin success');
+        } else {
+          // show error message make admin fail
+          alert('Make admin fail');
+        }
+
+        location.reload();
+      }
+    });
+  }
+</script>

@@ -296,11 +296,9 @@ export const makeAdmin = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       role: "admin",
     });
-    req.flash("success", "Uỷ quyền admin thành công");
-    res.redirect("/admin/admins");
+    res.json({ success: true });
   } catch (err) {
-    req.flash("error", err.message);
-    res.redirect("/admin/");
+    req.json({ success: false, err });
   }
 };
 

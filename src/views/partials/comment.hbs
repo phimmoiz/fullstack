@@ -106,6 +106,7 @@
 
 <script>
   function onLiked(el) {
+    console.log(el);
     const id = el.dataset.id;
     const url = `/comments/${id}/like`;
     const method = 'POST';

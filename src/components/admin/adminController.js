@@ -310,15 +310,13 @@ export const banUser = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       banned: isBan,
     });
-    if (!user.banned) {
-      req.flash("success", "Ban " + username + " thành công");
+    if (isBan) {
+      res.json({ success: true, message: "Ban thành công"});
     } else {
-      req.flash("success", "Unban " + username + " thành công");
+      res.json({ success: true, message: "Unban thành công"});
     }
-    res.redirect("/admin/users");
   } catch (err) {
-    req.flash("error", err.message);
-    res.redirect("/admin/");
+    res.json({ success: false, err });
   }
 };
 

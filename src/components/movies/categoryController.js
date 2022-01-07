@@ -2,8 +2,6 @@ import Category from "./categoryModel";
 import createError from "http-errors";
 import Movie from "./movieModel";
 export const addCategory = async (req, res) => {
-  // console.log(req.body);
-
   try {
     const { title, description, slug } = req.body;
 
@@ -14,14 +12,10 @@ export const addCategory = async (req, res) => {
       slug,
     });
 
-    res.json({ success: true, data: newCat });
+    res.json({ success: true, data: newCat, message: "Thêm chuyên mục thành công !" });
 
-    // res.render("/admin/index", {
-    //   title: "Admin Panel",
-    //   data: newCat,
-    // });
   } catch (err) {
-    res.json({ success: false, message: err.message });
+    res.json({ success: false, message: "Thêm chuyên mục thất bại !" });
   }
 };
 

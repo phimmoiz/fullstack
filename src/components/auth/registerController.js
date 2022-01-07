@@ -52,7 +52,7 @@ export const postRegister = async (req, res) => {
     console.log(err);
     return res.render("auth/views/register", {
       title: "Đăng ký",
-      error: err,
+      error: "Đăng ký không thành công",
     });
   }
 };

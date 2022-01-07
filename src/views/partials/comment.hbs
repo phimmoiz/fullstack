@@ -99,7 +99,7 @@
     </a>
     {{/ifNotEquals}}
   </ul>
-  <h2 class="text-xl font-semibold ml-2">Nhập Bình luận</h2>
+  <h2 class="text-xl font-semibold ml-2">Nhập bình luận</h2>
   {{!-- not user --}}
   {{#ifEquals @root/user.id null}}
   <form class="flex flex-col m-4" action="/comments/anonymous/{{movie.slug}}" method="post">

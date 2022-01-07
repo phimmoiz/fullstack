@@ -3,7 +3,6 @@ import Movie from "../movies/movieModel";
 import createError from "http-errors";
 
 export const getFavorites = async (req, res) => {
-    console.log(res.locals);
     //get user favorite movies
     const user = await User.findById(res.locals.user.id).populate("favorites");
   

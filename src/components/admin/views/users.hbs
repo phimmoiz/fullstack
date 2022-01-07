@@ -11,8 +11,7 @@
         <a href="/admin/users/{{this.username}}" class="p-2 w-full" data-tooltip="Xem thông tin {{this.username}}">
           <span class = "flex-grow">{{this.username}} </span>
         </a>
-        <form action="/admin/admins/ban" method="POST">
-          <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+        <form onsubmit="onBanUser(event)">
           <input type="hidden" name="username" value="{{this.username}}">
           <button class="text-white shadow-md rounded transform transition hover:scale-110 p-1 flex gap-1 items-center m-1 bg-blue-400">
           {{#unless this.banned}}
@@ -22,21 +21,19 @@
           </button>
           {{else}}
             <input type="hidden" name="isBan" value="false">
-              <i class="fas fa-user-times text-white"></i>
+            <i class="fas fa-user-times text-white"></i>
               Unban
           </button>
-            {{/unless}}
+          {{/unless}}
         </form>
-
-          <form action="/admin/admins/make" method="POST">
-          <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+        <form onsubmit="onMakeAdminSubmit(event)">
           <input type="hidden" name="username" value="{{this.username}}">
           <button class="text-red-500 shadow-md rounded transform transition hover:scale-110 p-1  gap-1 items-center m-1 bg-white hidden md:block">
             <i class="fas fa-user-lock text-red-500"></i>
             Make Admin
           </button>
         </form>
-    </li>
+  </li>
     {{/each}}
   </ul>
 </div>
@@ -83,3 +80,64 @@
     animation-duration: 1s;
   }
 </style>
+<script>
+  function onMakeAdminSubmit(event) {
+    event.preventDefault();
+
+    const { username } = event.target.elements;
+
+    if (!username.value) {
+      return;
+    }
+
+    const data = {
+      username: username.value,
+      _csrf: '{{@root/_csrfToken}}',
+    };  
+    $.ajax({
+      url: '/admin/admins/make',
+      method: 'POST',
+      data: data,
+      success: function(data) {
+        if (data.success) {
+          // show success message make admin success
+          alert('Make admin success');
+        } else {
+          // show error message make admin fail
+          alert('Make admin fail');
+        }
+
+        location.reload();
+      }
+    });
+  }
+
+  function onBanUser(event) {
+    event.preventDefault();
+    const { username, isBan } = event.target.elements;
+    if (!username.value) {
+      return;
+    }
+
+    const data = {
+      username: username.value,
+      isBan: isBan.value,
+      _csrf: '{{@root/_csrfToken}}',
+    };  
+    $.ajax({
+      url: '/admin/admins/ban',
+      method: 'POST',
+      data: data,
+      success: function(data) {
+        if (data.success) {
+          // show success message ban success
+          alert(data.message);
+        } else {
+          // show error message ban fail
+          alert(data.message);
+        }
+        location.reload();
+      }
+    });
+  }
+</script>

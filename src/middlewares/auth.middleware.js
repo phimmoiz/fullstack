@@ -9,8 +9,6 @@ export async function requireAuth(req, res, next) {
   try {
     const token = req.cookies.token;
 
-    console.log("token", token);
-
     if (!token) throw new Error("User not logged in");
 
     const user = await getUserByToken(token);

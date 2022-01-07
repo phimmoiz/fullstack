@@ -44,7 +44,7 @@ export async function checkAuth(req, res, next) {
       user.setLastLogin();
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   } finally {
     next();
   }

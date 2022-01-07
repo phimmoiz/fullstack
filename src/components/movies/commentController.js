@@ -20,6 +20,26 @@ export const postComment = async (req, res) => {
   }
 };
 
+export const postAnonymousComment = async (req, res) => {
+  try {
+    const { content } = req.body;
+    const { slug } = req.params;
+    const movie = await Movie.findOne({ slug });
+    const { anonymousName } = req.body;
+    const newComment = await Comment.create({
+      movie,
+      content,
+      anonymousName: "(Khách chưa đăng nhập) " + anonymousName,
+    });
+    console.log(newComment);
+
+    req.flash("success", "Bình luận thành công!");
+    res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
+
 export const getComments = async (req, res) => {
   try {
     const { slug } = req.params;

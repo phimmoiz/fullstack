@@ -8,7 +8,7 @@ const commentSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        // required: true
     },
     createdAt: {
         type: Date,
@@ -24,7 +24,15 @@ const commentSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         }
-    ]
+    ],
+    anonymousName: {
+        type: String,
+        default: "(Khách chưa đăng nhập) "
+    },
+    anonymousAvatar: {
+        type: String,
+        default: "/assets/images/anonymous.jpg",
+    }
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

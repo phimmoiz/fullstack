@@ -1,19 +1,26 @@
 <div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
   <h2 class="text-xl font-bold">Bình luận</h2>
-
   <ul class="list-inside list-none flex flex-col gap-1">
     {{#each comments}}
     <li>
       <div class="flex flex-col">
         <div class="flex flex-row" data-testid="comment">
           <div class="flex-none">
+            {{#ifNotEquals user._id null}}
             <img src="{{user.avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
+            {{else}}
+            <img src="{{anonymousAvatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
+            {{/ifNotEquals}}
           </div>
           <div class="flex-1">
             <div class="flex flex-col bg-gray-100 shadow-lg rounded-md px-4 pt-2 pb-3">
               <div class="flex flex-row justify-between items-center">
+                {{#ifNotEquals user._id null}}
                 <a href="/admin/users/{{user.username}}"
                   class="text-base font-bold text-pink-400 hover:text-pink-600">{{user.username}}</a>
+                {{else}}
+                <span class="text-base font-bold text-pink-400">{{anonymousName}}</span>
+                {{/ifNotEquals}}
                 <i class="fas fa-heart text-pink-400" data-like="{{id}}"> {{likes.length}}</i>
               </div>
               <p class=" text-black" data-testid="commentContent">{{content}}</p>
@@ -23,6 +30,7 @@
                 <span class="text-xs text-gray-600 dark:text-gray-50">{{createdAt}}</span>
               </div>
               <div class="flex justify-end gap-4">
+                {{#ifNotEquals @root/user.id null}}
                 <div class="flex-none">
                   {{#ifBelong likes @root/user.id }}
                   <a onclick="onLiked(this)" data-id="{{id}}"
@@ -32,13 +40,25 @@
                     class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Like</a>
                   {{/ifBelong}}
                 </div>
+                {{/ifNotEquals}}
 
-                {{#ifEquals user._id @root/user.id}}
-                <div class="flex-none">
-                  <a onclick="onDelete(this)" data-id="{{id}}"
-                    class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                {{#ifNotEquals @root/user.id null}}
+                <div>
+                  {{#ifEquals user._id @root/user.id }}
+                  <div class="flex-none">
+                    <a onclick="onDelete(this)" data-id="{{id}}"
+                      class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                  </div>
+                  {{else}}
+                  {{#ifEquals @root/user.role 'admin'}}
+                  <div class="flex-none">
+                    <a onclick="onDelete(this)" data-id="{{id}}"
+                      class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                  </div>
+                  {{/ifEquals}}
+                  {{/ifEquals}}
                 </div>
-                {{/ifEquals}}
+                {{/ifNotEquals}}
               </div>
             </div>
           </div>
@@ -79,29 +99,36 @@
     </a>
     {{/ifNotEquals}}
   </ul>
+  <h2 class="text-xl font-semibold ml-2">Nhập Bình luận</h2>
+  {{!-- not user --}}
+  {{#ifEquals @root/user.id null}}
+  <form class="flex flex-col m-4" action="/comments/anonymous/{{movie.slug}}" method="post">
+    <div class="flex flex-col gap-2 rounded-sm">
+      <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+      <input type="text" name="anonymousName" class="w-full p-2 border rounded-md" placeholder="Tên người dùng"
+        required>
+      <textarea name="content" id="content" class="w-full h-32 p-2 border rounded-md" placeholder="Nhập bình luận"
+        required></textarea>
+      <button type=" submit" class="btn btn-primary">Gửi</button>
+    </div>
+    {{/ifEquals}}
 
-  {{#if user}}
-  <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-    <div class="p-2">
-      <div class="flex flex-col">
-        {{!-- from input comment for movie --}}
+
+    {{!-- comment form --}}
+    {{#if user}}
+    <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
+      <div class="p-2">
         <form action="/comments/{{movie.slug}}" method="POST">
-          <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
-          <div class="flex justify-between gap-2">
-            <div class="flex-1 w-full">
-              <textarea name="content"
-                class="resize w-full boder border m-1 p-2 border-pink-400 rounded shadow-md text-black"
-                placeholder="Nhập bình luận của bạn..."></textarea>
-            </div>
-            <div class="flex-none">
-              <button type="submit" class="btn btn-primary">Gửi</button>
-            </div>
+          <div class="flex flex-col gap-2">
+            <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
+            <textarea name="content" class="w-full h-32 border p-2 border-pink-400 rounded shadow-md text-black"
+              placeholder="Nhập bình luận của bạn..." required></textarea>
+            <button type=" submit" class="btn btn-primary">Gửi</button>
           </div>
         </form>
       </div>
     </div>
-  </div>
-  {{/if}}
+    {{/if}}
 </div>
 
 <script>

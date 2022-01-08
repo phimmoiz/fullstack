@@ -102,14 +102,14 @@
     <div class="flex justify-start my-2 gap-2">
       {{!-- Button add to favorite --}}
       {{#unless isFavorite}}
-      <button data-url='add' class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+      <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
         onclick="addToFavorite('{{movie.slug}}')">
         <i class="fas fa-heart"></i>
         Thêm vào yêu thích
       </button>
       {{else}}
       {{!-- Remove from favorite --}}
-      <button data-url='remove' class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+      <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
         onclick="removeFromFavorite('{{movie.slug}}')">
         <i class="fas fa-heart"></i>
         Xóa khỏi yêu thích

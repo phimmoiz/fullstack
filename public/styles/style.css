@@ -2299,11 +2299,6 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-lime-300 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(190, 242, 100, var(--tw-bg-opacity));
-}
-
 .dark .dark\:bg-pink-300 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(249, 168, 212, var(--tw-bg-opacity));

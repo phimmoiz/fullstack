@@ -150,7 +150,6 @@
           const commentEl = document.querySelector(`[data-id="${id}"]`);
           const likeEl = document.querySelector(`[data-like="${id}"]`);
           likeEl.innerHTML = likeCount;
-          console.log(commentEl.innerHTML);
           if (commentEl.innerHTML == 'Like') {
             commentEl.innerHTML = 'UnLike';
             //change color

@@ -7,14 +7,18 @@ export const postComment = async (req, res) => {
     const { slug } = req.params;
     const movie = await Movie.findOne({ slug });
     const { id } = res.locals.user;
+    const { username } = res.locals.user;
+
     const newComment = await Comment.create({
       user: id,
+      username,
       movie,
       content,
     });
 
-    req.flash("success", "Bình luận thành công!");
-    res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+    //req.flash("success", "Bình luận thành công!");
+    //res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+    res.json({ success: true, newComment });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }
@@ -29,10 +33,10 @@ export const postAnonymousComment = async (req, res) => {
     const newComment = await Comment.create({
       movie,
       content,
-      anonymousName: "(Khách chưa đăng nhập) " + anonymousName,
+      anonymousName: "Khách - " + anonymousName,
     });
 
-    res.json({ success: true });
+    res.json({ success: true, comment: newComment });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }

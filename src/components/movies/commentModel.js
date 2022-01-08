@@ -27,7 +27,7 @@ const commentSchema = new mongoose.Schema({
     ],
     anonymousName: {
         type: String,
-        default: "(Khách chưa đăng nhập) "
+        default: "Khách "
     },
     anonymousAvatar: {
         type: String,

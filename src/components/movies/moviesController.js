@@ -138,15 +138,6 @@ export const getSingleMovie = async (req, res, next) => {
     const [commentsResolved, randomMoviesResolved, newSingleMoviesResolved] =
       await Promise.all([comments, randomMovies, newSingleMovies]);
 
-    // sort by date created descending order (latest first) comment
-    commentsResolved.sort((a, b) => {
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    });
-    
-    // const [commentsResolved, newSingleMoviesResolved] = await Promise.all([
-    //   comments,
-    //   newSingleMovies,
-    // ]);
     res.render("movies/views/movies/single-movie", {
       title: movie.title,
       movie,

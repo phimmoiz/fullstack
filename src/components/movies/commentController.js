@@ -31,10 +31,8 @@ export const postAnonymousComment = async (req, res) => {
       content,
       anonymousName: "(Khách chưa đăng nhập) " + anonymousName,
     });
-    console.log(newComment);
 
-    req.flash("success", "Bình luận thành công!");
-    res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+    res.json({ success: true });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }
@@ -44,7 +42,8 @@ export const getComments = async (req, res) => {
   try {
     const { slug } = req.params;
     const movie = await Movie.findOne({ slug });
-    const comments = await Comment.find({ movie }).sort({ createdAt: -1 });
+    const comments = await Comment.find({ movie })
+      .sort({ createdAt: -1 });
     res.json({ success: true, data: comments });
   } catch (err) {
     res.json({ success: false, message: err.message });

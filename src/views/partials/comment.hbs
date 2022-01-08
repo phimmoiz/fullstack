@@ -1,8 +1,8 @@
 <div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
   <h2 class="text-xl font-bold">Bình luận</h2>
-  <ul class="list-inside list-none flex flex-col gap-1">
+  <ul id="comment-container" class="list-inside list-none flex flex-col gap-1">
   {{#each comments}}
-    <li id="comment-form">
+    <li>
       <div class="flex flex-col">
         <div class="flex flex-row" data-testid="comment">
           <div class="flex-none">
@@ -99,6 +99,7 @@
     </a>
     {{/ifNotEquals}}
   </ul>
+
   <h2 class="text-xl font-semibold ml-2">Nhập bình luận</h2>
   {{!-- not user --}}
   {{#ifEquals @root/user.id null}}
@@ -130,6 +131,7 @@
 </div>
 
 <script id="comment-template" type="text/x-handlebar">
+<li>
   <div class="flex flex-col">
     <div class="flex flex-row" data-testid="comment">
       <div class="flex-none">
@@ -191,6 +193,7 @@
       </div>
     </div>
   </div>
+</li>
 </script>
 
 <script>
@@ -203,8 +206,6 @@
       return;
     }
 
-    console.log(anonymousName.value, content.value);
-
     const data = {
       anonymousName: anonymousName.value,
       content: content.value,
@@ -215,15 +216,15 @@
       url: '/comments/anonymous/{{movie.slug}}',
       method: 'POST',
       data,
-      success: (data) => {
-        const comment = data.comment;
-        const template = Handlebars.compile($('#comment-template').html());
-        const html = template(comment);
-        $('#comments').prepend(html);
-        anonymousName.value = '';
-        content.value = '';
-        $('#content').val('');
-        $('#anonymousName').val('');
+      success: (res) => {
+        if (res.success) {
+          const comment = data;
+          const template = Handlebars.compile($('#comment-template').html());
+          const html = template(comment);
+          $('#comment-container').prepend(html);
+          $('#content').val('');
+          $('#anonymousName').val('');
+        }
       },
     });
   }

@@ -1055,14 +1055,14 @@ video {
 .col-span-1 {
 	grid-column: span 1 / span 1;
 }
+.m-5 {
+	margin: 1.25rem;
+}
 .m-4 {
 	margin: 1rem;
 }
 .m-1 {
 	margin: 0.25rem;
-}
-.m-5 {
-	margin: 1.25rem;
 }
 .my-2 {
 	margin-top: 0.5rem;

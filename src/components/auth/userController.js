@@ -202,3 +202,55 @@ export const postUpdatePassword = async (req, res) => {
 };
 
 
+export const getForgotPwd = async (req, res) => {
+  res.render("auth/views/forgot-pwd", {
+    title: "Quên mật khẩu",
+    success: true,
+  });
+};
+
+export const postForgotPwd = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (user) {
+    user.resetPasswordToken = Randomstring.generate();
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+    await user.save();
+
+    const msg = {
+      to: user.email,
+      from: process.env.SENDGRID_EMAIL,
+      subject: "Khôi phục mật khẩu tài khoản PhimMoi",
+      text: `Xin chào ${user.fullname},\n\n`,
+      html: `<h1>Xin chào ${user.fullname}</h1>
+    <p>Bạn đã yêu cầu khôi phục mật khẩu tài khoản tại PhimMoi</p>
+    <p>Vui lòng click vào link bên dưới để khôi phục mật khẩu</p>
+    <a href="${process.env.DOMAIN_NAME}/user/reset-pwd?email=${user.email}&token=${user.resetPasswordToken}">Khôi phục mật khẩu</a>
+    <p>Nếu bạn không phải là người yêu cầu khôi phục mật khẩu này, vui lòng bỏ qua email này.</p>
+    <p>PhimMoi</p>
+  `,
+    };
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("Email sent");
+        res.json({
+          success: true,
+          message: "Bạn đã nhận được email khôi phục tài khoản,\nHãy kiểm tra email để khôi phục tài khoản",
+        });
+      })
+      .catch((err) => {
+        console.log("send email", err);
+        res.json({
+          success: false,
+          message: "Email chưa được gửi",
+        });
+      });
+  } else {
+    res.json({
+      success: false,
+      message: "Email không tồn tại\n Vui lòng kiểm tra lại",
+    });
+  }
+};

@@ -1,0 +1,32 @@
+{{!-- input email --}}
+<div class="flex flex-col gap-4">
+    <h3 class="text-xl my-2 px-2 font-semibold">
+        Nhập email để khôi phục mật khẩu
+    </h3>
+    <div class="flex flex-col">
+        <input type="email" class="p-2 border text-black border-pink-400 rounded w-full" name="email" id="email"
+            placeholder="Email" required>
+        <button
+            class="my-4 bg-pink-400 hover:bg-pink-600 p-2 rounded dark:text-white text-base-content transition duration-300"
+            type="submit" id="forgot">
+            Gửi
+        </button>
+    </div>
+</div>
+
+<script>
+    $('#forgot').click(function () {
+        const email = $('#email').val();
+        $.ajax({
+            url: '/user/forgot-pwd',
+            method: 'POST',
+            data: {
+                email: email,
+                _csrf: '{{@root/_csrfToken}}'
+            },
+            success: function (data) {
+                alert(data.message);
+            }
+        });
+    });
+</script>

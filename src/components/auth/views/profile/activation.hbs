@@ -63,7 +63,7 @@
         const id = e.getAttribute('data-id');
         const url = `/activate/${id}`;
         const data = {
-            __csrf: '{{@root/_csrfToken}}'
+            _csrf: '{{@root/_csrfToken}}'
         };
         $.ajax({
             url: url,

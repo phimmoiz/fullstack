@@ -24,21 +24,40 @@ export const getUser = async (req, res) => {
 export const getActivate = async (req, res) => {
   const { email, token } = req.query;
 
-  const user = await User.findOne({ email, activationToken: token });
+  const user = await User.findOne({ email });
 
   if (user) {
-    user.isActivated = true;
-    user.activationToken = undefined;
-    await user.save();
-    res.json({
-      success: true,
-      message: "Xác thực thành công",
-    });
-    return;
+    if (user.activationToken === token) {
+      user.isActivated = true;
+      user.activationToken = undefined;
+      res.render("auth/views/activate", {
+        title: `Kích hoạt tài khoản | ${email}`,
+        success: true,
+        message: "Xác thực tài khoản thành công",
+      });
+      return;
+    }
+    if (user.isActivated) {
+      res.render("auth/views/activate", {
+        title: `Kích hoạt tài khoản | ${email}`,
+        success: true,
+        message: "Tài khoản đã được kích hoạt",
+      });
+      return;
+    }
   }
 
-  res.json({
+  const error = "token không hợp lệ";
+  if (!user) {
+    error = "Tài khoản không tồn tại";
+  }
+
+
+  res.render("auth/views/activate", {
+    title: `Kích hoạt tài khoản | ${email}`,
     success: false,
-    message: "Xác thực thất bại",
+    error: error,
+    message: "Xác thực tài khoản thất bại",
   });
+
 };

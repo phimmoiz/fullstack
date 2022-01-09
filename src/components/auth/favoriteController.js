@@ -28,7 +28,7 @@ export const addFavorite = async (req, res, next) => {
       );
   
       if (isFavorite) {
-        throw createError(400, "Movie already in favorites");
+        throw createError(400, "Đã có trong danh sách yêu thích");
       }
   
       user.favorites.push(movie._id);
@@ -37,11 +37,13 @@ export const addFavorite = async (req, res, next) => {
   
       res.json({
         success: true,
-        message: "Movie added to favorites",
+        message: "Đã thêm vào yêu thích",
         favorites: user.favorites,
       });
     } catch (err) {
-      res.json({ success: false, message: err.message });
+      res.json({ 
+        success: false, 
+        message: err.message });
     }
 };
 
@@ -60,10 +62,12 @@ export const removeFavorite = async (req, res, next) => {
   
       res.json({
         success: true,
-        message: "Movie removed from favorites",
+        message: "Đã xoá khỏi yêu thích",
         favorites: user.favorites,
       });
     } catch (err) {
-      res.json({ success: false, message: err.message });
+      res.json({ 
+        success: false, 
+        message: "Đã có trong danh sách yêu thích" });
     }
 };

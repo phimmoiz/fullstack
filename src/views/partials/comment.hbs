@@ -1,7 +1,7 @@
 <div class="flex flex-col grid-cols-1 gap-2 p-2 shadow-md">
   <h2 class="text-xl font-bold">Bình luận</h2>
-  <ul class="list-inside list-none flex flex-col gap-1">
-    {{#each comments}}
+  <ul id="comment-container" class="list-inside list-none flex flex-col gap-1">
+  {{#each comments}}
     <li>
       <div class="flex flex-col">
         <div class="flex flex-row" data-testid="comment">
@@ -99,28 +99,26 @@
     </a>
     {{/ifNotEquals}}
   </ul>
-  <h2 class="text-xl font-semibold ml-2">Nhập Bình luận</h2>
+
+  <h2 class="text-xl font-semibold ml-2">Nhập bình luận</h2>
   {{!-- not user --}}
   {{#ifEquals @root/user.id null}}
-  <form class="flex flex-col m-4" action="/comments/anonymous/{{movie.slug}}" method="post">
+  <form class="flex flex-col m-4" onsubmit="onCommentAnonymousSubmit(event)"> 
     <div class="flex flex-col gap-2 rounded-sm">
-      <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
       <input type="text" name="anonymousName" class="w-full p-2 border rounded-md" placeholder="Tên người dùng"
         required>
-      <textarea name="content" id="content" class="w-full h-32 p-2 border rounded-md" placeholder="Nhập bình luận"
+      <textarea name="content" id="content" class="w-full h-32 p-2 border rounded-md" placeholder="Nhập bình luận của bạn..."
         required></textarea>
       <button type=" submit" class="btn btn-primary">Gửi</button>
     </div>
     {{/ifEquals}}
 
-
     {{!-- comment form --}}
-    {{#if user}}
+  {{#if user}}
     <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
       <div class="p-2">
-        <form action="/comments/{{movie.slug}}" method="POST">
+        <form onsubmit="onCommentUserSubmit(event)">
           <div class="flex flex-col gap-2">
-            <input type="hidden" name="_csrf" value="{{@root/_csrfToken}}">
             <textarea name="content" class="w-full h-32 border p-2 border-pink-400 rounded shadow-md text-black"
               placeholder="Nhập bình luận của bạn..." required></textarea>
             <button type=" submit" class="btn btn-primary">Gửi</button>
@@ -128,10 +126,141 @@
         </form>
       </div>
     </div>
-    {{/if}}
+  {{/if}}
 </div>
 
+<script id="commentAnonymous-template" type="text/x-handlebar">
+  <li>
+    <div class="flex flex-col">
+      <div class="flex flex-row" data-testid="comment">
+        <div class="flex-none">
+          <img src="\{{ anonymousAvatar }}" alt="avatar" class="w-12 h-12 rounded-full border">
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-col bg-gray-100 shadow-lg rounded-md px-4 pt-2 pb-3">
+            <div class="flex flex-row justify-between items-center">
+              <span class="text-base font-bold text-pink-400">\{{anonymousName}}</span>
+              <i class="fas fa-heart text-pink-400" data-like="{{id}}"> \{{likes.length}}</i>
+            </div>
+            <p class=" text-black" data-testid="commentContent">\{{content}}</p>
+          </div>
+          <div class="flex flex-row px-4 justify-between my-2">
+            <div class="flex">
+              <span class="text-xs text-gray-600 dark:text-gray-50">\{{createdAt}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>
+
+<script id="commentUser-template" type="text/x-handlebar">
+  <li>
+    <div class="flex flex-col">
+      <div class="flex flex-row" data-testid="comment">
+        <div class="flex-none">
+          <img src="\{{avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-col bg-gray-100 shadow-lg rounded-md px-4 pt-2 pb-3">
+            <div class="flex flex-row justify-between items-center">
+              <a href="/admin/users/\{{username}}"
+                class="text-base font-bold text-pink-400 hover:text-pink-600">\{{username}}</a>
+              <i class="fas fa-heart text-pink-400" data-like="\{{_id}}"> \{{likes.length}}</i>
+            </div>
+            <p class=" text-black" data-testid="commentContent">\{{content}}</p>
+          </div>
+          <div class="flex flex-row px-4 justify-between my-2">
+            <div class="flex">
+              <span class="text-xs text-gray-600 dark:text-gray-50">\{{createdAt}}</span>
+            </div>
+            <div class="flex justify-end gap-4">
+              <div class="flex-none">
+                <a onclick="onLiked(this)" data-id="\{{_id}}"
+                  class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Like</a>
+              </div>
+              <div>
+                <div class="flex-none">
+                  <a onclick="onDelete(this)" data-id="\{{_id}}"
+                    class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>
+
 <script>
+  function onCommentAnonymousSubmit(event) {
+    event.preventDefault();
+
+    const { anonymousName, content } = event.target.elements;
+
+    if (!content.value ) {
+      return;
+    }
+
+    const data = {
+      anonymousName: anonymousName.value,
+      content: content.value,
+      _csrf: '{{@root/_csrfToken}}',
+    };
+
+    $.ajax({
+      url: '/comments/anonymous/{{movie.slug}}',
+      method: 'POST',
+      data,
+      success: (res) => {
+        if (res.success) {
+          res.comment.createdAt = Date(res.comment.createdAt);
+          const comment = res.comment;
+          const template = Handlebars.compile($('#commentAnonymous-template').html());
+          const html = template(comment);
+          $('#comment-container').prepend(html);
+          $('#content').val('');
+          $('#anonymousName').val('');
+        }
+      },
+    });
+  }
+
+  function onCommentUserSubmit(event) {
+    event.preventDefault();
+
+    const { content } = event.target.elements;
+
+    if ( !content.value ) {
+      return;
+    }
+
+    const data = {
+      content: content.value,
+      _csrf: '{{@root/_csrfToken}}',
+    };
+    $.ajax({
+      url: '/comments/{{movie.slug}}',
+      method: 'POST',
+      data,
+      success: (res) => {
+        if (res.success) {
+          res.comment.createdAt = Date(res.comment.createdAt);
+          res.comment.username = '{{@root/user.username}}';
+          res.comment.avatar = '{{@root/user.avatar}}';
+
+          const comment = res.comment;
+          const template = Handlebars.compile($('#commentUser-template').html());
+          const html = template(comment);
+          $('#comment-container').prepend(html);
+          $('#content').val('');
+        }
+      },
+    });
+  }
+
   function onLiked(el) {
     const id = el.dataset.id;
     const url = `/comments/${id}/like`;
@@ -150,7 +279,6 @@
           const commentEl = document.querySelector(`[data-id="${id}"]`);
           const likeEl = document.querySelector(`[data-like="${id}"]`);
           likeEl.innerHTML = likeCount;
-          console.log(commentEl.innerHTML);
           if (commentEl.innerHTML == 'Like') {
             commentEl.innerHTML = 'UnLike';
             //change color

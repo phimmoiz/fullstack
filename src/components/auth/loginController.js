@@ -31,6 +31,7 @@ export const postLogin = async (req, res) => {
         username: user.username,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
       },
       process.env.JWT_SECRET,
       {

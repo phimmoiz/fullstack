@@ -7,14 +7,19 @@ export const postComment = async (req, res) => {
     const { slug } = req.params;
     const movie = await Movie.findOne({ slug });
     const { id } = res.locals.user;
+
     const newComment = await Comment.create({
       user: id,
       movie,
       content,
     });
 
-    req.flash("success", "Bình luận thành công!");
-    res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+    // get comment and join with user
+    const comment = await Comment.findById(newComment.id);
+
+    //req.flash("success", "Bình luận thành công!");
+    //res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+    res.json({ success: true, comment });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }
@@ -29,11 +34,10 @@ export const postAnonymousComment = async (req, res) => {
     const newComment = await Comment.create({
       movie,
       content,
-      anonymousName: "(Khách chưa đăng nhập) " + anonymousName,
+      anonymousName: "Khách - " + anonymousName,
     });
 
-    req.flash("success", "Bình luận thành công!");
-    res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
+    res.json({ success: true, comment: newComment });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }
@@ -43,7 +47,8 @@ export const getComments = async (req, res) => {
   try {
     const { slug } = req.params;
     const movie = await Movie.findOne({ slug });
-    const comments = await Comment.find({ movie }).sort({ createdAt: -1 });
+    const comments = await Comment.find({ movie })
+      .sort({ createdAt: -1 });
     res.json({ success: true, data: comments });
   } catch (err) {
     res.json({ success: false, message: err.message });

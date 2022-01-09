@@ -1,8 +1,4 @@
-{{#if success}}
-<div class="p-2 rounded bg-green-200 dark:bg-lime-300">
-  <p>{{success}}</p>
-</div>
-{{/if}}
+<div id="toast-container"></div>
 
 {{#if movie}}
 <div x-data='{
@@ -100,8 +96,6 @@
             {{/with}}
           </div>
         </div>
-
-
       </div>
     </div>
 
@@ -130,9 +124,6 @@
       </a>
       {{/ifEquals}}
     </div>
-
-
-
 
     <h2 class="text-xl font-bold mt-4">Mô tả</h2>
     <p class="px-2" id="description">
@@ -222,14 +213,12 @@
                 </h3>
                 <p class="line-clamp-1 text-xs font-light text-opacity-60 text-white" data-card="subtitle"
                   x-text="episode.title + ' ⎯ ' + movie.englishTitle">
-
                 </p>
               </div>
               <div
                 class="absolute px-2 border-2 top-2 left-2 bg-white p-1 rounded-xl dark:text-gray-800 flex items-center gap-1">
                 <i class="fas fa-film"></i>
                 <span x-text="episode.title"></span>
-
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-60 flex items-center justify-center">
@@ -248,15 +237,15 @@
     </div>
   </div>
 </div>
-
 {{>comment}}
-
 <script>
-  const desc = document.querySelector("#description"); const fullText =
+  const desc = document.querySelector("#description"); 
+  const fullText =
     desc.textContent; const clamped = desc.textContent.slice(0, 500) + '...';
-  desc.textContent = clamped; desc.textContent += "..."; let show = false;
-  desc.addEventListener("click", () => {
-    show = !show; if (show) {
+    desc.textContent = clamped; desc.textContent += "..."; 
+    let show = false;
+    desc.addEventListener("click", () => {
+      show = !show; if (show) {
       desc.textContent = fullText; return;
     } desc.textContent = clamped;
   });
@@ -273,15 +262,56 @@
 </div>
 {{/if}}
 
-<script>
-  function editFilmClickHandler(e) {
-    console.log(e);
+<script id="toast-success" type="text/x-handlebar">
+  <div class="toast flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm fixed top-20 right-5">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clip-rule="evenodd" />
+      </svg>
+      <p class="ml-3 text-sm font-bold text-green-600">\{{ message }}</p>
+    </div>
+  </div>
+</script>
 
+<script id="toast-error" type="text/x-handlebar">
+  <div class="toast flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm fixed top-20 right-5">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+          clip-rule="evenodd" />
+      </svg>
+      <p class="ml-3 text-sm font-bold text-red-600">\{{ message }}</p>
+    </div>
+  </div>
+</script>
+
+<script>
+    function notify(message, type) {
+    if (type) {
+      const template = Handlebars.compile($('#toast-success').html());
+      const html = template({
+        message: message
+      });
+      $('#toast-container').append(html);
+    } else {
+      const template = Handlebars.compile($('#toast-error').html());
+      const html = template({
+        message: message
+      });
+      $('#toast-container').append(html);
+    }
+  }
+
+  function editFilmClickHandler(e) {
     // turn all p to input
     $("#filmEditForm").find("p").each(function () {
       $(this).replaceWith(`<input type="text" name="${$(this).attr("name")}" value="${$(this).text()}">`);
     });
   }
+
   function addToFavorite(slug) {
     $.ajax({
       url: "/favorites",
@@ -291,14 +321,12 @@
         _csrf: `{{ _csrfToken }}`
       },
       success: function (data) {
-        console.log('addToFavorite', data);
         if (data.success) {
-          alert("Đã thêm vào yêu thích");
+          // ajax xoá khỏi danh sách phim
+          notify(data.message, data.success);
         } else {
-          alert("Đã có trong danh sách yêu thích");
+          notify(data.message, data.success)
         }
-
-        //reload 
         location.reload();
       }
     });
@@ -312,16 +340,38 @@
         _csrf: `{{ _csrfToken }}`
       },
       success: function (data) {
-        console.log('removeFromFavorite', data);
         if (data.success) {
-          alert("Đã xoá khỏi yêu thích");
+          notify(data.message, data.success);
         } else {
-          alert("Đã có trong danh sách yêu thích");
+          notify(data.message, data.success)
         }
-
         //reload
         location.reload();
       }
     });
   }
 </script>
+
+<style>
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(calc(-100% + 5px));
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .toast {
+    animation: slideInLeft ease .3s, fadeOut linear 1s 3s forwards;
+  }
+</style>

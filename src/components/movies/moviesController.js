@@ -120,7 +120,7 @@ export const getSingleMovie = async (req, res, next) => {
     const comments = Comment.find({ movie: movie._id }).skip(start).limit(limit).populate({
       path: "user",
       model: User,
-    });
+    }).sort({ createdAt: -1 });
     const commentCount = await Comment.countDocuments({ movie: movie._id });
     // total pages
     const totalPages = Math.ceil(commentCount / limit);
@@ -137,11 +137,6 @@ export const getSingleMovie = async (req, res, next) => {
 
     const [commentsResolved, randomMoviesResolved, newSingleMoviesResolved] =
       await Promise.all([comments, randomMovies, newSingleMovies]);
-
-    // const [commentsResolved, newSingleMoviesResolved] = await Promise.all([
-    //   comments,
-    //   newSingleMovies,
-    // ]);
 
     res.render("movies/views/movies/single-movie", {
       title: movie.title,

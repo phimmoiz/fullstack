@@ -1,10 +1,11 @@
 {{#> admin}}
+<div id="toast-container"></div>
 <div class="p-2">
   {{! List all category from categories }}
   <h3 class="text-lg mb-2">
     Categories
   </h3>
-  <ul class="list-inside list-none flex flex-col gap-1">
+  <ul id="categoryForm" class="list-inside list-none flex flex-col gap-1">
     {{#each categories}}
     <li class="pl-6 flex items-center justify-between p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1 hover:bg-pink-200 dark:hover:bg-pink-500">
       <a href="/categories/{{this.slug}}">
@@ -27,10 +28,60 @@
 </div>
 
 {{/admin}}
+
+<script id="category-template" type="text/x-handlebar">
+  <li class="pl-6 flex items-center justify-between p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1 hover:bg-pink-200 dark:hover:bg-pink-500">
+    <a href="/categories/" + \{{slug}}>
+      \{{title}}
+    </a>
+  </li>
+</script>
+
+<script id="toast-success" type="text/x-handlebar">
+  <div class="toast flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm fixed top-20 right-5">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clip-rule="evenodd" />
+      </svg>
+      <p class="ml-3 text-sm font-bold text-green-600">\{{ message }}</p>
+    </div>
+  </div>
+</script>
+
+<script id="toast-error" type="text/x-handlebar">
+  <div class="toast flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm fixed top-20 right-5">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+          clip-rule="evenodd" />
+      </svg>
+      <p class="ml-3 text-sm font-bold text-red-600">\{{ message }}</p>
+    </div>
+  </div>
+</script>
+
 <script>
+  function notify(message, type) {
+    if (type) {
+      const template = Handlebars.compile($('#toast-success').html());
+      const html = template({
+        message: message
+      });
+      $('#toast-container').append(html);
+    } else {
+      const template = Handlebars.compile($('#toast-error').html());
+      const html = template({
+        message: message
+      });
+      $('#toast-container').append(html);
+    }
+  }
+
   function onCategorySubmit(event) {
     event.preventDefault();
-
     const { description, slug, title } = event.target.elements;
 
     if (!description.value || !slug.value || !title.value) {
@@ -41,41 +92,46 @@
       description: description.value,
       slug: slug.value,
       title: title.value,
+      _csrf: '{{@root/_csrfToken}}',
     };
     // JQuery AJAX
     $.ajax({
       url: '/categories',
       method: 'POST',
       data,
-      success: ({ data }) => {
-        $("#notify").html(`<div class="p-2 bg-red-400 text-black rounded fadeInClass mx-4">
-      Đã tạo chuyên mục
-    <a href="/categories/${data.slug}">
-      ${data.title}
-    </a>
-  </div>
-  `);
-      },
-      error: (err) => {
-        console.log(err);
+      success: function (res) {
+        if (res.success) {
+          const category_template = Handlebars.compile($('#category-template').html());
+          const html = category_template(data);
+          $('#categoryForm').append(html);
+          notify(res.message, res.success);
+        } else {
+          notify(res.message, res.success)
+        }
       },
     });
-
   }
 </script>
 <style>
-  @keyframes fadeIn {
+  @keyframes slideInLeft {
     from {
       opacity: 0;
+      transform: translateX(calc(-100% + 5px));
     }
 
     to {
       opacity: 1;
+      transform: translateX(0);
     }
   }
 
-  .fadeInClass {
-    animation-name: fadeIn;
-    animation-duration: 1s;
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .toast {
+    animation: slideInLeft ease .3s, fadeOut linear 1s 3s forwards;
   }
 </style>

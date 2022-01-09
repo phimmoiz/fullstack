@@ -15,7 +15,7 @@ const episodeSchema = new mongoose.Schema(
 
     image: {
       type: String,
-      required: true,
+      default: "/assets/images/poster.png",
     },
 
     uploadDate: {

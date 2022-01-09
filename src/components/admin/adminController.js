@@ -103,7 +103,7 @@ export const moviePanelGetIndex = async (req, res) => {
 
   // get all movies, sort, and populate all
   const movies = await Movie.find({})
-    .sort({ createdAt: -1 })
+    //.sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit)
     .populate({

@@ -160,14 +160,14 @@
     <div class="flex flex-col">
       <div class="flex flex-row" data-testid="comment">
         <div class="flex-none">
-          <img src="\{{user.avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
+          <img src="\{{avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
         </div>
         <div class="flex-1">
           <div class="flex flex-col bg-gray-100 shadow-lg rounded-md px-4 pt-2 pb-3">
             <div class="flex flex-row justify-between items-center">
-              <a href="/admin/users/{{user.username}}"
-                class="text-base font-bold text-pink-400 hover:text-pink-600">\{{user.username}}</a>
-              <i class="fas fa-heart text-pink-400" data-like="{{id}}"> \{{likes.length}}</i>
+              <a href="/admin/users/\{{username}}"
+                class="text-base font-bold text-pink-400 hover:text-pink-600">\{{username}}</a>
+              <i class="fas fa-heart text-pink-400" data-like="\{{_id}}"> \{{likes.length}}</i>
             </div>
             <p class=" text-black" data-testid="commentContent">\{{content}}</p>
           </div>
@@ -177,32 +177,15 @@
             </div>
             <div class="flex justify-end gap-4">
               <div class="flex-none">
-                {{!-- {{#ifBelong likes }} --}}
-                <a onclick="onLiked(this)" data-id="{{id}}"
-                  class="text-xs text-pink-600 dark:text-gray-50 hover:cursor-pointer">UnLike</a>
-                {{!-- {{else}} --}}
-                <a onclick="onLiked(this)" data-id="{{id}}"
+                <a onclick="onLiked(this)" data-id="\{{_id}}"
                   class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Like</a>
-                {{!-- {{/ifBelong}} --}}
               </div>
-
-              {{!-- {{#ifNotEquals @root/user.id null}} --}}
               <div>
-                {{!-- {{#ifEquals user._id @root/user.id }} --}}
                 <div class="flex-none">
-                  <a onclick="onDelete(this)" data-id="{{id}}"
+                  <a onclick="onDelete(this)" data-id="\{{_id}}"
                     class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
                 </div>
-                {{!-- {{else}} --}}
-                {{!-- {{#ifEquals @root/user.role 'admin'}} --}}
-                  <div class="flex-none">
-                    <a onclick="onDelete(this)" data-id="{{id}}"
-                      class="text-xs text-gray-600 dark:text-gray-50 hover:cursor-pointer">Delete</a>
-                  </div>
-                {{!-- {{/ifEquals}} --}}
-                {{!-- {{/ifEquals}} --}}
               </div>
-              {{!-- {{/ifNotEquals}} --}}
             </div>
           </div>
         </div>
@@ -258,16 +241,17 @@
       content: content.value,
       _csrf: '{{@root/_csrfToken}}',
     };
-
     $.ajax({
       url: '/comments/{{movie.slug}}',
       method: 'POST',
       data,
       success: (res) => {
         if (res.success) {
-          res.newComment.createdAt = Date(res.newComment.createdAt);
-          const comment = res.newComment;
-          console.log(comment);
+          res.comment.createdAt = Date(res.comment.createdAt);
+          res.comment.username = '{{@root/user.username}}';
+          res.comment.avatar = '{{@root/user.avatar}}';
+
+          const comment = res.comment;
           const template = Handlebars.compile($('#commentUser-template').html());
           const html = template(comment);
           $('#comment-container').prepend(html);

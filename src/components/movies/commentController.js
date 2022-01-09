@@ -7,18 +7,19 @@ export const postComment = async (req, res) => {
     const { slug } = req.params;
     const movie = await Movie.findOne({ slug });
     const { id } = res.locals.user;
-    const { username } = res.locals.user;
 
     const newComment = await Comment.create({
       user: id,
-      username,
       movie,
       content,
     });
 
+    // get comment and join with user
+    const comment = await Comment.findById(newComment.id);
+
     //req.flash("success", "Bình luận thành công!");
     //res.redirect(`/movies/${slug}#cmt-${newComment.id}`);
-    res.json({ success: true, newComment });
+    res.json({ success: true, comment });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }

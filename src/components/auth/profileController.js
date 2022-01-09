@@ -87,8 +87,3 @@ export const getActivate = async (req, res) => {
     user,
   });
 };
-
-
-export const postActivate = async (req, res) => {
-  console.log(req.params.id);
-};

@@ -1,0 +1,83 @@
+{{#ifEquals success true}}
+<div
+    class="bg-green-200 dark:bg-green-300 hover:bg-green-300 dark:hover:bg-green-400 p-2 rounded my-2 items-center justify-center">
+    <h1 class="text-xl mb-2 px-2 font-semibold m-5 text-center">
+        <i class="fas fa-check-circle text-green-600"></i>
+        {{message}}
+    </h1>
+</div>
+<div class="flex flex-col mt-4 gap-4">
+    <h3 class="text-xl mb-2 px-2 font-semibold">
+        Đổi mật khẩu
+    </h3>
+    <input type="password" class="p-2 border text-black border-pink-400 rounded w-full" name="newPassword" id="newpwd"
+        placeholder="Mật khẩu mới" required>
+    <input type="password" class="p-2 border text-black border-pink-400 rounded w-full" name="confirmPassword"
+        id="renewpwd" placeholder="Nhập lại mật khẩu mới" required>
+    <button
+        class="my-4 bg-pink-400 hover:bg-pink-600 p-2 rounded dark:text-white text-base-content transition duration-300"
+        id="submit">
+        Đổi mật khẩu
+    </button>
+
+</div>
+{{else}}
+<div
+    class="bg-red-300 dark:bg-red-400 hover:bg-red-400 dark:hover:bg-red-500 p-2 rounded my-2 items-center justify-center">
+    <h1 class="text-xl mb-2 px-2 font-semibold m-5 text-center">
+        <i class="fas fa-exclamation-circle text-red-600"></i>
+        {{message}}
+    </h1>
+</div>
+{{/ifEquals}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const submit = document.getElementById('submit');
+        submit.addEventListener('click', function (e) {
+            e.preventDefault();
+            console.log('submit');
+            const newpwd = document.getElementById('newpwd').value;
+            const renewpwd = document.getElementById('renewpwd').value;
+            // empty check
+            if (newpwd === '' || renewpwd === '') {
+                alert('Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
+            // regex check length 6 character and not special character
+            const regex = /^[a-zA-Z0-9]{6,}$/;
+            if (!regex.test(newpwd)) {
+                alert('Mật khẩu phải có ít nhất 6 ký tự');
+                return;
+            }
+            // password match check
+            if (newpwd != renewpwd) {
+                alert('Mật khẩu không khớp');
+                return;
+            }
+            $.ajax({
+                url: '/user/updatePassword',
+                type: 'POST',
+                data: {
+                    newpwd: newpwd,
+                    email: '{{email}}',
+                    _csrf: '{{@root/_csrfToken}}'
+                },
+                success: function (res) {
+                    if (res.success) {
+                        alert(res.message);
+                        const id = '{{@root/user.id}}';
+                        if (id.length > 0) {
+                            window.location.href = '/logout';
+                        } else {
+                            window.location.href = '/login';
+                        }
+                    } else {
+                        alert(res.message);
+                    }
+                }
+            });
+        });
+    });
+
+</script>

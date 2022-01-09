@@ -1774,6 +1774,9 @@ video {
 .uppercase {
 	text-transform: uppercase;
 }
+.italic {
+	font-style: italic;
+}
 .leading-none {
 	line-height: 1;
 }
@@ -2096,14 +2099,14 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-400:hover {
-	--tw-bg-opacity: 1;
-	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
-}
-
 .hover\:bg-pink-600:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(219, 39, 119, var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-400:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
 }
 
 .hover\:bg-opacity-95:hover {

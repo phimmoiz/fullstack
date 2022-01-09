@@ -17,5 +17,37 @@
   </button>
 
 </form>
+{{!-- reset password --}}
+<h3 class="text-xl mb-2 px-2 font-semibold italic hover:underline cursor-pointer" id="resetpwd" data-id="{{user.id}}"
+  value="{{user.isActivated}}">
+  Khôi phục mật khẩu bằng email ?
+</h3>
+
+<script>
+  $('[id="resetpwd"]').click(function () {
+    // get value isActivated
+    const isActivated = $('#resetpwd').attr('value');
+    if (isActivated == 'false') {
+      alert('Bạn chưa kích hoạt tài khoản,\nHãy kích hoạt tài khoản để sử dụng chức năng này');
+      return;
+    }
+    const id = $('#resetpwd').attr('data-id');
+    $.ajax({
+      url: '/user/reset-pwd/' + id,
+      method: 'POST',
+      data: {
+        _csrf: '{{@root/_csrfToken}}'
+      },
+      success: function (data) {
+        console.log(data);
+        if (data.success) {
+          alert('Bạn đã nhận được email khôi phục tài khoản,\nHãy kiểm tra email để khôi phục tài khoản');
+        }
+      }
+    });
+
+  });
+
+</script>
 
 {{/profile}}

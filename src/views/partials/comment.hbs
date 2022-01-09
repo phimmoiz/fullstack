@@ -5,7 +5,7 @@
     <li>
       <div class="flex flex-col">
         <div class="flex flex-row" data-testid="comment">
-          <div class="flex-none">
+          <div class="flex-none m-5">
             {{#ifNotEquals user._id null}}
             <img src="{{user.avatar}}" alt="avatar" class="w-12 h-12 rounded-full border">
             {{else}}
@@ -278,7 +278,7 @@
           //get comment by id
           const commentEl = document.querySelector(`[data-id="${id}"]`);
           const likeEl = document.querySelector(`[data-like="${id}"]`);
-          likeEl.innerHTML = likeCount;
+          likeEl.innerHTML = ` ${likeCount}`;
           if (commentEl.innerHTML == 'Like') {
             commentEl.innerHTML = 'UnLike';
             //change color

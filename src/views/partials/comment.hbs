@@ -105,9 +105,9 @@
   {{#ifEquals @root/user.id null}}
   <form class="flex flex-col m-4" onsubmit="onCommentAnonymousSubmit(event)"> 
     <div class="flex flex-col gap-2 rounded-sm">
-      <input type="text" name="anonymousName" class="w-full p-2 border rounded-md" placeholder="Tên người dùng"
+      <input type="text" name="anonymousName" class="w-full p-2 border rounded-md border-pink-400 shadow-md text-black" placeholder="Tên người dùng"
         required>
-      <textarea name="content" id="content" class="w-full h-32 p-2 border rounded-md" placeholder="Nhập bình luận của bạn..."
+      <textarea name="content" id="content" class="w-full h-32 p-2 border rounded-md border-pink-400 shadow-md text-black" placeholder="Nhập bình luận của bạn..."
         required></textarea>
       <button type=" submit" class="btn btn-primary">Gửi</button>
     </div>

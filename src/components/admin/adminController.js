@@ -337,3 +337,17 @@ export const infoUser = async (req, res) => {
     res.redirect("/admin/users");
   }
 };
+
+export const makeUser = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const user = await User.findOne({ username });
+    await User.findByIdAndUpdate(user._id, {
+      role: "user",
+    });
+    res.json({ success: true, message: "Chuyển " + username + " thành user thành công !" });
+  } catch (err) {
+    req.json({ success: false, err });
+  }
+}

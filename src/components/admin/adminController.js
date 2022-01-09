@@ -311,9 +311,9 @@ export const banUser = async (req, res) => {
       banned: isBan,
     });
     if (isBan === "true") {
-      res.json({ success: true, message: "Ban thành công", user, isBan });
+      res.json({ success: true, message: "Ban " + username + " thành công", user, isBan });
     } else {
-      res.json({ success: true, message: "Unban thành công", user, isBan });
+      res.json({ success: true, message: "Unban " + username + " thành công", user, isBan });
     }
   } catch (err) {
     res.json({ success: false, err });

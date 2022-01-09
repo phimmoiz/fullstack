@@ -213,12 +213,18 @@ export const getEpisode = async (req, res, next) => {
     if (!episodeData) {
       throw new Error("Episode not found");
     }
+    
+    const vimeoId = episodeData.serverVimeo.split("/")[3];
+
+    const video = "https://player.vimeo.com/video/" + vimeoId;
 
     res.render("movies/views/movies/episode", {
       movie,
       season: seasonData,
       episode: episodeData,
+      video,
     });
+    
   } catch (err) {
     next(createError(404, err.message));
   }

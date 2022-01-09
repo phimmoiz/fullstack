@@ -1,5 +1,6 @@
 import { hashPassword } from "../../utils";
 import User from "./userModel";
+import sgMail from "../../services/sendGrid";
 
 export const getRegister = (req, res) => {
   res.render("auth/views/register", { title: "Đăng ký" });
@@ -45,6 +46,28 @@ export const postRegister = async (req, res) => {
       email,
       fullname,
     });
+
+    const msg = {
+      to: email,
+      from: process.env.SENDGRID_EMAIL,
+      subject: "Xác thực tài khoản PhimMoi",
+      text: `Xin chào ${fullname}`,
+      html: `<h1>Xin chào ${fullname}</h1>
+      <p>Bạn vừa đăng ký tài khoản tại PhimMoi.vn</p>
+      <p>Vui lòng click vào link sau để xác thực tài khoản:</p>
+      <a href="${process.env.DOMAIN_NAME}/user/activate?email=${email}&token=${user.activationToken}">Xác thực tài khoản</a>
+      <p>Nếu bạn không phải là người đăng ký tài khoản này, vui lòng bỏ qua email này.</p>
+      <p>PhimMoi</p>
+    `,
+    };
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("Email sent");
+      })
+      .catch((err) => {
+        console.log("send email", err);
+      });
 
     req.flash("success", "Đăng ký thành công");
     return res.redirect("/login");

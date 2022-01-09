@@ -31,7 +31,6 @@ export const postAnonymousComment = async (req, res) => {
       content,
       anonymousName: "(Khách chưa đăng nhập) " + anonymousName,
     });
-    console.log(newComment);
 
     req.flash("success", "Bình luận thành công!");
     res.redirect(`/movies/${slug}#cmt-${newComment.id}`);

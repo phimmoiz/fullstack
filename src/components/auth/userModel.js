@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { comparePassword } from "../../utils/";
+import Randomstring from "randomstring";
 
 // create user schema
 let userSchema = new mongoose.Schema({
@@ -40,6 +41,22 @@ let userSchema = new mongoose.Schema({
     },
   ],
   lastLogin: {
+    type: Date,
+    default: null,
+  },
+  isActivated: {
+    type: Boolean,
+    default: false,
+  },
+  activationToken: {
+    type: String,
+    default: Randomstring.generate(),
+  },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
     type: Date,
     default: null,
   },

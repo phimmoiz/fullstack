@@ -10,6 +10,7 @@ import {
   getInfo,
   getChangePwd,
   getTermPolicy,
+  getActivate,
 } from "../components/auth/profileController.js";
 
 const router = Router();
@@ -24,5 +25,7 @@ router.get("/info", getInfo);
 router.get("/changepwd", getChangePwd);
 
 router.get("/term_policy", getTermPolicy);
+
+router.get("/activation", getActivate);
 
 export default router;

@@ -1847,6 +1847,10 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(161, 161, 170, var(--tw-text-opacity));
 }
+.text-rose-300 {
+	--tw-text-opacity: 1;
+	color: rgba(253, 164, 175, var(--tw-text-opacity));
+}
 .text-opacity-80 {
 	--tw-text-opacity: 0.8;
 }
@@ -2074,14 +2078,19 @@ html[data-theme="dark"] .card-badge {
 	background-color: rgba(185, 28, 28, var(--tw-bg-opacity));
 }
 
+.hover\:bg-green-400:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
+}
+
 .hover\:bg-pink-600:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(219, 39, 119, var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-400:hover {
+.hover\:bg-red-400:hover {
 	--tw-bg-opacity: 1;
-	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
+	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
 
 .hover\:bg-opacity-95:hover {
@@ -2311,6 +2320,11 @@ html[data-theme="dark"] .card-badge {
 .dark .dark\:hover\:bg-green-500:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(34, 197, 94, var(--tw-bg-opacity));
+}
+
+.dark .dark\:hover\:bg-red-500:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
 
 .dark .dark\:hover\:bg-opacity-80:hover {

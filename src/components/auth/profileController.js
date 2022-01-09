@@ -78,3 +78,17 @@ export const getTermPolicy = async (req, res) => {
     user,
   });
 };
+
+export const getActivate = async (req, res) => {
+  const userId = res.locals.user.id;
+  const user = await User.findById(userId);
+  res.render("auth/views/profile/activate", {
+    title: `${user.username} | Kích hoạt tài khoản`,
+    user,
+  });
+};
+
+
+export const postActivate = async (req, res) => {
+  console.log(req.params.id);
+};

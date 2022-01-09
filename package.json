@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "@tailwindcss/line-clamp": "^0.2.2",
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
@@ -25,6 +26,9 @@
     "hbs": "^4.1.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
+    "nodemailer": "^6.7.2",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "randomstring": "^1.2.1",
     "reload": "^3.2.0",
     "socket.io": "^4.4.0",
     "tailwindcss": "^2.2.19"

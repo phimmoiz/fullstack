@@ -346,7 +346,7 @@ export const makeUser = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       role: "user",
     });
-    res.json({ success: true, message: "Chuyển " + username + " thành user thành công !" });
+    res.json({ success: true, message: "Chuyển " + username + " thành user thành công !", user });
   } catch (err) {
     req.json({ success: false, err });
   }

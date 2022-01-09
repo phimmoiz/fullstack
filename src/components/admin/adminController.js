@@ -296,7 +296,7 @@ export const makeAdmin = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       role: "admin",
     });
-    res.json({ success: true });
+    res.json({ success: true, message: "Chuyển " + username + " thành admin thành công !",user });
   } catch (err) {
     req.json({ success: false, err });
   }
@@ -310,10 +310,10 @@ export const banUser = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       banned: isBan,
     });
-    if (isBan) {
-      res.json({ success: true, message: "Ban thành công"});
+    if (isBan === "true") {
+      res.json({ success: true, message: "Ban thành công", user, isBan });
     } else {
-      res.json({ success: true, message: "Unban thành công"});
+      res.json({ success: true, message: "Unban thành công", user, isBan });
     }
   } catch (err) {
     res.json({ success: false, err });

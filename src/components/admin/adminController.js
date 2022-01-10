@@ -103,7 +103,7 @@ export const moviePanelGetIndex = async (req, res) => {
 
   // get all movies, sort, and populate all
   const movies = await Movie.find({})
-    .sort({ createdAt: -1 })
+    //.sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit)
     .populate({
@@ -296,7 +296,7 @@ export const makeAdmin = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       role: "admin",
     });
-    res.json({ success: true });
+    res.json({ success: true, message: "Chuyển " + username + " thành admin thành công !",user });
   } catch (err) {
     req.json({ success: false, err });
   }
@@ -310,10 +310,10 @@ export const banUser = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       banned: isBan,
     });
-    if (isBan) {
-      res.json({ success: true, message: "Ban thành công"});
+    if (isBan === "true") {
+      res.json({ success: true, message: "Ban " + username + " thành công", user, isBan });
     } else {
-      res.json({ success: true, message: "Unban thành công"});
+      res.json({ success: true, message: "Unban " + username + " thành công", user, isBan });
     }
   } catch (err) {
     res.json({ success: false, err });
@@ -337,3 +337,17 @@ export const infoUser = async (req, res) => {
     res.redirect("/admin/users");
   }
 };
+
+export const makeUser = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const user = await User.findOne({ username });
+    await User.findByIdAndUpdate(user._id, {
+      role: "user",
+    });
+    res.json({ success: true, message: "Chuyển " + username + " thành user thành công !", user });
+  } catch (err) {
+    req.json({ success: false, err });
+  }
+}

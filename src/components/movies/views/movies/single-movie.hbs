@@ -99,22 +99,24 @@
       </div>
     </div>
 
-    <div class="flex justify-start my-2 gap-2">
-      {{!-- Button add to favorite --}}
-      {{#unless isFavorite}}
-      <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
-        onclick="addToFavorite('{{movie.slug}}')">
-        <i class="fas fa-heart"></i>
-        Thêm vào yêu thích
-      </button>
-      {{else}}
-      {{!-- Remove from favorite --}}
-      <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
-        onclick="removeFromFavorite('{{movie.slug}}')">
-        <i class="fas fa-heart"></i>
-        Xóa khỏi yêu thích
-      </button>
-      {{/unless}}
+    <div id={{@root/user.username}} class="flex justify-start my-2 gap-2">
+      <div id="{{@root/user.username}}-Child">
+        {{!-- Button add to favorite --}}
+        {{#unless isFavorite}}
+        <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+          onclick="addToFavorite('{{movie.slug}}')">
+          <i class="fas fa-heart"></i>
+          Thêm vào yêu thích
+        </button>
+        {{else}}
+        {{!-- Remove from favorite --}}
+        <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+          onclick="removeFromFavorite('{{movie.slug}}')">
+          <i class="fas fa-heart"></i>
+          Xóa khỏi yêu thích
+        </button>
+        {{/unless}}
+      </div>
       {{!-- button to admin --}}
       {{#ifEquals user.role "admin"}}
       <a class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
@@ -176,9 +178,9 @@
       </div>
       <div class="mb-2">
         <label for="serverVimeo" class="text-sm">
-          Server Vimeo (optional)
+          Server Vimeo
         </label>
-        <input type="text" name="serverVimeo" id="serverVimeo" class="w-full text-black border p-2 rounded-md">
+        <input type="text" name="serverVimeo" id="serverVimeo" class="w-full text-black border p-2 rounded-md" required>
       </div>
 
       <input type="hidden" name="_csrf" value={{@root/_csrfToken}}>
@@ -195,7 +197,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary">Tạo</button>
+      <button class="btn btn-primary row-start-4">Tạo</button>
     </form>
     {{/modal}}
     {{/ifEquals}}
@@ -288,6 +290,26 @@
   </div>
 </script>
 
+<script id="addFavorite" type="text/x-handlebar">
+<div id="\{{ username }}-Child">
+  <button class="p-2 bg-fuchsia-600 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+    onclick="addToFavorite('\{{slug}}')">
+    <i class="fas fa-heart"></i>
+    Thêm vào yêu thích
+  </button>
+</div>
+</script>
+
+<script id="removeFavorite" type="text/x-handlebar">
+<div id="\{{ username }}-Child">
+  <button class="p-2 bg-rose-400 hover:bg-opacity-80 transition cursor-pointer text-white rounded-lg"
+    onclick="removeFromFavorite('\{{slug}}')">
+    <i class="fas fa-heart"></i>
+    Xóa khỏi yêu thích
+  </button>
+</div>
+</script>
+
 <script>
     function notify(message, type) {
     if (type) {
@@ -320,14 +342,19 @@
         slug: slug,
         _csrf: `{{ _csrfToken }}`
       },
-      success: function (data) {
-        if (data.success) {
-          // ajax xoá khỏi danh sách phim
-          notify(data.message, data.success);
+      success: function (res) {
+        if (res.success) {
+          notify(res.message, res.success);
+          const template = Handlebars.compile($('#removeFavorite').html());
+          const html = template({
+            slug: res.slug,
+            username: '{{@root/user.username}}',
+          });
+          $('#' + '{{@root/user.username}}' + "-Child").remove();
+          $('#' + '{{@root/user.username}}').prepend(html);
         } else {
-          notify(data.message, data.success)
+          notify(res.message, res.success)
         }
-        location.reload();
       }
     });
   }
@@ -339,14 +366,19 @@
         slug: slug,
         _csrf: `{{ _csrfToken }}`
       },
-      success: function (data) {
-        if (data.success) {
-          notify(data.message, data.success);
+      success: function (res) {
+        if (res.success) {
+          notify(res.message, res.success);
+          const template = Handlebars.compile($('#addFavorite').html());
+          const html = template({
+            slug: res.slug,
+            username: '{{@root/user.username}}',
+          });
+          $('#' + '{{@root/user.username}}' + "-Child").remove();
+          $('#' + '{{@root/user.username}}').prepend(html);
         } else {
-          notify(data.message, data.success)
+          notify(res.message, data.success)
         }
-        //reload
-        location.reload();
       }
     });
   }

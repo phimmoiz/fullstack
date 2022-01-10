@@ -1,4 +1,5 @@
 {{#> admin}}
+<div id="toast-container"></div>
 <div class="p-1">
     <h3 class="text-lg mb-2 flex items-center">
       Admins
@@ -14,13 +15,21 @@
         </form>
           {{/modal}}
       </h3>
-    <ul class="list-inside list-none flex flex-col gap-1">
+  <ul id="list admin" class="list-inside list-none flex flex-col gap-1">
     {{#each admins}}
-
-    <li class= "pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+    <li id="{{this.username}}"class= "pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
       <a href="/admin/users/{{this.username}}" class="p-2 w-full" data-tooltip="Xem thông tin {{this.username}}">
         <span class = "flex-grow">{{this.username}} </span>
       </a>
+    {{#ifNotEquals @root/user.username this.username}}
+      <form onsubmit="onMakeUserSubmit(event)">
+        <input type="hidden" name="username" value="{{this.username}}">
+        <button class="text-red-500 shadow-md rounded transform transition hover:scale-110 p-1 gap-1 items-center m-1 bg-white">
+          <i class="fas fa-user-lock text-red-500"></i>
+          Make user
+        </button>
+      </form>
+    {{/ifNotEquals}}
     </li>
     {{/each}}
   </ul>
@@ -50,3 +59,96 @@
 </ul>
 {{/if}}
 {{/admin}}
+<script id="toast-success" type="text/x-handlebar">
+  <div class="toast flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm fixed top-20 right-5">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clip-rule="evenodd" />
+      </svg>
+      <p class="ml-3 text-sm font-bold text-green-600">\{{ message }}</p>
+    </div>
+  </div>
+</script>
+
+<script id="toast-error" type="text/x-handlebar">
+  <div class="toast flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm fixed top-20 right-5">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+          clip-rule="evenodd" />
+      </svg>
+      <p class="ml-3 text-sm font-bold text-red-600">\{{ message }}</p>
+    </div>
+  </div>
+</script>
+<script>
+    function notify(message, type) {
+    if (type) {
+      const template = Handlebars.compile($('#toast-success').html());
+      const html = template({
+        message: message
+      });
+      $('#toast-container').append(html);
+    } else {
+      const template = Handlebars.compile($('#toast-error').html());
+      const html = template({
+        message: message
+      });
+      $('#toast-container').append(html);
+    }
+  }
+    function onMakeUserSubmit(event) {
+    event.preventDefault();
+
+    const { username } = event.target.elements;
+
+    if (!username.value) {
+      return;
+    }
+
+    const data = {
+      username: username.value,
+      _csrf: '{{@root/_csrfToken}}',
+    };  
+    $.ajax({
+      url: '/admin/admins/makeUser',
+      method: 'POST',
+      data: data,
+      success: function(res) {
+        if (res.success) {
+          notify(res.message, res.success);
+          const admin = document.getElementById(res.user.username);
+          admin.remove();
+        } else {
+          notify(res.message, res.success);
+        }
+      }
+    });
+  }
+</script>
+<style>
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(calc(-100% + 5px));
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .toast {
+    animation: slideInLeft ease .3s, fadeOut linear 1s 3s forwards;
+  }
+</style>

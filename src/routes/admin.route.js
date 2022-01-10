@@ -14,6 +14,7 @@ import {
   makeAdmin,
   banUser,
   infoUser,
+  makeUser,
 } from "../components/admin/adminController";
 
 const router = Router();
@@ -41,9 +42,11 @@ router.get("/categories", getCategoriesPanel);
 
 router.post("/createAdmin", createAdmin);
 
-router.post("/admins/make", makeAdmin);
+router.post("/admins/makeAdmin", makeAdmin);
 
 router.post("/admins/ban", banUser);
 
 router.get("/users/:username", infoUser);
+
+router.post("/admins/makeUser", makeUser);
 export default router;

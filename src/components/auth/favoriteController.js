@@ -39,6 +39,7 @@ export const addFavorite = async (req, res, next) => {
         success: true,
         message: "Đã thêm vào yêu thích",
         favorites: user.favorites,
+        slug,
       });
     } catch (err) {
       res.json({ 
@@ -64,6 +65,7 @@ export const removeFavorite = async (req, res, next) => {
         success: true,
         message: "Đã xoá khỏi yêu thích",
         favorites: user.favorites,
+        slug,
       });
     } catch (err) {
       res.json({ 

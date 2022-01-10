@@ -5,7 +5,7 @@
     'fixed bottom-0 right-4 z-50 w-11/12 lg:w-[50rem]': pin,
     'max-h-10': !chat,
   }">
-  <h2 class="flex text-xl items-center bg-pink-200 dark:bg-blue-400 dark:hover:bg-opacity-80 p-2 rounded-t-md"
+  <h2 class="cursor-pointer flex text-xl items-center bg-pink-200 dark:bg-blue-400 dark:hover:bg-opacity-80 p-2 rounded-t-md"
     @click="chat = !chat, localStorage.setItem('chat', JSON.stringify(chat)), fullscreen = !chat">
     <span class="flex-grow">
       {{!-- icon size small --}}

@@ -1,5 +1,5 @@
 <div class="p-2 shadow-md rounded-md bg-base-200 my-2">
-  <h2 class="text-xl font-bold mb-2">{{episode.title}}</h2>
+  <h2 class="text-xl font-bold mb-2">{{title}}</h2>
 
   {{!-- tailwind breadcrumb --}}
   {{!-- <div class="flex items-center justify-between mb-2">
@@ -88,6 +88,26 @@
 <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
 <link rel="stylesheet" href="https://cdn.plyr.io/3.6.9/plyr.css" />
 
+{{log movie}}
+{{log episode}}
 <script>
   const player = new Plyr('#player');
+
+  //get oldHistory from localStorage    
+  const oldHistory = JSON.parse(localStorage.getItem('history')) || [];
+
+  const episode = {
+    title: '{{movie.title}}', 
+    englishTItle: '{{movie.englishTitle}}',
+    url: window.location.href,
+    episodeName: '{{episode.title}}' + ' - ' + '{{season.name}}',
+    image: '{{episode.image}}' || '{{movie.image}}',
+  };
+
+  //append episode to history, limit history to 10 items
+  oldHistory.push(episode);
+  oldHistory.splice(0, oldHistory.length - 10);
+
+  //save history to localStorage
+  localStorage.setItem('history', JSON.stringify(oldHistory));
 </script>

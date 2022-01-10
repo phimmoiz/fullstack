@@ -785,8 +785,12 @@ video {
     transition: top 0.3s;
   }
 .fadeOut {
-    -webkit-animation: fadeOut 1s 2s forwards;
-            animation: fadeOut 1s 2s forwards;
+    -webkit-animation: fadeOut 2s 8s forwards;
+            animation: fadeOut 2s 8s forwards;
+  }
+.toast {
+    -webkit-animation: slideInLeft ease .3s, fadeOut linear 1s 6s forwards;
+            animation: slideInLeft ease .3s, fadeOut linear 1s 6s forwards;
   }
 @-webkit-keyframes fadeOut {
     0% {

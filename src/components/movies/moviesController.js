@@ -219,6 +219,7 @@ export const getEpisode = async (req, res, next) => {
     const video = "https://player.vimeo.com/video/" + vimeoId;
 
     res.render("movies/views/movies/episode", {
+      title: movie.title + " - " + seasonData.name + " - " + episodeData.title,
       movie,
       season: seasonData,
       episode: episodeData,

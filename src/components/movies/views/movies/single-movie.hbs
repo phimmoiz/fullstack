@@ -204,7 +204,7 @@
     <div class="p-2 grid grid-cols-2 md:grid-cols-4 gap-2" id="episodeSection">
       <template x-for="(episode, index) in movie.seasons[chooseSeason].episodes">
         <div class="h-40">
-          <a :href="'/movies/'+movie.slug+'/'+movie.seasons[chooseSeason].slug+'/episode-'+episode.slug">
+          <a :href="'/movies/'+movie.slug+'/'+movie.seasons[chooseSeason].slug+'/'+episode.slug">
             <div class="group rounded box-border shadow-md relative overflow-hidden appear h-full">
               <figure class="h-full w-full">
                 <img :src="episode.image || movie.image" data-card="image"

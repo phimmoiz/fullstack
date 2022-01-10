@@ -133,7 +133,11 @@
   }
 
   .fadeOut {
-    animation: fadeOut 1s 2s forwards;
+    animation: fadeOut 2s 8s forwards;
+  }
+
+  .toast {
+    animation: slideInLeft ease .3s, fadeOut linear 1s 6s forwards;
   }
 
   @keyframes fadeOut {

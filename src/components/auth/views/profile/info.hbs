@@ -6,7 +6,12 @@
 {{/if}}
 <div class="flex flex-col">
   <div class="flex flex-col items-center justify-center p-2">
-    <img src="{{user.avatar}}" class="rounded-full border w-40 h-40 border-gray-400 right-10" alt="{{user.username}}">
+    <img src="{{user.avatar}}" class="rounded-full border w-40 h-40 border-gray-400 right-10" alt="{{user.username}}"
+      id="avatar">
+    <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold mt-2 py-1 px-2 rounded " id="editAvatar"
+      onclick="editAvatar()">
+      Thay đổi ảnh đại diện
+    </button>
     <h3 class="text-xl mb-2 px-2 font-semibold m-5">
       Thông tin cá nhân
     </h3>
@@ -18,16 +23,24 @@
       </div>
       <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded" id="editfullname"
         onclick="editFullname()">
-        Sửa
+        Thay đổi
       </button>
     </h3>
     <h3
-      class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+      class="px-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
       Tên đăng nhập: {{user.username}}
+      <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded cursor-not-allowed"
+        id="editusername" data-tooltip="Không thể thay đổi tên đăng nhập">
+        Thay đổi
+      </button>
     </h3>
     <h3
-      class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+      class="px-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
       Email: {{user.email}}
+      <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded cursor-not-allowed"
+        id="editEmail" data-tooltip="Không thể thay đổi Email">
+        Thay đổi
+      </button>
     </h3>
     <h3
       class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
@@ -70,6 +83,7 @@
     fullname.innerHTML = `{{user.fullname}}`;
     document.getElementById("editfullname").style.display = "block";
   }
+
   function updateFullname() {
     const fullname = document.getElementById("fullname");
     const value = fullname.getElementsByTagName("input")[0].value;
@@ -88,6 +102,9 @@
         alert(res.message);
       },
     });
+  }
+
+  function editAvatar() {
 
   }
 </script>

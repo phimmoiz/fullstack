@@ -11,6 +11,7 @@ import {
   getChangePwd,
   getTermPolicy,
   getActivate,
+  postUpdateFullname,
 } from "../components/auth/profileController.js";
 
 const router = Router();
@@ -19,6 +20,8 @@ router.use(requireAuth);
 router.get("/", getProfile);
 
 router.post("/changepwd", postChangePwd);
+
+router.post("/updateFullname", postUpdateFullname);
 
 router.get("/info", getInfo);
 

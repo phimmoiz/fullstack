@@ -45,6 +45,7 @@ export const postChangePwd = async (req, res, next) => {
       message: "Đổi mật khẩu thành công",
       user,
     });
+
   } catch (error) {
     return res.render("auth/views/profile/changepwd", {
       title: "Đổi mật khẩu",
@@ -92,4 +93,25 @@ export const getActivate = async (req, res) => {
     title: `${user.username} | Kích hoạt tài khoản`,
     user,
   });
+};
+
+export const postUpdateFullname = async (req, res) => {
+  try {
+    const userId = res.locals.user.id;
+    const { fullname } = req.body;
+
+    const user = await User.findById(userId);
+    user.fullname = fullname;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Cập nhật thành công",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
 };

@@ -11,8 +11,15 @@
       Thông tin cá nhân
     </h3>
     <h3
-      class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
-      Họ và tên: {{user.fullname}}
+      class="px-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+      <div class="flex items-center gap-2">
+        <span>Họ và tên:</span>
+        <span id="fullname">{{user.fullname}}</span>
+      </div>
+      <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded" id="editfullname"
+        onclick="editFullname()">
+        Sửa
+      </button>
     </h3>
     <h3
       class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
@@ -27,7 +34,7 @@
       Vai trò: {{user.role}}
     </h3>
     <h3
-      class="pl-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
+      class="px-6 h-20 flex items-center justify-between hover:bg-pink-200 dark:hover:bg-pink-500 p-2 w-full shadow-md rounded transform transition hover:scale-105 gap-1">
       Kích hoạt:
       {{#ifEquals user.isActivated true}}
       <span class="bg-green-300 dark:bg-green-400 hover:bg-green-400 dark:hover:bg-green-500 p-2 rounded my-2">
@@ -39,5 +46,48 @@
         Chưa kích hoạt
       </a>
       {{/ifEquals}}
+    </h3>
   </div>
-  {{/profile}}
+</div>
+{{/profile}}
+{{log @root}}
+<script>
+  function editFullname() {
+    let fullname = document.getElementById("fullname");
+    fullname.innerHTML = `
+    <input type="text" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded" value="${fullname.innerText}">
+    <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded" onclick="updateFullname()">
+      Lưu
+    </button>
+    <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded" onclick="cancelFullname()">
+      Hủy
+    </button>
+    `;
+    document.getElementById("editfullname").style.display = "none";
+    // define funtion cancelFullname
+  }
+  function cancelFullname() {
+    fullname.innerHTML = `{{user.fullname}}`;
+    document.getElementById("editfullname").style.display = "block";
+  }
+  function updateFullname() {
+    const fullname = document.getElementById("fullname");
+    const value = fullname.getElementsByTagName("input")[0].value;
+    $.ajax({
+      url: "/profile/updateFullname",
+      type: "POST",
+      data: {
+        fullname: value,
+        _csrf: "{{@root/_csrfToken}}",
+      },
+      success: function (res) {
+        if (res.success) {
+          fullname.innerHTML = value;
+          document.getElementById("editfullname").style.display = "block";
+        }
+        alert(res.message);
+      },
+    });
+
+  }
+</script>

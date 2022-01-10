@@ -1744,6 +1744,10 @@ video {
 	padding-left: 0.75rem;
 	padding-right: 0.75rem;
 }
+.px-6 {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
 .pb-4 {
 	padding-bottom: 1rem;
 }
@@ -2158,6 +2162,11 @@ html[data-theme="dark"] .card-badge {
 .hover\:bg-green-400:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-600:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(37, 99, 235, var(--tw-bg-opacity));
 }
 
 .hover\:bg-opacity-95:hover {

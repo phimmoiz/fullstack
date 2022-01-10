@@ -15,7 +15,7 @@ const episodeSchema = new mongoose.Schema(
 
     image: {
       type: String,
-      required: true,
+      default: "/assets/images/poster.png",
     },
 
     uploadDate: {
@@ -37,10 +37,12 @@ const episodeSchema = new mongoose.Schema(
 
     serverFshare: {
       type: String,
+      default: "https://vimeo.com/363802890",
     },
 
     serverVimeo: {
       type: String,
+      default: "https://vimeo.com/363802890",
     },
 
     season: {

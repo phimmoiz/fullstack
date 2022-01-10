@@ -44,8 +44,6 @@ export const postEpisode = async (req, res, next) => {
       },
     });
 
-    console.log(populated);
-
     const movieSlug = populated.season.movie.slug;
 
     req.flash("success", `Episode ${episode.title} created successfully`);

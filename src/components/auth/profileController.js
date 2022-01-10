@@ -1,5 +1,4 @@
 import User from "./userModel.js";
-import createError from "http-errors";
 import { hashPassword } from "../../utils/";
 
 export const getProfile = async (req, res) => {
@@ -20,31 +19,38 @@ export const postChangePwd = async (req, res, next) => {
 
     const user = await User.findById(userId);
 
-    if (user.password != oldPassword) {
+    // Check old password hash
+    const isMatch = await user.checkPassword(oldPassword);
+
+    if (!isMatch) {
       throw new Error("Mật khẩu cũ không chính xác");
     }
-    if (newPassword !== confirmPassword) {
+
+    if (newPassword != confirmPassword) {
       throw new Error("Mật khẩu mới không khớp");
     }
 
-    // check new password regex
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // regex for password validation length >= 6 
+    const regex = /^[a-zA-Z0-9]{6,}$/;
     if (!regex.test(newPassword)) {
-      throw new Error(
-        "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt"
-      );
+      throw new Error("Mật khẩu phải có ít nhất 6 ký tự");
     }
 
-    user.password = hashPassword(newPassword);
+    // hash password
+    user.password = await hashPassword(newPassword);
     await user.save();
 
     res.render("auth/views/profile/info", {
       title: `${user.username} | Trang cá nhân`,
       message: "Đổi mật khẩu thành công",
+      user,
     });
   } catch (error) {
-    next(createError(500, error.message));
+    return res.render("auth/views/profile/changepwd", {
+      title: "Đổi mật khẩu",
+      success: false,
+      error: error.message,
+    });
   }
 };
 

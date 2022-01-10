@@ -12,7 +12,7 @@ const messageSocket = (io) => {
           throw new Error("No token");
         }
 
-        let user = await isTokenValid(token); // check if the token is valid
+        let user = await getUserByToken(token); // check if the token is valid
 
         if (!user) {
           throw new Error("No user");

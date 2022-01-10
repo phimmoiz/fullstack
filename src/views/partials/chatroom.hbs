@@ -32,32 +32,34 @@
   <div class="rounded-b-md gap-2 overflow-y-scroll p-2 bg-white max-h-[calc(80vh)] overflow-x-hidden"
     data-testid="chatroom-content" x-data="{content: ''}">
 
-    <textarea class="resize border rounded-md p-2 h-[fit-content] my-2 w-full max-w-[80%] text-black"
-      placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)" x-model="content" {{!-- on enter key pressed --}}
-      @keydown.enter="sendMessageHandler(content)"></textarea>
+    {{#if user}}
+      <textarea class="resize border rounded-md p-2 h-[fit-content] my-2 w-full max-w-[80%] text-black"
+        placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)" x-model="content" {{!-- on enter key pressed --}}
+        @keydown.enter="sendMessageHandler(content)"></textarea>
 
-    <div class="flex items-center gap-1 justify-between md:justify-start mb-1">
+      <div class="flex items-center gap-1 justify-between md:justify-start mb-1">
 
-      <button class="btn btn-primary px-4" @click="sendMessageHandler(content)">
-        <i class="fas fa-paper-plane"></i>
-        <span class="ml-1 hidden md:inline">Gửi</span>
+        <button class="btn btn-primary px-4" @click="sendMessageHandler(content)">
+          <i class="fas fa-paper-plane"></i>
+          <span class="ml-1 hidden md:inline">Gửi</span>
 
-      </button>
+        </button>
 
-      {{#ifEquals user.role 'admin'}}
-      <button class="btn bg-red-400 px-4" @click="sendMessageHandler('/clear')">
-        <i class="fas fa-trash-alt"></i>
-        <span class="ml-1 hidden md:inline">Xóa</span>
-      </button>
-      {{/ifEquals}}
+        {{#ifEquals user.role 'admin'}}
+        <button class="btn bg-red-400 px-4" @click="sendMessageHandler('/clear')">
+          <i class="fas fa-trash-alt"></i>
+          <span class="ml-1 hidden md:inline">Xóa</span>
+        </button>
+        {{/ifEquals}}
 
-      <div class="flex gap-1 items-center"
-        x-html="content.length <= 10 ? 
-          `<span class='p-2 rounded-md bg-red-400 inline-block'><i class='fas fa-exclamation-triangle'></i>Nội dung chat cần có ít nhất 10 ký tự:</span>` : 
-          `<span class='p-2 rounded-md bg-green-400 inline-block'><i class='fas fa-check-circle'></i>Nội dung chat hợp lệ</span>`">
+        <div class="flex gap-1 items-center"
+          x-html="content.length <= 10 ? 
+            `<span class='flex gap-2 items-center p-2 rounded-md bg-red-400 inline-block'><i class='fas fa-exclamation-triangle'></i>Nội dung chat cần có ít nhất 10 ký tự:</span>` : 
+            `<span class='flex gap-2 items-center p-2 rounded-md bg-green-400 inline-block'><i class='fas fa-check-circle'></i>Nội dung chat hợp lệ</span>`">
+        </div>
       </div>
-    </div>
 
+    {{/if}}
     <div id="chats" class="flex flex-col gap-2"></div>
 
     {{!-- on scroll here, load more --}}

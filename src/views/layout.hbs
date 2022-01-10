@@ -63,30 +63,38 @@
     });
 
   </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-12PVN1VP9Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
+    gtag('config', 'G-12PVN1VP9Z');
+  </script>
 
 </head>
 
-      <body class="bg-white text-black dark:bg-black dark:text-white">
-        <div id="myDivId"></div>
+<body class="bg-white text-black dark:bg-black dark:text-white">
+  <div id="myDivId"></div>
 
-        {{> darkmode_toggle}}
-        {{!-- Main layout --}}
-        {{> header}}
-        <div class="container max-w-screen-xl mx-auto my-2">
-          {{{body}}}
-        </div>
-        {{> footer}}
+  {{> darkmode_toggle}}
+  {{!-- Main layout --}}
+  {{> header}}
+  <div class="container max-w-screen-xl mx-auto my-2">
+    {{{body}}}
+  </div>
+  {{> footer}}
 
 
-        {{!-- defer html inline script --}}
-        <script>
-          $(document).ready(function () {
-            topbar.hide()
-          });
+  {{!-- defer html inline script --}}
+  <script>
+    $(document).ready(function () {
+      topbar.hide()
+    });
   </script>
 
   {{> globalScript}}
-  </body>
+</body>
 
 </html>

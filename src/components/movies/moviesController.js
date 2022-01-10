@@ -10,6 +10,7 @@ import {
   getNewMovies,
   getMovieWithOneEpisode,
   increaseViewCount,
+  getRandomMovies,
 } from "./moviesService";
 
 // Routing
@@ -133,7 +134,7 @@ export const getSingleMovie = async (req, res, next) => {
       });
     // new movies
     const newSingleMovies = getMovieWithOneEpisode({ page: 1, limit: 10 });
-    const randomMovies = getNewMovies({ page: 1, limit: 10 });
+    const randomMovies = getRandomMovies({ limit: 10 });
 
     const [commentsResolved, randomMoviesResolved, newSingleMoviesResolved] =
       await Promise.all([comments, randomMovies, newSingleMovies]);
@@ -213,7 +214,7 @@ export const getEpisode = async (req, res, next) => {
     if (!episodeData) {
       throw new Error("Episode not found");
     }
-    
+
     const vimeoId = episodeData.serverVimeo.split("/")[3];
 
     const video = "https://player.vimeo.com/video/" + vimeoId;
@@ -225,7 +226,7 @@ export const getEpisode = async (req, res, next) => {
       episode: episodeData,
       video,
     });
-    
+
   } catch (err) {
     next(createError(404, err.message));
   }

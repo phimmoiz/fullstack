@@ -88,3 +88,13 @@ export const increaseViewCount = async (movieId) => {
   movie.viewCount += 1;
   await movie.save();
 };
+
+// get random 10 movies
+export const getRandomMovies = async ({ limit = 10 }) => {
+
+  const movies = await Movie.find({}).lean(true);
+  // shuffle array
+  const shuffledMovies = movies.sort(() => 0.5 - Math.random());
+
+  return shuffledMovies.slice(0, limit);
+};

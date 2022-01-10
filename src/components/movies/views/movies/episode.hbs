@@ -18,7 +18,8 @@
     </div>
   </div> --}}
   <div class="plyr__video-embed" id="player">
-    <iframe src="{{video}}" width="640" height="320" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+    <iframe src="{{video}}" width="640" height="320" frameborder="0" allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen>
     </iframe>
   </div>
 
@@ -97,16 +98,26 @@
   const oldHistory = JSON.parse(localStorage.getItem('history')) || [];
 
   const episode = {
-    title: '{{movie.title}}', 
+    title: '{{movie.title}}',
     englishTItle: '{{movie.englishTitle}}',
     url: window.location.href,
     episodeName: '{{episode.title}}' + ' - ' + '{{season.name}}',
     image: '{{episode.image}}' || '{{movie.image}}',
   };
 
-  //append episode to history, limit history to 10 items
-  oldHistory.push(episode);
-  oldHistory.splice(0, oldHistory.length - 10);
+  //if episode is already in history, remove it
+  oldHistory.forEach((item, index) => {
+    if (item.url === episode.url) {
+      oldHistory.splice(index, 1);
+    }
+  });
+
+  //add episode to history
+  oldHistory.unshift(episode);
+  //check if history is more than 10
+  if (oldHistory.length > 10) {
+    oldHistory.pop();
+  }
 
   //save history to localStorage
   localStorage.setItem('history', JSON.stringify(oldHistory));

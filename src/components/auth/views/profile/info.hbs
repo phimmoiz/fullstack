@@ -8,10 +8,10 @@
   <div class="flex flex-col items-center justify-center p-2">
     <img src="{{user.avatar}}" class="rounded-full border w-40 h-40 border-gray-400 right-10" alt="{{user.username}}"
       id="avatar">
-    <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold mt-2 py-1 px-2 rounded " id="editAvatar"
-      onclick="editAvatar()">
-      Thay đổi ảnh đại diện
-    </button>
+    <p class="uploader-normal-button mt-2">
+      <input type="hidden" role="uploadcare-uploader" name="image" data-public-key="demopublickey" data-clearable
+        data-images-only />
+    </p>
     <h3 class="text-xl mb-2 px-2 font-semibold m-5">
       Thông tin cá nhân
     </h3>
@@ -63,8 +63,38 @@
   </div>
 </div>
 {{/profile}}
-{{log @root}}
+
 <script>
+  UPLOADCARE_PUBLIC_KEY = "demopublickey";
+  UPLOADCARE_LOCALE_TRANSLATIONS = {
+    buttons: {
+      remove: 'Hủy',
+      choose: {
+        images: {
+          one: 'Thay đổi ảnh đại diện',
+        }
+      }
+    }
+  };
+  UPLOADCARE_LOCALE = "vi";
+
+  const wedget = uploadcare.Widget('[role=uploadcare-uploader]');
+  //oncomplete
+  wedget.onUploadComplete(function (info) {
+    $.ajax({
+      url: '/profile/update-avatar',
+      method: 'POST',
+      data: {
+        avatar: info.cdnUrl,
+        _csrf: `{{@root/_csrfToken}}`,
+      },
+      success: function (data) {
+        alert(data.message);
+        window.location.reload();
+      }
+    });
+  });
+
   function editFullname() {
     let fullname = document.getElementById("fullname");
     fullname.innerHTML = `
@@ -102,9 +132,5 @@
         alert(res.message);
       },
     });
-  }
-
-  function editAvatar() {
-
   }
 </script>

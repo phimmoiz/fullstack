@@ -115,3 +115,24 @@ export const postUpdateFullname = async (req, res) => {
     });
   }
 };
+
+export const postUploadAvatar = async (req, res) => {
+  try {
+    const userId = res.locals.user.id;
+    const { avatar } = req.body;
+
+    const user = await User.findById(userId);
+    user.avatar = avatar;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Cập nhật thành công",
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+}

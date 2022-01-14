@@ -35,11 +35,11 @@
     {{#if user}}
       <textarea class="resize border rounded-md p-2 h-[fit-content] my-2 w-full max-w-[80%] text-black"
         placeholder="Báo lỗi phim, tâm sự tuổi đôi mươi ( ͡° ͜ʖ ͡°)" x-model="content" {{!-- on enter key pressed --}}
-        @keydown.enter="sendMessageHandler(content)"></textarea>
+        @keydown.enter="sendMessageHandler(content); content = ''"></textarea>
 
       <div class="flex items-center gap-1 justify-between md:justify-start mb-1">
 
-        <button class="btn btn-primary px-4" @click="sendMessageHandler(content)">
+        <button class="btn btn-primary px-4" @click="sendMessageHandler(content); content == ''">
           <i class="fas fa-paper-plane"></i>
           <span class="ml-1 hidden md:inline">Gửi</span>
 
@@ -95,7 +95,7 @@
 
   function sendMessageHandler(content) {
     console.log(content)
-    socket.emit("chat message", content);
+    socket.emit("chat message", content.trim());
   }
 
   socket.on("chat message receive", function (message) {
